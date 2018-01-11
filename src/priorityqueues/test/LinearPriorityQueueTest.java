@@ -22,7 +22,7 @@ public class LinearPriorityQueueTest {
 			new LinearPriorityQueue<String>();
 
 	@Test
-	public void testSimpleConstructorAndSize(){
+	public void testLinearPQSimpleConstructorAndSize(){
 		assertTrue(greekPublicSectorQueue.isEmpty());
 		assertEquals(greekPublicSectorQueue.size(), 0);
 		greekPublicSectorQueue.enqueue("ASD", 10);
@@ -33,7 +33,7 @@ public class LinearPriorityQueueTest {
 	}
 
 	@Test
-	public void testOrderOfInsertedElements(){
+	public void testLinearPQOrderOfInsertedElements(){
 		greekPublicSectorQueue.enqueue("Filippou", 2);
 		greekPublicSectorQueue.enqueue("Vasilakopoulos", 2);
 		assertEquals(greekPublicSectorQueue.size(), 2);
@@ -69,7 +69,7 @@ public class LinearPriorityQueueTest {
 	}
 
 	@Test
-	public void testIterator(){
+	public void testLinearPQIterator(){
 		String[] strings = {"Karathodori", "Stergiou", "Tasou", "Pipinis", "Papandreou", "Mitsotakis"};
 		for(int i = 0; i < strings.length; i++)
 			greekPublicSectorQueue.enqueue(strings[i], strings.length - 1 - i);

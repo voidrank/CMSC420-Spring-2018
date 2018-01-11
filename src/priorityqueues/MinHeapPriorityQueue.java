@@ -36,7 +36,7 @@ public class MinHeapPriorityQueue<T> implements PriorityQueue<T>{
 
 	@Override
 	public void enqueue(T element, int priority) {
-		data.add(new PriorityQueueNode<T>(element, priority));
+		data.insert(new PriorityQueueNode<T>(element, priority));
 	}
 
 

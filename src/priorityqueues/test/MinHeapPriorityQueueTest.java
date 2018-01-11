@@ -29,7 +29,7 @@ public class MinHeapPriorityQueueTest {
 			new MinHeapPriorityQueue<String>();
 	
 	@Test
-	public void testSimpleConstructorAndSize(){
+	public void testMinHeapPQSimpleConstructorAndSize(){
 		assertTrue(greekPublicSectorQueue.isEmpty());
 		assertEquals(greekPublicSectorQueue.size(), 0);
 		greekPublicSectorQueue.enqueue("ASD", 10);
@@ -40,7 +40,7 @@ public class MinHeapPriorityQueueTest {
 	}
 	
 	@Test
-	public void testOrderOfInsertedElements(){
+	public void testMinHeapPQOrderOfInsertedElements(){
 		greekPublicSectorQueue.enqueue("Filippou", 2);
 		greekPublicSectorQueue.enqueue("Vasilakopoulos", 2);
 		assertEquals(greekPublicSectorQueue.size(), 2);
@@ -76,7 +76,7 @@ public class MinHeapPriorityQueueTest {
 	}
 	
 	@Test
-	public void testIterator(){
+	public void testMinHeapPQIterator(){
 		String[] strings = {"Karathodori", "Stergiou", "Tasou", "Pipinis", "Papandreou", "Mitsotakis"};
 		for(int i = 0; i < strings.length; i++)
 			greekPublicSectorQueue.enqueue(strings[i], strings.length - 1 - i);

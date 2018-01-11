@@ -24,7 +24,7 @@ public class LinkedList<T> implements List<T> {
 	private Node<T> head; // head of the list
 	protected boolean modificationFlag; // helps with fail-fast iteration
 
-	// Keeping a count of the number of list elements as we add
+	// Keeping a count of the number of list elements as we insert
 	// them will make querying for the size more efficient.
 	protected int size; 
 

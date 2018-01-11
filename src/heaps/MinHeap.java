@@ -20,9 +20,9 @@ public interface MinHeap<T extends Comparable<T>> extends Iterable<T>{
 
 	/**
 	 * Add an element in the <tt>MinHeap</tt>.
-	 * @param element The element to add to the <tt>MinHeap</tt>.
+	 * @param element The element to insert to the <tt>MinHeap</tt>.
 	 */
-	public void add(T element);
+	public void insert(T element);
 	
 	/**
 	 * Removes and returns the minimum element from the <tt>MinHeap</tt>.
@@ -49,7 +49,7 @@ public interface MinHeap<T extends Comparable<T>> extends Iterable<T>{
 	 * @return <tt>true</tt> if the <tt>MinHeap</tt> is empty, <tt>false</tt> otherwise.
 	 */
 	public boolean isEmpty();
-	
+
 	/**
 	 * Clears the <tt>MinHeap</tt> of all elements.
 	 */

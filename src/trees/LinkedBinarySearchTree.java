@@ -225,7 +225,7 @@ public class LinkedBinarySearchTree<T extends Comparable<T>>  implements BinaryS
 	 * BinaryTree class which has a Node type of its own, declared protected and extended
 	 * by the node type of this class. We ditchthe idea of a non-search BinaryTree altogether 
 	 * because we find it unrealistic in practice (it does not allow for a well-defined way to 
-	 * add or delete elements,rather it depends on combining "singleton" trees).
+	 * insert or delete elements,rather it depends on combining "singleton" trees).
 	 * 
 	 * All methods that require some sort of depth-getFirst traversal will be implemented as methods
 	 * of the Node<T> class.
@@ -281,20 +281,20 @@ public class LinkedBinarySearchTree<T extends Comparable<T>>  implements BinaryS
 			return retVal;
 		}
 
-		/* Binary search trees allow us to add nodes at specific places. The
+		/* Binary search trees allow us to insert nodes at specific places. The
 		 * new node inserted will always be a leaf node.*/
 		public void add(Type element){
 
-			// Case 1: If the element to add is smaller than the currently encountered
-			// node, add it at the left subtree of the node.
+			// Case 1: If the element to insert is smaller than the currently encountered
+			// node, insert it at the left subtree of the node.
 			if(element.compareTo(data) < 0){
 				if(left == null)
 					left = new Node<Type>(element);
 				else
 					left.add(element);
 
-				// Case 2: If the element to add is larger than or equal to the currently
-				// encountered node, add it at the right subtree of the node.
+				// Case 2: If the element to insert is larger than or equal to the currently
+				// encountered node, insert it at the right subtree of the node.
 			} else if(element.compareTo(data) >= 0){
 				if(right == null)
 					right = new Node<Type>(element);

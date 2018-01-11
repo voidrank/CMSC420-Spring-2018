@@ -4,7 +4,7 @@ package trees;
  * <p>A <tt>BinarySearchTree</tt> is a {@link Tree} with a maximum of 2 children nodes per node
  * which allows for adding and removing nodes in a sorted manner. As such, it will extend
  * the {@link Tree} interface but it will also restrict the objects it stores to Comparable ones.
- * There are only going to be two new methods in this interface: add(T) and delete(T).</p>
+ * There are only going to be two new methods in this interface: insert(T) and delete(T).</p>
  * 
  * <p>Following classic semantics, for every given node, elements in the left subtree of the node
  * are smaller (as defined by their <tt>compareTo()</tt> definitions) than the element at the node, which is
@@ -25,7 +25,7 @@ public interface BinarySearchTree<T extends Comparable<T>> extends Tree<T>{
 	/**
 	 * Adds an element to the tree. <tt>BinarySearchTree</tt>s impose criteria for insertion
 	 * (see description of the class), whereas general Trees do not.
-	 * @param element The element to add.
+	 * @param element The element to insert.
 	 */
 	public void add(T element);
 	

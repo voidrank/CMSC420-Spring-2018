@@ -49,24 +49,24 @@ public class LinkedMinHeap<T extends Comparable<T>> implements MinHeap<T> {
 		count++;
 		modificationFlag = false;
 	}
-	
-	/** 
+
+	/**
 	 * Copy constructor initializes the current MinHeap as a carbon
 	 * copy of the parameter.
-	 * 
+	 *
 	 * @param other The MinHeap to copy the elements from.
 	 */
 	public LinkedMinHeap(MinHeap<T> other){
 		if(other == null)
 			return;
 		for(T el: other) // MaxHeaps have been made Iterable.
-			add(el);
+			insert(el);
 		modificationFlag = false;
 	}
-	
+
 	/**
 	 * Standard equals() method.
-	 * 
+	 *
 	 * @return true If the parameter Object and the current MinHeap
 	 * are identical Objects.
 	 */
@@ -107,11 +107,11 @@ public class LinkedMinHeap<T extends Comparable<T>> implements MinHeap<T> {
 	}
 
 
-	/* To add an element in the heap, we add it as the last leaf, and then we move the element upward until
+	/* To insert an element in the heap, we insert it as the last leaf, and then we move the element upward until
 	 * the heap identity is maintained.  
 	 */
 	@Override
-	public void add(T element) {
+	public void insert(T element) {
 		MinHeapNode<T> newNode = new MinHeapNode<T>(element); 
 		MinHeapNode<T> newNodeParent = null;
 		if(root == null)
@@ -284,7 +284,7 @@ public class LinkedMinHeap<T extends Comparable<T>> implements MinHeap<T> {
 		}
 		
 		public void gatherAllElements(MinHeap<T2> oheap){
-			oheap.add(data); // pre-order traversal
+			oheap.insert(data); // pre-order traversal
 			if(left != null)
 				left.gatherAllElements(oheap);
 			if(right!= null)

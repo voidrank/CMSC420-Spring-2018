@@ -29,9 +29,9 @@ public class ArrayMinHeap<T extends Comparable<T>> implements MinHeap<T> {
 
 	/**
 	 * Expands the capacity of the ArrayMinHeap. This method is typically
-	 * called by add(T element) when we're trying to add an element in an already
+	 * called by insert(T element) when we're trying to insert an element in an already
 	 * full heap. 
-	 * {@link #add(Comparable)}
+	 * {@link #insert(Comparable)}
 	 */
 	private void expandCapacity(){
 		Object[] temp = new Object[2*data.length];
@@ -62,11 +62,11 @@ public class ArrayMinHeap<T extends Comparable<T>> implements MinHeap<T> {
 		last = 0;
 		modificationFlag = false;
 	}
-	
-	/** 
+
+	/**
 	 * Copy constructor initializes the current MinHeap as a carbon
-	 * copy of the parameter. 
-	 * 
+	 * copy of the parameter.
+	 *
 	 * @param other The MinHeap object to base construction of the current object on.
 	 */
 	public ArrayMinHeap(MinHeap<T> other){
@@ -77,14 +77,14 @@ public class ArrayMinHeap<T extends Comparable<T>> implements MinHeap<T> {
 			last = 0;
 		}else
 			for(T el: other)
-				add(el);
+				insert(el);
 		modificationFlag = false;
 	}
-	
+
 	/**
 	 * Standard equals() method.
 	 * @return true if the current object and the parameter object
-	 * are equal, with the code providing the equality contract. 
+	 * are equal, with the code providing the equality contract.
 	 */
 	@Override
 	public boolean equals(Object other){
@@ -105,10 +105,10 @@ public class ArrayMinHeap<T extends Comparable<T>> implements MinHeap<T> {
 	}
 	
 	/**
-	 * Returns the maximum node among the two nodes provided as parameters. 
+	 * Returns the minimum child among the two children indices provided as parameters.
 	 * @param indLeft the index of the left child 
 	 * @param indRight the index of the right child
-	 * @return the index of the maximum child.
+	 * @return the index of the minimum child.
 	 */
 	private int findMinChild(int indLeft, int indRight){
 		int retVal;
@@ -126,21 +126,21 @@ public class ArrayMinHeap<T extends Comparable<T>> implements MinHeap<T> {
 	}
 	
 	@Override
-	public void add(T element) {
-		// To add an element in the minheap, we add it as the last element,
+	public void insert(T element) {
+		// To insert an element in the minheap, we insert it as the last element,
 		// and then we keep swapping it with its parent until the minheap
 		// identity is maintained.
 		if(last == data.length)
 			expandCapacity();
 		data[last] = element;
-		int current = last, parent = (current - 1) / 2;
+		int current = last, parent = current / 2;
 		// While you need to switch, switch
 		while(((T) data[parent]).compareTo((T)data[current]) > 0){ 
 			Object temp = data[current]; 
 			data[current] = data[parent];
 			data[parent] = temp;
 			current = parent;
-			parent = (parent - 1) / 2;
+			parent = parent/ 2;
 		}
 		last++;
 	}
@@ -151,7 +151,7 @@ public class ArrayMinHeap<T extends Comparable<T>> implements MinHeap<T> {
 		// and then swap the smallest child of the root with the root
 		// and keep on doing that until the heap identity is maintained.
 		if(data[0] == null)
-			throw new EmptyHeapException("removeMin(): Heap is empty!");
+			throw new EmptyHeapException("deleteMin(): Heap is empty!");
 		T retVal = (T)data[0];
 		data[0] = data[last - 1];
 		int current = 0, minChild = findMinChild(1, 2);
@@ -209,7 +209,7 @@ public class ArrayMinHeap<T extends Comparable<T>> implements MinHeap<T> {
 			tempHeap = new ArrayMinHeap<T2>();
 			for(Object el: data)
 				if(el != null) // Recall that an array-based Heap might have null references...
-					tempHeap.add((T2)el);
+					tempHeap.insert((T2)el);
 			modificationFlag = false;
 		}
 
