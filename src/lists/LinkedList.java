@@ -3,17 +3,21 @@ package lists;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 
-/** LinkedList is a simple (single) linked list. A linked list
- * is the most common list out there. The main benefit compared to an array-based
+/** <p><tt>LinkedList</tt> is a simple (forwardly-linked) {@link List}. A linked list
+ * is the most common {@link List} out there. The main benefit compared to an array-based
  * implementation is that it's a dynamic data structure which never has to 
  * expand its capacity to accommodate new elements. The main
- * drawbacks compared to an array-based implementation is that certain methods, such as
- * accessing or deleting methods based on indices, are not that efficient.
- *  
- * @author Jason Filippou (jasonfil@cs.umd.edu)
- * 
- * @since September 2013
+ * drawbacks (compared to an array-based implementation such as {@link StaticArrayList}) is that
+ * certain methods, such as accessing or deleting methods based on indices, are not that efficient.</p>
  *
+ * <p>You should <b>not</b> edit this class! It is given to you as a resource for your project.</p>
+ *
+ * @author  <a href="mailto:jasonfil@cs.umd.edu">Jason Filippou</a>
+ * 
+ * @param <T> The type of element held by the container.
+ *
+ * @see DoublyLinkedList
+ * @see StaticArrayList
  */
 public class LinkedList<T> implements List<T> {
 
@@ -172,7 +176,7 @@ public class LinkedList<T> implements List<T> {
 	}
 
 	@Override
-	public boolean remove(T element) {
+	public boolean delete(T element) {
 		// In this method, we will need to keep control of the previous node
 		// at every step of the iteration.
 		Node<T> previous = head, current = head;
@@ -196,11 +200,11 @@ public class LinkedList<T> implements List<T> {
 	}
 
 	@Override
-	public void remove(int index) throws IllegalListAccessException {
+	public void delete(int index) throws IllegalListAccessException {
 		// Again, we will need a "previous" node reference.
 		if(index < 0 || index >= size)
 			throw new IllegalListAccessException("delete(int): Index " + index + " is not a valid list index.");
-		// Special case of removing the first element of the list:
+		// Special case of removing the getFirst element of the list:
 		if(index == 0){
 			head = head.next; // Could be null, signifying that only one element was contained in the list.			
 			size--;
@@ -218,11 +222,11 @@ public class LinkedList<T> implements List<T> {
 	}
 
 	@Override
-	public boolean removeAll(T element) {
+	public boolean deleteAll(T element) {
 		boolean response = false;
 		while(contains(element)){
 			response = true;
-			remove(element);
+			delete(element);
 		}
 		if(response == true)
 			modificationFlag = true;

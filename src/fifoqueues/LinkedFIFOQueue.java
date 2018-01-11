@@ -5,15 +5,21 @@ import java.util.Iterator;
 
 
 /**
- * A LinkedFIFOQueue is a queue which uses a DoublyLinkedList as the underlying implementation.
- * Such a queue never needs data resizing and can grow as long as the system allows it to.
- * We use a DoublyLinkedList instead of a LinkedList for the underlying implementation such that we have 
- * constant time enqueueings and dequeuings (a singly linked list would provide linear time for one
- * of the two operations).
- * 
- * @author Jason Filippou (jasonfil@cs.umd.edu)
+ * <p>A <tt>LinkedFIFOQueue</tt> is a {@link FIFOQueue} which uses a {@link DoublyLinkedList} as the underlying implementation.
+ * Such a queue <b>never</b> needs data resizing and can grow as long as the system allows it to.
+ * We use a {@link DoublyLinkedList} instead of a {@link LinkedList} LinkedList for the underlying
+ * implementation such that we have constant time enqueueings and dequeuings (a singly linked list would provide
+ * <b>linear</b> time for one of the two operations).</p>
  *
- * @param <T> The type of Object contained within the LinkedFIFOQueue.
+ * <p>You should <b>not</b> edit this class! It is given to you as a resource for your project.</p>
+ *
+ * @author  <a href="mailto:jasonfil@cs.umd.edu">Jason Filippou</a>
+ *
+ * @param <T> The type of Object contained within the container.
+ *
+ * @see FIFOQueue
+ * @see LinearArrayFIFOQueue
+ * @see CircularArrayFIFOQueue
  */
 
 public class LinkedFIFOQueue<T> implements FIFOQueue<T> {
@@ -94,13 +100,13 @@ public class LinkedFIFOQueue<T> implements FIFOQueue<T> {
 	}
 
 	@Override
-	public T dequeue() throws EmptyQueueException {
+	public T dequeue() throws EmptyFIFOQueueException {
 		T retVal = null;
 		try {
 			retVal = data.getFirst();
-			data.remove(0);
+			data.delete(0);
 		} catch (EmptyListException e) {
-			throw new EmptyQueueException("dequeue(): FIFOQueue is empty.");
+			throw new EmptyFIFOQueueException("dequeue(): FIFOQueue is empty.");
 		} catch(IllegalListAccessException exc){
 			// Dummy catchblock, since this type of exception will never be generated.
 		}
@@ -108,11 +114,11 @@ public class LinkedFIFOQueue<T> implements FIFOQueue<T> {
 	}
 
 	@Override
-	public T first() throws EmptyQueueException {
+	public T first() throws EmptyFIFOQueueException {
 		try {
 			return data.getFirst();
 		}catch(EmptyListException exc){
-			throw new EmptyQueueException("first(): FIFOQueue is empty.");
+			throw new EmptyFIFOQueueException("getFirst(): FIFOQueue is empty.");
 		}
 	}
 

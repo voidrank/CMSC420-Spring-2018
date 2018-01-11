@@ -5,12 +5,17 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /** 
- * A DoublyLinkedList is a {@link LinkedList} whose nodes have two references,
- * one pointing to the previous and one to the next node.
- * 
- * @author Jason Filippou (jasonfil@cs.umd.edu)
+ * <p>A <tt>DoublyLinkedList</tt> is a {@link LinkedList} whose nodes have two references,
+ * one pointing to the previous and one to the next node.</p>
+ *
+ * <p>You should <b>not</b> edit this class! It is given to you as a resource for your project.</p>
+ *
+ * @author  <a href="mailto:jasonfil@cs.umd.edu">Jason Filippou</a>
  *
  * @param <T> The data type held by the list.
+ *
+ * @see StaticArrayList
+ * @see LinkedList
  */
 public class DoublyLinkedList<T> extends LinkedList<T>{
 
@@ -202,7 +207,7 @@ public class DoublyLinkedList<T> extends LinkedList<T>{
 	}
 
 	@Override
-	public boolean remove(T element){
+	public boolean delete(T element){
 		DoublyLinkedNode<T> current = head;
 		while(current.next != head){ // Again, iterate until one node before the head.
 			if(current.getData().equals(element)){
@@ -237,11 +242,11 @@ public class DoublyLinkedList<T> extends LinkedList<T>{
 	}
 
 	@Override 
-	public boolean removeAll(T element){
+	public boolean deleteAll(T element){
 		boolean response = false;
 		while(contains(element)){
 			response = true;
-			remove(element);
+			delete(element);
 		}
 		if(response == true)
 			modificationFlag = true;
@@ -249,11 +254,11 @@ public class DoublyLinkedList<T> extends LinkedList<T>{
 	}
 
 	@Override
-	public void remove(int index) throws IllegalListAccessException{
+	public void delete(int index) throws IllegalListAccessException{
 		if(index < 0 || index >= size)
 			throw new IllegalListAccessException("delete(int): Index " + index + " is not a valid list index.");
 		modificationFlag = true; // If the method doesn't throw an exception, it will always delete an element, thus modifying the container.
-		// Special case of removing the first element of the list:
+		// Special case of removing the getFirst element of the list:
 
 		if(index == 0){
 			if(head.next == head)// Special case of only one element in the list

@@ -1,53 +1,60 @@
 package priorityqueues;
 
-import fifoqueues.EmptyQueueException;
+import fifoqueues.EmptyFIFOQueueException;
 
-/** A <tt>PriorityQueue</tt> is an extension of a classic FIFO FIFOQueue. Instead of traditional
- * FIFO processing, a priorityqueues.PriorityQueue inserts elements with a higher priority
- * first, where "higher" is typically interpreted as "lower" in the arithmetic
- * sense, e.g 1 is "higher" priority than 2. Elements with the same priority
- * are inserted in a FIFO fashion.
+/**<p> A <tt>PriorityQueue</tt> is an extension of a classic FIFO queue. Instead of traditional
+ * FIFO processing, a <tt>PriorityQueue</tt> inserts elements with a higher priority
+ * getFirst, where "higher" is typically interpreted as "lower" in the arithmetic
+ * sense. For example, a priority of 1 (one) is considered "higher" than priority 2 (two),
+ * and the element with that particular priority would be processed faster by the application
+ * using the <tt>PriorityQueue</tt>. Elements with the <b>same</b> priority are inserted in a FIFO fashion.</p>
  *
- * @author Jason Filippou (jasonfil@cs.umd.edu)
+ * <p>You should <b>not</b> edit this interface! It is given to you as a resource for your project.</p>
+ *
+ * @author  <a href="mailto:jasonfil@cs.umd.edu">Jason Filippou</a>
+ *
+ * @see LinearPriorityQueue
+ * @see heaps.MinHeap
+ * @see MinHeapPriorityQueue
  *
  */
 public interface PriorityQueue<T> extends Iterable<T> {
 
 	/**
-	 * Enqueue the element in the priorityqueues.PriorityQueue.
+	 * Enqueues the provided element taking into account its prority.
 	 * @param element The element to enqueue.
 	 * @param priority The priority of the element that will be enqueued.
 	 */
 	public void enqueue(T element, int priority);
 	
 	/**
-	 * Removes and returns an element of the priorityqueues.PriorityQueue.
-	 * @return The element at the top of the priorityqueues.PriorityQueue.
-	 * @throws EmptyQueueException If the priorityqueues.PriorityQueue is empty.
+	 * Returns <b>and deletes</b> the top element of the <tt>PriorityQueue</tt>.
+	 * @return The element at the top of the <tt>PriorityQueue</tt>.
+	 * @throws EmptyFIFOQueueException If the <tt>PriorityQueue</tt> is empty.
 	 */
-	public T dequeue() throws EmptyQueueException;
+	public T dequeue() throws EmptyFIFOQueueException;
 	
 	/**
-	 * Returns but does not delete the first element from the top of the priorityqueues.PriorityQueue.
-	 * @return The element at the top of the priorityqueues.PriorityQueue
-	 * @throws EmptyQueueException If the priorityqueues.PriorityQueue is empty.
+	 * Returns, <b>but does not delete</b> the top element of the <tt>PriorityQueue</tt>.
+	 * @return The element at the top of the <tt>PriorityQueue</tt>.
+	 * @throws EmptyFIFOQueueException If the <tt>PriorityQueue</tt> is empty.
 	 */
-	public T first() throws EmptyQueueException;
+	public T getFirst() throws EmptyFIFOQueueException;
 	
 	/**
-	 * Returns the number of elements currently in the priorityqueues.PriorityQueue.
-	 * @return The number of elements currently in the priorityqueues.PriorityQueue.
+	 * Returns the number of elements currently in the <tt>PriorityQueue</tt>.
+	 * @return The number of elements currently in the <tt>PriorityQueue</tt>.
 	 */
 	public int size();
 	
 	/**
-	 * Queries the ProrityQueue for emptiness.
-	 * @return true if the priorityqueues.PriorityQueue is empty.
+	 * Queries the <tt>PriorityQueue</tt> for emptiness.
+	 * @return <tt>true</tt> if the <tt>PriorityQueue</tt> is empty, <tt>false</tt> otherwise.
 	 */
 	public boolean isEmpty();
 	
 	/**
-	 * Clears the priorityqueues.PriorityQueue.
+	 * Clears the <tt>PriorityQueue</tt> of all its elements.
 	 */
 	public void clear();
 }

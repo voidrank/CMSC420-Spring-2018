@@ -6,15 +6,23 @@ import exceptions.InvalidCapacityException;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 /**
- * LinearArrayFIFOQueue is an implementation of fifoqueues based on a simple linear array.
+ *<p> <tt>LinearArrayFIFOQueue</tt> is a {@link FIFOQueue} based on a simple linear array.
  * It is a very inefficient queue implementation, because depending on whether we choose the
- * first or last "filled-in" cell of the array to hold the "front" element of the queue, either
- * enqueuing or dequeuing will take linear time. In this queue, we will assume a queue typical of
- * the Greek public sector of the economy, where enqueuings are much more common. This means that the
- * inner implementation has the "top" element at the first address of the array.
- * 
- * @author Jason Filippou (jasonfil@cs.umd.edu)
+ * getFirst or last "filled-in" cell of the array to hold the "front" element of the queue, either
+ * enqueuing or dequeuing will take linear time. In this queue, we will assume a queue where enqueuings
+ * are much more common than dequeueings. This means that the inner implementation has the "top" element at
+ * the getFirst address of the array, and calls to {@link #dequeue()} will result in (linear-time)
+ * shifting of all the array elements. However, the assumption is that those calls are relatively infrequent.</p>
  *
+ * <p>You should <b>not</b> edit this class! It is given to you as a resource for your project.</p>
+ *
+ * @author  <a href="mailto:jasonfil@cs.umd.edu">Jason Filippou</a>
+ *
+ * @param <T> The type of element contained by this queue.
+ *
+ * @see FIFOQueue
+ * @see LinkedFIFOQueue
+ * @see CircularArrayFIFOQueue
  */
 @SuppressWarnings("unchecked")
 public class LinearArrayFIFOQueue<T> implements FIFOQueue<T> {
@@ -170,9 +178,9 @@ public class LinearArrayFIFOQueue<T> implements FIFOQueue<T> {
 	}
 
 	@Override
-	public T dequeue() throws EmptyQueueException {
+	public T dequeue() throws EmptyFIFOQueueException {
 		if(isEmpty())
-			throw new EmptyQueueException("dequeue(): FIFOQueue is empty");
+			throw new EmptyFIFOQueueException("dequeue(): FIFOQueue is empty");
 		T el = data[0];
 		shiftLeft();
 		rear--;
@@ -181,9 +189,9 @@ public class LinearArrayFIFOQueue<T> implements FIFOQueue<T> {
 	}
 
 	@Override
-	public T first() throws EmptyQueueException {
+	public T first() throws EmptyFIFOQueueException {
 		if(isEmpty())
-			throw new EmptyQueueException("first(): FIFOQueue is empty");
+			throw new EmptyFIFOQueueException("getFirst(): FIFOQueue is empty");
 		return data[0];
 	}
 

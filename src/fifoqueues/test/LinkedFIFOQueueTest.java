@@ -10,6 +10,15 @@ import java.util.Iterator;
 
 import static org.junit.Assert.*;
 
+/**
+ * <p>A testing framework for {@link LinkedFIFOQueue}.</p>
+ *
+ * <p>You should <b>not</b> edit this class! It is given to you as a resource for your project.</p>
+ *
+ * @author  <a href="mailto:jasonfil@cs.umd.edu">Jason Filippou</a>
+ *
+ * @see LinearArrayFIFOQueueTest
+ */
 public class LinkedFIFOQueueTest {
 
 	private FIFOQueue<Integer> integerFIFOQueue = new LinkedFIFOQueue<Integer>();
@@ -54,8 +63,8 @@ public class LinkedFIFOQueueTest {
 		try {
 			assertEquals(stringFIFOQueue.first(), "Soda");
 			assertEquals(stringFIFOQueue.size(), 1); // Size should not've been decremented.
-		} catch (EmptyQueueException e) { // This should not've been thrown
-			fail("EmptyQueueException should not've been thrown.");
+		} catch (EmptyFIFOQueueException e) { // This should not've been thrown
+			fail("EmptyFIFOQueueException should not've been thrown.");
 		}
 		stringFIFOQueue.clear();
 	}
@@ -66,8 +75,8 @@ public class LinkedFIFOQueueTest {
 		try {
 			assertEquals(stringFIFOQueue.dequeue(), "Soda");
 			assertEquals(stringFIFOQueue.size(), 0); // Size SHOULD've been decremented.
-		} catch (EmptyQueueException e) { // This should not've been thrown
-			fail("EmptyQueueException should not've been thrown.");
+		} catch (EmptyFIFOQueueException e) { // This should not've been thrown
+			fail("EmptyFIFOQueueException should not've been thrown.");
 		}
 		stringFIFOQueue.clear();
 
@@ -77,7 +86,7 @@ public class LinkedFIFOQueueTest {
 		for(int i = 0; i < 100; i++)
 			try {
 				integerFIFOQueue.dequeue();
-			} catch (EmptyQueueException e) {
+			} catch (EmptyFIFOQueueException e) {
 				fail("Empy queue exception should not've been thrown (i = " + i + ")");
 			}
 		assertTrue(integerFIFOQueue.isEmpty());
@@ -92,8 +101,8 @@ public class LinkedFIFOQueueTest {
 		assertEquals(integerFIFOQueue.size(), 100);
 		try {
 			assertEquals(integerFIFOQueue.first(), new Integer(0));
-		} catch(EmptyQueueException exc){
-			fail("EmptyQueueException should not've been thrown.");
+		} catch(EmptyFIFOQueueException exc){
+			fail("EmptyFIFOQueueException should not've been thrown.");
 		}
 		integerFIFOQueue.clear();
 	}

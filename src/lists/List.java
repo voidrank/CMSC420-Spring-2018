@@ -1,20 +1,19 @@
 package lists;
 import java.util.Iterator;
 
-/***
- * A LinearList is a linear ADT which inserts elements in O(n), deletes them in O(n)
- * and access them in O(n). Elements can only be added to the front or the back. Note
- * that this interface does not require that the implementation is a LinkedList, even
- * though that would be what makes most sense. It does not even specify whether the LinearList,
- * if linked, will have single or double links per node.
+/**
+ * <p>A <tt>List</tt> is a linear ADT which offers insertion, search and deletion in at most linear time.
+ * Elements can only be added to the front or the back, never in between.</p>
  * 
- * It is a requirement that the type T is Comparable, or else we will not be able to 
- * implement methods such as contains() and delete(). The interface itself extends the Iterable
- * interface, which means that we can use foreach() statements to easily access its elements.
- * 
- * @author Jason Filippou (jasonfil@cs.umd.edu)
- * @since September 2013 
- * @param <T> The type of object that the LinearList will hold.
+ * <p>It is a requirement that the type <i>T</i> is {@link Comparable}, or else we will not be able to
+ * implement methods such as {@link #contains(Object)} and {@link #delete(int)}. The interface is {@link Iterable}
+ * interface, which means that we can use for-each loops to easily access its elements.</p>
+ *
+ * <p>You should <b>not</b> edit this class! It is given to you as a resource for your project.</p>
+ *
+ * @author  <a href="mailto:jasonfil@cs.umd.edu">Jason Filippou</a>
+ *
+ * @param <T> The type of object that the <tt>List</tt> will hold.
  */
 
 public interface List<T> extends Iterable<T>{
@@ -32,7 +31,7 @@ public interface List<T> extends Iterable<T>{
 	public void pushBack(T element);
 	
 	/**
-	 * Get the first element of the list. This method does *not* delete this element
+	 * Get the getFirst element of the list. This method does *not* delete this element
 	 * (call "delete" to delete elements).
 	 * @return A copy of the element at the top of the list.
 	 * @throws EmptyListException If the list is empty.
@@ -40,7 +39,7 @@ public interface List<T> extends Iterable<T>{
 	public T getFirst() throws EmptyListException;
 	
 	/**
-	 * Get the last element of the list. This method does <b>>not</b delete this element
+	 * Get the last element of the list. This method does <b>not</b> delete this element
 	 * (call "delete" to delete elements).
 	 * @return A copy of the element at the top of the list.
 	 * @throws EmptyListException if the list is empty.
@@ -64,25 +63,24 @@ public interface List<T> extends Iterable<T>{
 	public boolean contains(T element);
 	
 	/**
-	 * Removes *one* instance of element from the list. 
+	 * Removes <b>one</b> instance of element from the list.
 	 * @param element the element to be removed.
-	 * @return true if the element was removed.
+	 * @return <tt>true</tt> if the element was removed, <tt>false</tt> otherwise.
 	 */
-	public boolean remove(T element); 
+	public boolean delete(T element);
 	
-	/** Removes the element at position "index" of the list.
+	/** Deletes the element at position <tt>index</tt> of the list.
 	 * @param index The index of the element to be removed.
 	 * @throws IllegalListAccessException if the index is below 0 or above the list's length.
 	 */
-	
-	public void remove(int index) throws IllegalListAccessException;
+	public void delete(int index) throws IllegalListAccessException;
 	
 	/**
-	 * Removes *all* instances of element from the list.
+	 * Removes <b>all</b> instances of element from the list.
 	 * @param element The element to be removed.
-	 * @return true if the element was removed at least once.
+	 * @return <tt>true</tt> if the element was removed at least once, <tt>false</tt> otherwise.
 	 */
-	public boolean removeAll(T element);
+	public boolean deleteAll(T element);
 	
 	/**
 	 * Returns the number of elements in the list.
@@ -98,17 +96,17 @@ public interface List<T> extends Iterable<T>{
 	
 	/**
 	 * Queries the list for emptiness.
-	 * @return true if the list is empty.
+	 * @return <tt>true</tt> if the list is empty, <tt>false</tt> otherwise.
 	 */
 	public boolean isEmpty();
 	
 	/**
-	 * Returns a "fail-fast" iterator for the Iterable List.
-	 * Fail-fast iterators will throw a ConcurrentModificationException
-	 * if the collection is modified by means other than the Iterator.delete()
-	 * method during scanning of the collection.
+	 * <p>Returns a "fail-fast" {@link Iterator} over the elements contained by <tt>this</tt>.
+	 * Fail-fast iterators will throw a {@link java.util.ConcurrentModificationException}
+	 * if the collection is modified by means other than {@link Iterator#remove()}
+	 * while iterating through the container through the {@link Iterator}.</p>
 	 * 
-	 * @return an Iterator over the elements of the collection, in proper (linear) order.
+	 * @return an {@link Iterator} over the elements of the collection, in proper (linear) order.
 	 */
 	public Iterator<T> iterator();
 }

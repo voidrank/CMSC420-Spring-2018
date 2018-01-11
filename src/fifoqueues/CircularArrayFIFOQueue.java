@@ -8,16 +8,20 @@ import exceptions.InvalidCapacityException;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 
-/**A CircularArrayFIFOQueue is an implementation of a FIFOQueue based on a one-dimensional
+/** <p>A <tt>CircularArrayFIFOQueue</tt> is a {@link FIFOQueue} based on a one-dimensional
  * array which can wrap around. That is, it is possible for the front of the queue
- * to be at index n and the back of the queue at index m, where n > m. Compared to 
- * LinearArrayFIFOQueue, this implementation provides for constant time enqueueing and
- * dequeueing, but it requires more attention when coding.
- *   
- * @author Jason Filippou (jasonfil@cs.umd.edu)
- * 
- * @since September 2013
- * 
+ * to be at index <i>n</i> and the back of the queue at index <i>m</i>, where <i>n &#62; m</i>. Compared to
+ * {@link LinearArrayFIFOQueue}, this implementation provides for <b>constanttime </b> enqueueing and
+ * dequeueing! It is, however, a bit tougher to implement.</p>
+ *
+ * <p>You should <b>not</b> edit this class! It is given to you as a resource for your project.</p>
+ *
+ * @author  <a href="mailto:jasonfil@cs.umd.edu">Jason Filippou</a>
+ *
+ * @see LinearArrayFIFOQueue
+ * @see LinkedFIFOQueue
+ *
+ * @param <T> The type of object held by this container.
  *
  */
 
@@ -52,8 +56,11 @@ public class CircularArrayFIFOQueue<T> implements FIFOQueue<T> {
 		modificationFlag = false;
 	}
 
-	/** Non-default constructor initializes data structure with
-	 * the provided capacity of elements.
+	/** Non-default constructor pre-allocates memory for the data structure according
+	 * to the provided capacity.
+	 *
+	 * @param capacity The provided initial capacity of the container.
+	 *
 	 * @throws InvalidCapacityException If the capacity provided is negative.
 	 */
 	public CircularArrayFIFOQueue(int capacity) throws InvalidCapacityException{
@@ -108,7 +115,7 @@ public class CircularArrayFIFOQueue<T> implements FIFOQueue<T> {
 	class CircularArrayQueueIterator<T2> implements Iterator<T2>{
 
 		private int current;
-		boolean calledNextOnce; // This is needed for remove().
+		boolean calledNextOnce; // This is needed for delete().
 
 		public CircularArrayQueueIterator(){
 			current = front; // Simply basing removal possibility on current == front is unsatisfactory, because current == front will be satisfied after n - 1 removals
@@ -181,9 +188,9 @@ public class CircularArrayFIFOQueue<T> implements FIFOQueue<T> {
 	}
 
 	@Override
-	public T dequeue() throws EmptyQueueException {
+	public T dequeue() throws EmptyFIFOQueueException {
 		if(isEmpty())
-			throw new EmptyQueueException("dequeue(): FIFOQueue is empty.");
+			throw new EmptyFIFOQueueException("dequeue(): FIFOQueue is empty.");
 		T retVal = data[front];
 		front = (front + 1) % data.length;
 		count--;
@@ -192,9 +199,9 @@ public class CircularArrayFIFOQueue<T> implements FIFOQueue<T> {
 	}
 
 	@Override
-	public T first() throws EmptyQueueException {
+	public T first() throws EmptyFIFOQueueException {
 		if(isEmpty())
-			throw new EmptyQueueException("first(): FIFOQueue is empty.");
+			throw new EmptyFIFOQueueException("getFirst(): FIFOQueue is empty.");
 		return data[front];
 	}
 

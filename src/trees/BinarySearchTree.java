@@ -1,23 +1,24 @@
 package trees;
 
 /**
- * A <tt>BinarySearchTree</tt> is a {@link <tt>Tree</tt>} with a maximum of 2 children nodes per node 
+ * <p>A <tt>BinarySearchTree</tt> is a {@link Tree} with a maximum of 2 children nodes per node
  * which allows for adding and removing nodes in a sorted manner. As such, it will extend
  * the {@link Tree} interface but it will also restrict the objects it stores to Comparable ones.
- * There are only going to be two new methods in this interface: add(T) and delete(T).
+ * There are only going to be two new methods in this interface: add(T) and delete(T).</p>
  * 
- * Following classical semantics, for every given node, elements in the left subtree of the node
- * are smaller (as defined by their compareTo() definitions) than the element at the node, which is
- * subsequently smaller than or equal to the nodes in the right subtree.
+ * <p>Following classic semantics, for every given node, elements in the left subtree of the node
+ * are smaller (as defined by their <tt>compareTo()</tt> definitions) than the element at the node, which is
+ * subsequently smaller than or equal to the nodes in the right subtree.</p>
  * 
- * Note that this interface does not allow for methods that balance it. For BinarySearchTrees
- * that allow for auto-balancing, AVL trees or Red-Black trees should be used.
- * 
- * @author Jason Filippou (jasonfil@cs.umd.edu)
+ * <p>Note that this interface does not allow for methods that balance it. For BinarySearchTrees
+ * that allow for auto-balancing, AVL trees or Red-Black trees should be used.</p>
  *
- * @param <T> The Comparable type held by the BinarySearchTree.
- * 
- * @since October 2013
+ * <p>You should <b>not</b> edit this class! It is given to you as a resource for your project.</p>
+ *
+ * @author  <a href="mailto:jasonfil@cs.umd.edu">Jason Filippou</a>
+ *
+ * @param <T> The Comparable type held by the <tt>BinarySearchTree</tt>.
+ *
  */
 public interface BinarySearchTree<T extends Comparable<T>> extends Tree<T>{
 	

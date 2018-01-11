@@ -10,6 +10,14 @@ import java.util.NoSuchElementException;
 
 import static org.junit.Assert.*;
 
+/**
+ * <p>A testing framework for {@link LinkedBinarySearchTree}.</p>
+ *
+ * <p>You should <b>not</b> edit this class! It is given to you as a resource for your project.</p>
+ *
+ * @author  <a href="mailto:jasonfil@cs.umd.edu">Jason Filippou</a>
+ *
+ */
 public class LinkedBinarySearchTreeTest {
 
 	private BinarySearchTree<Integer> intTree= new LinkedBinarySearchTree<Integer>();
@@ -54,14 +62,14 @@ public class LinkedBinarySearchTreeTest {
 			fail("getMin() and/or getMax() reported an empty tree, which shouldn't be the case.");
 		}
 
-		// Try to remove different types of nodes, see what happens.
+		// Try to delete different types of nodes, see what happens.
 		try {
 			intTree.delete(0);
 			assertEquals(intTree.getMin(), new Integer(-1));// Min and Max shouldn't change
 			assertEquals(intTree.getMax(), new Integer(9));
 			assertEquals(intTree.size(), nums.length - 1); // 1 less
 		} catch(EmptyTreeException exc){
-			fail("remove() threw an unexpected EmptyTreeException when removing a leaf node.");
+			fail("delete() threw an unexpected EmptyTreeException when removing a leaf node.");
 		}
 
 		try {
@@ -70,7 +78,7 @@ public class LinkedBinarySearchTreeTest {
 			assertEquals(intTree.getMax(), new Integer(9));
 			assertEquals(intTree.size(), nums.length - 2); // 1 less
 		} catch(EmptyTreeException exc){
-			fail("remove() threw an unexpected EmptyTreeException when removing a pre-leaf node.");
+			fail("delete() threw an unexpected EmptyTreeException when removing a pre-leaf node.");
 		}
 
 		try {
@@ -79,7 +87,7 @@ public class LinkedBinarySearchTreeTest {
 			assertEquals(intTree.getMax(), new Integer(9));
 			assertEquals(intTree.size(), nums.length - 3); // 1 less
 		} catch(EmptyTreeException exc){
-			fail("remove() threw an unexpected EmptyTreeException when removing a pre-leaf node.");
+			fail("delete() threw an unexpected EmptyTreeException when removing a pre-leaf node.");
 		}
 
 		try {
@@ -88,7 +96,7 @@ public class LinkedBinarySearchTreeTest {
 			assertEquals(intTree.getMax(), new Integer(5));
 			assertEquals(intTree.size(), nums.length - 4); // 1 less
 		} catch(EmptyTreeException exc){
-			fail("remove() threw an unexpected EmptyTreeException when removing a leaf node.");
+			fail("delete() threw an unexpected EmptyTreeException when removing a leaf node.");
 		}
 
 		// Two sequential root deletions should provide us with an empty tree.
@@ -97,7 +105,7 @@ public class LinkedBinarySearchTreeTest {
 			intTree.delete(4);
 			assertTrue(intTree.isEmpty());
 		} catch(EmptyTreeException exc){
-			fail("remove() threw an unexpected EmptyTreeException when removing the root.");
+			fail("delete() threw an unexpected EmptyTreeException when removing the root.");
 		}
 		intTree.clear(); // Should not affect the emptiness of the tree 
 		assertTrue(intTree.isEmpty());
@@ -132,7 +140,7 @@ public class LinkedBinarySearchTreeTest {
 			intTree.delete(-10);
 			assertEquals(intTree.getRoot(), new Integer(-2));
 		} catch(EmptyTreeException exc){
-			fail("remove() threw an unexpected EmptyTreeException when removing the root.");
+			fail("delete() threw an unexpected EmptyTreeException when removing the root.");
 		}
 
 		// Removing the same node should throw an exception, because there's no duplicates

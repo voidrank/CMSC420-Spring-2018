@@ -1,19 +1,23 @@
 package trees;
 
-import fifoqueues.EmptyQueueException;
+import fifoqueues.EmptyFIFOQueueException;
 import fifoqueues.LinkedFIFOQueue;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
- * LinkedBinarySearchTree is an implementation of a BinarySearchTree using links.
+ * <p><tt>LinkedBinarySearchTree</tt> is an implementation of a BinarySearchTree using links.
  * It is by far the most commonly encountered binary tree implementation. Compared to
- * an array-based implementation, there is no memory waste when the tree is not full.
- * 
- * @author Jason Filippou (jasonfil@cs.umd.edu)
+ * an array-based implementation, there is always memory waste (even in the case of a perfect binary tree,
+ * since the leaf level still has <i>2&#94;(h+1)</i> (where <i>h</i> is the tree's height) pointers
+ * to <tt>null</tt>.</p>
+ *
+ * <p>You should <b>not</b> edit this class! It is given to you as a resource for your project.</p>
  *
  * @param <T> The {@link java.lang.Comparable} type stored by the container.
+ *
+ * @author  <a href="mailto:jasonfil@cs.umd.edu">Jason Filippou</a>
  */
 public class LinkedBinarySearchTree<T extends Comparable<T>>  implements BinarySearchTree<T>{
 
@@ -143,7 +147,7 @@ public class LinkedBinarySearchTree<T extends Comparable<T>>  implements BinaryS
 				if(current.right != null)
 					nodeQueue.enqueue(current.right);
 			}
-		} catch(EmptyQueueException exc){
+		} catch(EmptyFIFOQueueException exc){
 			// Dummy catchblock because dequeue() is complaining.
 		}
 		return elementList.iterator();
@@ -223,7 +227,7 @@ public class LinkedBinarySearchTree<T extends Comparable<T>>  implements BinaryS
 	 * because we find it unrealistic in practice (it does not allow for a well-defined way to 
 	 * add or delete elements,rather it depends on combining "singleton" trees).
 	 * 
-	 * All methods that require some sort of depth-first traversal will be implemented as methods
+	 * All methods that require some sort of depth-getFirst traversal will be implemented as methods
 	 * of the Node<T> class.
 	 */
 	protected class Node<Type extends Comparable<Type>>{

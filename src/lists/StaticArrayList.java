@@ -5,15 +5,20 @@ import exceptions.InvalidCapacityException;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 
-/** StaticArrayList is an implementation of a LinearList with an array. It does not
- * make any practical sense, because it would be much more efficient to use a LinkedLinearList
- * in the general case, but it is possible theoretically. The only method of the LinearList interface
- * that is executed more efficiently in ArrayLinearList than in LinkedLinearList is the delete(int)
- * method, which runs in O(1). Of course, other methods such as pushFront are horribly inneficient.
- * 
- * @author Jason Filippou, jasonfil@cs.umd.edu
- *@since September 2013
+/** <p><tt>StaticArrayList</tt> is an implementation of a {@link List} with an array. It does not
+ * make any practical sense, because it would be much more efficient to use a {@link LinkedList}
+ * in the general case, but it is possible theoretically. The only method of the {@link List} interface
+ * that is executed more efficiently in {@link StaticArrayList} than in {@link LinkedList} is  {@link #delete(int)}
+ * which runs in <i>O(1)</i>. Of course, other methods such as {@link #pushFront(Object)} are horribly inneficient.</p>
+ *
+ *<p>You should <b>not</b> edit this class! It is given to you as a resource for your project.</p>
+ *
+ * @author  <a href="mailto:jasonfil@cs.umd.edu">Jason Filippou</a>
+ *
  * @param <T> the type held by the ArrayLinearList.
+ *
+ * @see LinkedList
+ * @see DoublyLinkedList
  */
 
 @SuppressWarnings("unchecked")
@@ -180,7 +185,7 @@ public class StaticArrayList<T> implements List<T> {
 	}
 
 	@Override
-	public boolean remove(T element) {
+	public boolean delete(T element) {
 		for(int i = 0; i <= lastIndex; i++){
 			if(data[i].equals(element)){
 				data[i] = null; // Drop it, allow for garbage collection if no other references to it exist.
@@ -196,7 +201,7 @@ public class StaticArrayList<T> implements List<T> {
 
 	/* delete(int) is very fastly implemented in such a list. */
 	@Override
-	public void remove(int index) throws IllegalListAccessException{
+	public void delete(int index) throws IllegalListAccessException{
 		if(index < 0 || index > lastIndex)
 			throw new IllegalListAccessException("delete(int): Index " + index + " refers to a position outside the list.");
 		data[index] = null;
@@ -206,16 +211,16 @@ public class StaticArrayList<T> implements List<T> {
 		modificationFlag = true;
 	}
 
-	/* removeAll(T) will be similar to delete(T), the main difference being that we
-	 * won't exit the method after the first removal.
+	/* deleteAll(T) will be similar to delete(T), the main difference being that we
+	 * won't exit the method after the getFirst removal.
 	 */
 	@Override
-	public boolean removeAll(T element) {
+	public boolean deleteAll(T element) {
 		// I'll just call delete() as many times as needed...
 		boolean contained = false;
 		while(contains(element)){
 			contained = true;
-			remove(element);
+			delete(element);
 		}
 		if(contained == true)
 			modificationFlag = true;

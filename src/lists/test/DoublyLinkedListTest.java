@@ -8,6 +8,15 @@ import java.util.Iterator;
 
 import static org.junit.Assert.*;
 
+/**
+ * A testing framework for {@link DoublyLinkedList}.
+ *
+ * @author  <a href="mailto:jasonfil@cs.umd.edu">Jason Filippou</a>
+ *
+ * @see LinkedListTest
+ *
+ * @see StaticArrayListTest
+ */
 public class DoublyLinkedListTest {
 
 	private final int DEFAULT_CAPACITY = 50;
@@ -51,7 +60,7 @@ public class DoublyLinkedListTest {
 		try {
 			assertEquals(stringList.getFirst(), "Mack");
 		}catch(EmptyListException exc){
-			fail("List should not be empty after first push.");
+			fail("List should not be empty after getFirst push.");
 		}
 		stringList.pushFront("Jello");
 		try {
@@ -69,7 +78,7 @@ public class DoublyLinkedListTest {
 			assertEquals(stringList.getLast(), "Mack");
 			assertEquals(stringList.getFirst(), "Mack"); // First and last elements should be the same at this point.
 		}catch(EmptyListException exc){
-			fail("List should not be empty after first push.");
+			fail("List should not be empty after getFirst push.");
 		}
 		stringList.pushBack("Jello");
 		try {
@@ -128,20 +137,20 @@ public class DoublyLinkedListTest {
 		stringList.pushBack("resemblance");
 		stringList.pushBack("is");
 		stringList.pushBack("uncanny.");
-		assertTrue(stringList.remove("is"));
-		assertFalse(stringList.remove("is")); // No duplicates of "is".
-		assertTrue(stringList.removeAll("The"));
+		assertTrue(stringList.delete("is"));
+		assertFalse(stringList.delete("is")); // No duplicates of "is".
+		assertTrue(stringList.deleteAll("The"));
 		// The list's length should now be 2, so if I ask of the object
 		// to delete the object at index 2, I should get an IllegalListAccessException thrown at me.
 		try {
-			stringList.remove(2);
+			stringList.delete(2);
 		} catch(IllegalListAccessException ie){
 			assertTrue(true);
 		}
 		// However, removing 0 and 1 should be ok...
 		try {
-			stringList.remove(0);
-			stringList.remove(0); // Note that the first element will be at position 0 after the previous line is executed!
+			stringList.delete(0);
+			stringList.delete(0); // Note that the getFirst element will be at position 0 after the previous line is executed!
 		} catch(IllegalListAccessException ae){
 			fail("Positions 0 and 1 should be valid for this list to delete from...");
 		}
@@ -149,12 +158,12 @@ public class DoublyLinkedListTest {
 		//... and should leave me with a list of size 0
 		assertTrue(stringList.isEmpty());
 
-		// Let us also make sure that duplicates are removed from removeAll()
+		// Let us also make sure that duplicates are removed from deleteAll()
 		// and that leaves us with a list of the appropriate size...
 		integerList.pushBack(1);
 		integerList.pushFront(1);
 		integerList.pushFront(2);
-		assertTrue(integerList.removeAll(1));
+		assertTrue(integerList.deleteAll(1));
 		assertFalse(integerList.contains(1));
 		assertTrue(integerList.contains(2));
 		assertEquals(integerList.size(), 1);
@@ -191,7 +200,7 @@ public class DoublyLinkedListTest {
 		}
 		
 		try {
-			stringList.remove(0);
+			stringList.delete(0);
 			it2.next(); // This SHOULD throw a ConcurrentModificationException.
 			fail("Concurrent Modification Exception should've been thrown.");
 		} catch(ConcurrentModificationException exc){
