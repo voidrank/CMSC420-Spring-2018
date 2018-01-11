@@ -1,7 +1,7 @@
 package priorityqueues.test;
 
-import fifoqueues.EmptyFIFOQueueException;
 import org.junit.Test;
+import priorityqueues.EmptyPriorityQueueException;
 import priorityqueues.LinearPriorityQueue;
 import priorityqueues.PriorityQueue;
 
@@ -18,62 +18,94 @@ import static org.junit.Assert.*;
  */
 public class LinearPriorityQueueTest {
 
-	private PriorityQueue<String> greekPublicSectorQueue = 
+	private PriorityQueue<String> greekNamesQueue =
 			new LinearPriorityQueue<String>();
+	private PriorityQueue<Double> doubles = new LinearPriorityQueue<Double>();
 
 	@Test
-	public void testLinearPQSimpleConstructorAndSize(){
-		assertTrue(greekPublicSectorQueue.isEmpty());
-		assertEquals(greekPublicSectorQueue.size(), 0);
-		greekPublicSectorQueue.enqueue("ASD", 10);
-		assertEquals(greekPublicSectorQueue.size(), 1);
-		greekPublicSectorQueue.clear();
-		assertTrue(greekPublicSectorQueue.isEmpty());
-		assertEquals(greekPublicSectorQueue.size(), 0);
+	public void testLinearPQConstructorAndSize(){
+		assertTrue("After construction, a LinearPriorityQueue should be empty.",
+				greekNamesQueue.isEmpty());
+		assertEquals("After construction, a LinearPriorityQueue's size should be 0.",0,
+				greekNamesQueue.size());
 	}
 
 	@Test
-	public void testLinearPQOrderOfInsertedElements(){
-		greekPublicSectorQueue.enqueue("Filippou", 2);
-		greekPublicSectorQueue.enqueue("Vasilakopoulos", 2);
-		assertEquals(greekPublicSectorQueue.size(), 2);
+	public void testLinearPQClear(){
+		greekNamesQueue.enqueue("Alexandrou", 8);
+		greekNamesQueue.clear();
+		assertTrue("After clearing, a LinearPriorityQueue should be empty.", greekNamesQueue.isEmpty());
+		assertEquals("After clearing, a LinearPriorityQueue's size should be 0.",0,  greekNamesQueue.size());
+	}
+	@Test
+	public void testLinearPQEnqueueAndGetMinDifferentPriorities(){
+		greekNamesQueue.enqueue("Filippou", 2);
+		assertEquals("After inserting a single element, a LinearPriorityQueue should have a size of 1", 1,
+				greekNamesQueue.size());
+
+		greekNamesQueue.enqueue("Alexandrou", 10);
+		assertEquals("After inserting 2 elements, the queue should have a size of 2.",2, greekNamesQueue.size());
+
+		greekNamesQueue.enqueue("Vasilakopoulos", 5);
+		assertEquals("After inserting 3 elements, the queue should have a size of 2.",2, greekNamesQueue.size());
 		try {
-			assertEquals(greekPublicSectorQueue.getFirst(), "Filippou");
-		} catch (EmptyFIFOQueueException e) {
-			fail("EmptyFIFOQueueException should not've been thrown.");
+			assertEquals("LinearPriorityQueue.getFirst() did not return the correct element.",
+					"Filippou", greekNamesQueue.getFirst());
+		} catch(AssertionError ae) {throw(ae);}
+		catch (EmptyPriorityQueueException e) {
+			fail("Since the queue was not empty upon call to LinearPriorityQueue.getFirst(), an " +
+					"EmptyPriorityQueueException should not have been thrown.");
 		}
-		assertEquals(greekPublicSectorQueue.size(), 2);
 		try {
-			assertEquals(greekPublicSectorQueue.dequeue(), "Filippou");
-		} catch (EmptyFIFOQueueException e) {
-			fail("EmptyFIFOQueueException should not've been thrown.");
+			assertEquals("LinearPriorityQueue.dequeue() did not return the correct element.", greekNamesQueue.dequeue(), "Filippou");
+		} catch (EmptyPriorityQueueException e) {
+			fail("Since the queue was not empty upon call to LinearPriorityQueue.dequeue(), an " +
+					"EmptyPriorityQueueException should not have been thrown.");
 		}
-		assertEquals(greekPublicSectorQueue.size(), 1);
 		try {
-			assertEquals(greekPublicSectorQueue.getFirst(), "Vasilakopoulos");
-		} catch (EmptyFIFOQueueException e) {
-			fail("EmptyFIFOQueueException should not've been thrown.");
+			assertEquals(greekNamesQueue.getFirst(), "Vasilakopoulos");
+
+		} catch(AssertionError ae) {throw(ae);}
+		catch (EmptyPriorityQueueException e) {
+			fail("Despite a prior dequeue-ing, the queue was still not empty upon call to " +
+					"LinearPriorityQueue.getFirst(), so an EmptyPriorityQueueException should not have been thrown.");
 		}
-		greekPublicSectorQueue.enqueue("Papandreou", 1);
-		greekPublicSectorQueue.enqueue("Mitsotakis", 1);
+		greekNamesQueue.enqueue("Papandreou", 1);
+		greekNamesQueue.enqueue("Mitsotakis", 2);
 		try {
-			assertNotEquals(greekPublicSectorQueue.getFirst(), "Vasilakopoulos"); // No longer the getFirst
-			assertEquals(greekPublicSectorQueue.dequeue(), "Papandreou");
-			assertEquals(greekPublicSectorQueue.dequeue(), "Mitsotakis");
-			assertEquals(greekPublicSectorQueue.dequeue(), "Vasilakopoulos");
-		}catch(EmptyFIFOQueueException e){
-			fail("EmptyFIFOQueueException should not've been thrown.");
+			assertNotEquals(greekNamesQueue.getFirst(), "Vasilakopoulos"); // No longer the first.
+			assertEquals(greekNamesQueue.dequeue(), "Papandreou");
+			assertEquals(greekNamesQueue.dequeue(), "Mitsotakis");
+			assertEquals(greekNamesQueue.dequeue(), "Vasilakopoulos");
 		}
-		assertTrue(greekPublicSectorQueue.isEmpty());
-		greekPublicSectorQueue.clear();
+		catch(AssertionError ae) {throw(ae);}
+		catch(EmptyPriorityQueueException e){
+			fail("EmptyPriorityQueueException should not've been thrown.");
+		}
+
+		assertEquals("After dequeue-ing every element, the LinearPriorityQueue should have a size of 0",
+				0, greekNamesQueue.size());
+		assertTrue("After dequeue-ing every element, the LinearPriorityQueue should be empty.",
+				greekNamesQueue.isEmpty());
+
+	}
+
+	@Test
+	public void testLinearPQManyEnqueues(){
+
+	}
+
+	@Test
+	public void testLinearPQManyDequeues(){
+
 	}
 
 	@Test
 	public void testLinearPQIterator(){
 		String[] strings = {"Karathodori", "Stergiou", "Tasou", "Pipinis", "Papandreou", "Mitsotakis"};
 		for(int i = 0; i < strings.length; i++)
-			greekPublicSectorQueue.enqueue(strings[i], strings.length - 1 - i);
-		Iterator<String> it = greekPublicSectorQueue.iterator();
+			greekNamesQueue.enqueue(strings[i], strings.length - 1 - i);
+		Iterator<String> it = greekNamesQueue.iterator();
 		assertTrue(it.hasNext());
 		try {
 			it.remove();
@@ -86,7 +118,7 @@ public class LinearPriorityQueueTest {
 		for(int i = strings.length - 1; i > -1; i--)
 			assertEquals(it.next(), strings[i]);
 		assertFalse(it.hasNext());
-		it = greekPublicSectorQueue.iterator(); // reset iterator
+		it = greekNamesQueue.iterator(); // reset iterator
 		it.next();
 		try {
 			it.remove();
@@ -95,7 +127,7 @@ public class LinearPriorityQueueTest {
 		}
 		for(int i = strings.length - 2; i > -1; i--) // Above zero, since we removed one element
 			assertEquals(strings[i], it.next());
-		greekPublicSectorQueue.clear();
+		greekNamesQueue.clear();
 		
 		// Now we will also check iterations over a queue that has 
 		// non-singleton FIFO fifoqueues in it
@@ -105,10 +137,10 @@ public class LinearPriorityQueueTest {
 		
 		for(int i = 0; i < strings.length; i++)
 			if(i < 4)
-				greekPublicSectorQueue.enqueue(strings[i], 2);
+				greekNamesQueue.enqueue(strings[i], 2);
 			else
-				greekPublicSectorQueue.enqueue(strings[i], 1);
-		it = greekPublicSectorQueue.iterator();
+				greekNamesQueue.enqueue(strings[i], 1);
+		it = greekNamesQueue.iterator();
 		try {
 			it.remove();
 			fail("Call should have thrown an IllegalStateException.");
@@ -123,6 +155,6 @@ public class LinearPriorityQueueTest {
 		for(int i = 0; i < 4; i++)
 			assertEquals(it.next(), strings[i]);
 		assertFalse(it.hasNext());
-		greekPublicSectorQueue.clear();
+		greekNamesQueue.clear();
 	}
 }

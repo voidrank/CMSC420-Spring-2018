@@ -41,21 +41,21 @@ public class MinHeapPriorityQueue<T> implements PriorityQueue<T>{
 
 
 	@Override
-	public T dequeue() throws EmptyFIFOQueueException {
+	public T dequeue() throws EmptyPriorityQueueException {
 		try {
 			return data.deleteMin().data;
 		}catch(EmptyHeapException e){
-			throw new EmptyFIFOQueueException("dequeue(): FIFOQueue is empty!");
+			throw new EmptyPriorityQueueException("dequeue(): FIFOQueue is empty!");
 		}
 	}
 
 	@Override
-	public T getFirst() throws EmptyFIFOQueueException {
+	public T getFirst() throws EmptyPriorityQueueException {
 		// TODO Auto-generated method stub
 		try {
 			return data.getMin().data;
 		}catch(EmptyHeapException e){
-			throw new EmptyFIFOQueueException("getFirst(): FIFOQueue is empty!");
+			throw new EmptyPriorityQueueException("getFirst(): FIFOQueue is empty!");
 		}
 	}
 

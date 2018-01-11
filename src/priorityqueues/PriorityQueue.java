@@ -1,7 +1,5 @@
 package priorityqueues;
 
-import fifoqueues.EmptyFIFOQueueException;
-
 /**<p> A <tt>PriorityQueue</tt> is an extension of a classic FIFO queue. Instead of traditional
  * FIFO processing, a <tt>PriorityQueue</tt> inserts elements with a higher priority
  * getFirst, where "higher" is typically interpreted as "lower" in the arithmetic
@@ -30,20 +28,21 @@ public interface PriorityQueue<T> extends Iterable<T> {
 	/**
 	 * Returns <b>and deletes</b> the top element of the <tt>PriorityQueue</tt>.
 	 * @return The element at the top of the <tt>PriorityQueue</tt>.
-	 * @throws EmptyFIFOQueueException If the <tt>PriorityQueue</tt> is empty.
+	 * @throws EmptyPriorityQueueException if the <tt>PriorityQueue</tt> is empty.
 	 */
-	public T dequeue() throws EmptyFIFOQueueException;
+	public T dequeue() throws EmptyPriorityQueueException;
 	
 	/**
 	 * Returns, <b>but does not delete</b> the top element of the <tt>PriorityQueue</tt>.
 	 * @return The element at the top of the <tt>PriorityQueue</tt>.
-	 * @throws EmptyFIFOQueueException If the <tt>PriorityQueue</tt> is empty.
+	 * @throws EmptyPriorityQueueException If the <tt>PriorityQueue</tt> is empty.
 	 */
-	public T getFirst() throws EmptyFIFOQueueException;
+	public T getFirst() throws EmptyPriorityQueueException;
 	
 	/**
 	 * Returns the number of elements currently in the <tt>PriorityQueue</tt>.
 	 * @return The number of elements currently in the <tt>PriorityQueue</tt>.
+	 * @throws EmptyPriorityQueueException if the <tt>PriorityQueue</tt> is empty.
 	 */
 	public int size();
 	

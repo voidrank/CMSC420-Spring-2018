@@ -79,21 +79,35 @@ public class LinearPriorityQueue<T> implements PriorityQueue<T> {
 	}
 
 	@Override
-	public T dequeue() throws EmptyFIFOQueueException {
+	public T dequeue() throws EmptyPriorityQueueException {
 		if(isEmpty())
-			throw new EmptyFIFOQueueException("dequeue(): queue is empty!");
-		T first = data.get(0).dequeue(); 
+			throw new EmptyPriorityQueueException("dequeue(): queue is empty!");
+		// Since PriorityQueueNode is one of my own queues, I need to make
+		// this inelegant check for accessing the first FIFO queue in my collection...
+		T first = null;
+		try {
+			first = data.get(0).dequeue();
+		} catch(EmptyFIFOQueueException ignored) {
+			throw new EmptyPriorityQueueException("dequeue(): queue is empty!");
+		}
 		if(data.get(0).isEmpty())
-			data.remove(0);
+			data.remove(0); // Get rid of the FIFO queue itself as well.
 		modificationFlag = true;
 		return first;
 	}
 
 	@Override
-	public T getFirst() throws EmptyFIFOQueueException {
+	public T getFirst() throws EmptyPriorityQueueException {
 		if(isEmpty())
-			throw new EmptyFIFOQueueException("dequeue(): queue is empty!");
-		return data.get(0).first(); // call to getFirst() instead of dequeue()
+			throw new EmptyPriorityQueueException("dequeue(): queue is empty!");
+		// Same point as above...
+		T first = null;
+		try {
+			first = data.get(0).first();
+		} catch(EmptyFIFOQueueException ignored){
+			throw new EmptyPriorityQueueException("dequeue(): queue is empty!");
+		}
+		return first; // call to getFirst() instead of dequeue()
 	}
 
 
