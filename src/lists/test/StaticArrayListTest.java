@@ -1,4 +1,4 @@
-package lists.testing;
+package lists.test;
 
 import lists.*;
 import org.junit.Test;
@@ -8,16 +8,13 @@ import java.util.Iterator;
 
 import static org.junit.Assert.*;
 
-/* This jUnit test case class will be almost identical to the StaticArrayListTest 
- * class, minus the polymorphic reference changes as well as some additional copy constructor
- * tests to ensure that we can copy construct an ArrayListLinearList from an ArrayLinearList
- * and vice versa.
- */
-public class ArrayListBasedListTest {
+public class StaticArrayListTest {
+
+	/* We will follow the same approach followed for the Stack jUnit tests. */
 	private final int DEFAULT_CAPACITY = 50;
-	private List<String> stringList = new ArrayListBasedList<String>();
-	private List<Integer> integerList = new ArrayListBasedList<Integer>();
-	
+	private List<String> stringList = new StaticArrayList<String>();
+	private List<Integer> integerList = new StaticArrayList<Integer>();
+
 	private String[] strings = {"Madrigal", "Meth", "Walt", "Jessie", "Brock"};
 
 	@Test
@@ -38,19 +35,19 @@ public class ArrayListBasedListTest {
 		assertEquals(integerList.size(), DEFAULT_CAPACITY + 1);
 		integerList.clear();
 	}
-	
+
 	@Test
 	public void testCopyConstructorAndEquals(){
-		
+
 		// First, do a standard copy construction and test it.
 		for(String s: strings)
 			stringList.pushBack(s);
 		List<String> stringList2 = new StaticArrayList<String>(stringList);
 		assertEquals(stringList2, stringList);
-		
+
 		// Second, create a new list of type ArrayListLinearList<String> and then
 		// see whether you can create an ArrayLinearList<String> by copying *that* list.
-		
+
 		List<String> stringList3 = new ArrayListBasedList<String>(stringList);
 		assertEquals(stringList3, stringList);
 		assertEquals(stringList3, stringList2);
@@ -91,7 +88,7 @@ public class ArrayListBasedListTest {
 		}
 		stringList.clear();
 	}
-
+	
 	@Test
 	public void testGetters(){
 		for(int i = 0; i < 10; i++)
@@ -111,6 +108,7 @@ public class ArrayListBasedListTest {
 		}
 		integerList.clear();
 	}
+
 	
 	@Test
 	public void testClear(){
@@ -222,6 +220,7 @@ public class ArrayListBasedListTest {
 			if(next.compareTo(5) < 0)
 				intit.remove();
 		}
+		System.out.println(integerList);
 		intit = integerList.iterator(); // reset iterator, re-check
 		for(int i = 5; i < 10; i++)
 			assertEquals(intit.next(), new Integer(i));
@@ -229,7 +228,7 @@ public class ArrayListBasedListTest {
 		stringList.clear();
 		integerList.clear();
 	}
-	
+
 	@Test
 	public void testToString(){
 		for(int i = 1; i <= 10; i++)
@@ -238,3 +237,5 @@ public class ArrayListBasedListTest {
 		integerList.clear();
 	}
 }
+
+

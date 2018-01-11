@@ -1,4 +1,4 @@
-package priorityqueues.testing;
+package priorityqueues.test;
 
 import fifoqueues.EmptyQueueException;
 import org.junit.Test;

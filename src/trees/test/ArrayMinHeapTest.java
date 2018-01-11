@@ -1,4 +1,4 @@
-package priorityqueues.testing;
+package trees.test;
 
 import org.junit.Test;
 import trees.ArrayMinHeap;

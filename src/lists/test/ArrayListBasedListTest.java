@@ -1,4 +1,4 @@
-package lists.testing;
+package lists.test;
 
 import lists.*;
 import org.junit.Test;
@@ -8,11 +8,15 @@ import java.util.Iterator;
 
 import static org.junit.Assert.*;
 
-public class DoublyLinkedListTest {
-
+/* This jUnit test case class will be almost identical to the StaticArrayListTest 
+ * class, minus the polymorphic reference changes as well as some additional copy constructor
+ * tests to ensure that we can copy construct an ArrayListLinearList from an ArrayLinearList
+ * and vice versa.
+ */
+public class ArrayListBasedListTest {
 	private final int DEFAULT_CAPACITY = 50;
-	private List<String> stringList = new DoublyLinkedList<String>();
-	private List<Integer> integerList = new DoublyLinkedList<Integer>();
+	private List<String> stringList = new ArrayListBasedList<String>();
+	private List<Integer> integerList = new ArrayListBasedList<Integer>();
 	
 	private String[] strings = {"Madrigal", "Meth", "Walt", "Jessie", "Brock"};
 
@@ -41,7 +45,7 @@ public class DoublyLinkedListTest {
 		// First, do a standard copy construction and test it.
 		for(String s: strings)
 			stringList.pushBack(s);
-		List<String> stringList2 = new LinkedList<String>(stringList);
+		List<String> stringList2 = new StaticArrayList<String>(stringList);
 		assertEquals(stringList2, stringList);
 		
 		// Second, create a new list of type ArrayListLinearList<String> and then
@@ -233,5 +237,4 @@ public class DoublyLinkedListTest {
 		assertEquals("[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]", integerList.toString());
 		integerList.clear();
 	}
-
 }

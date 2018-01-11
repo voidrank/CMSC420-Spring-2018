@@ -1,4 +1,4 @@
-package fifoqueues.testing;
+package fifoqueues.test;
 
 import org.junit.Test;
 import fifoqueues.*;

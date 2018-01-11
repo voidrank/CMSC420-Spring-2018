@@ -2,7 +2,7 @@ package priorityqueues;
 
 import fifoqueues.EmptyQueueException;
 
-/** A priorityqueues.PriorityQueue is an extension of a classic FIFO Queue. Instead of traditional
+/** A <tt>PriorityQueue</tt> is an extension of a classic FIFO Queue. Instead of traditional
  * FIFO processing, a priorityqueues.PriorityQueue inserts elements with a higher priority
  * first, where "higher" is typically interpreted as "lower" in the arithmetic
  * sense, e.g 1 is "higher" priority than 2. Elements with the same priority

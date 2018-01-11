@@ -8,7 +8,7 @@ import trees.MinHeap;
 import java.util.ArrayList;
 import java.util.Iterator;
 /**
- * priorityqueues.HeapPriorityQueue is a priority queue implemented as a heap. Adhering
+ * <tt>HeapPriorityQueue</tt> is a priority queue implemented as a heap. Adhering
  * to the specifications introduced by the book, we achieve a solution to the
  * FIFO ordering problem by creating our own Comparable node class and overriding
  * the compareTo() method.

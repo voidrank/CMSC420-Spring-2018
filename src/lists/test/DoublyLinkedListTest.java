@@ -1,4 +1,4 @@
-package lists.testing;
+package lists.test;
 
 import lists.*;
 import org.junit.Test;
@@ -8,13 +8,12 @@ import java.util.Iterator;
 
 import static org.junit.Assert.*;
 
-public class StaticArrayListTest {
+public class DoublyLinkedListTest {
 
-	/* We will follow the same approach followed for the Stack jUnit tests. */
 	private final int DEFAULT_CAPACITY = 50;
-	private List<String> stringList = new StaticArrayList<String>();
-	private List<Integer> integerList = new StaticArrayList<Integer>();
-
+	private List<String> stringList = new DoublyLinkedList<String>();
+	private List<Integer> integerList = new DoublyLinkedList<Integer>();
+	
 	private String[] strings = {"Madrigal", "Meth", "Walt", "Jessie", "Brock"};
 
 	@Test
@@ -35,19 +34,19 @@ public class StaticArrayListTest {
 		assertEquals(integerList.size(), DEFAULT_CAPACITY + 1);
 		integerList.clear();
 	}
-
+	
 	@Test
 	public void testCopyConstructorAndEquals(){
-
+		
 		// First, do a standard copy construction and test it.
 		for(String s: strings)
 			stringList.pushBack(s);
-		List<String> stringList2 = new StaticArrayList<String>(stringList);
+		List<String> stringList2 = new LinkedList<String>(stringList);
 		assertEquals(stringList2, stringList);
-
+		
 		// Second, create a new list of type ArrayListLinearList<String> and then
 		// see whether you can create an ArrayLinearList<String> by copying *that* list.
-
+		
 		List<String> stringList3 = new ArrayListBasedList<String>(stringList);
 		assertEquals(stringList3, stringList);
 		assertEquals(stringList3, stringList2);
@@ -88,7 +87,7 @@ public class StaticArrayListTest {
 		}
 		stringList.clear();
 	}
-	
+
 	@Test
 	public void testGetters(){
 		for(int i = 0; i < 10; i++)
@@ -108,7 +107,6 @@ public class StaticArrayListTest {
 		}
 		integerList.clear();
 	}
-
 	
 	@Test
 	public void testClear(){
@@ -220,7 +218,6 @@ public class StaticArrayListTest {
 			if(next.compareTo(5) < 0)
 				intit.remove();
 		}
-		System.out.println(integerList);
 		intit = integerList.iterator(); // reset iterator, re-check
 		for(int i = 5; i < 10; i++)
 			assertEquals(intit.next(), new Integer(i));
@@ -228,7 +225,7 @@ public class StaticArrayListTest {
 		stringList.clear();
 		integerList.clear();
 	}
-
+	
 	@Test
 	public void testToString(){
 		for(int i = 1; i <= 10; i++)
@@ -236,6 +233,5 @@ public class StaticArrayListTest {
 		assertEquals("[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]", integerList.toString());
 		integerList.clear();
 	}
+
 }
-
-

@@ -1,4 +1,4 @@
-package lists.testing;
+package lists.test;
 
 import lists.*;
 import org.junit.Test;

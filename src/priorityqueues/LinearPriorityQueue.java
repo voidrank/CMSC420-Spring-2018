@@ -11,7 +11,7 @@ import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 
 /**
- *  priorityqueues.LinearPriorityQueue is a priority queue implemented as an array
+ *  <tt>LinearPriorityQueue</tt> is a priority queue implemented as an array
  * of common FIFO fifoqueues, where the fifoqueues themselves hold objects
  * with the same priority in the order they arrived. It is important
  * to understand that, because in a priority queue new elements can be 
@@ -25,8 +25,8 @@ import java.util.Iterator;
  * 
  *  A more straightforward implementation of a priority queue as a special-
  * case heap can be found in priorityqueues.HeapPriorityQueue.java.
- * 
  *
+ * @param <T> The type held by the container.
  * 
  * @author Jason Filippou (jasonfil@cs.umd.edu)
  *
