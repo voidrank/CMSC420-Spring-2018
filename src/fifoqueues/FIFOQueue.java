@@ -1,16 +1,15 @@
 package fifoqueues;
 
 /**
- * An interface for fifoqueues. Queues allow for enqueueing  an element in the back,
+ * An interface for FIFO queues. Queues allow for enqueueing  an element in the back,
  * dequeueing it from the front, as well as querying for the size of the queue,
  * the first element, whether the queue is empty, and clearing the queue. 
  * 
  * @author Jason Filippou (jasonfil@cs.umd.edu)
  *
- * @since September 2013
- * @param <T> The type contained by this Queue.
+ * @param <T> The type contained by this <tt>FIFOQueue</tt>.
  */
-public interface Queue<T> extends Iterable<T> {
+public interface FIFOQueue<T> extends Iterable<T> {
 
 	/** Inserts an element in the back of the queue.
 	 * 

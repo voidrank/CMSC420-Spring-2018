@@ -6,7 +6,7 @@ import exceptions.InvalidCapacityException;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 /**
- * LinearArrayQueue is an implementation of fifoqueues based on a simple linear array.
+ * LinearArrayFIFOQueue is an implementation of fifoqueues based on a simple linear array.
  * It is a very inefficient queue implementation, because depending on whether we choose the
  * first or last "filled-in" cell of the array to hold the "front" element of the queue, either
  * enqueuing or dequeuing will take linear time. In this queue, we will assume a queue typical of
@@ -17,7 +17,7 @@ import java.util.Iterator;
  *
  */
 @SuppressWarnings("unchecked")
-public class LinearArrayQueue<T> implements Queue<T> {
+public class LinearArrayFIFOQueue<T> implements FIFOQueue<T> {
 
 
 	private T[] data;
@@ -44,7 +44,7 @@ public class LinearArrayQueue<T> implements Queue<T> {
 	/**
 	 * Default constructor initializes data structure with its default capacity.
 	 */
-	public LinearArrayQueue(){
+	public LinearArrayFIFOQueue(){
 		data = (T[])(new Object[INIT_CAPACITY]);
 		rear = 0;
 		modificationFlag = false;
@@ -52,10 +52,10 @@ public class LinearArrayQueue<T> implements Queue<T> {
 
 	/**
 	 * Second constructor initializes data structure with provided capacity.
-	 * @param capacity The original capacity to provide our LinearArrayQueue with.
+	 * @param capacity The original capacity to provide our LinearArrayFIFOQueue with.
 	 * @throws InvalidCapacityException If the capacity provided is negative.
 	 */
-	public LinearArrayQueue(int capacity) throws InvalidCapacityException{
+	public LinearArrayFIFOQueue(int capacity) throws InvalidCapacityException{
 		if(capacity < 0)
 			throw new InvalidCapacityException("Invalid capacity provided!");
 		data = (T[])(new Object[capacity]);
@@ -67,7 +67,7 @@ public class LinearArrayQueue<T> implements Queue<T> {
 	 * Copy constructor. Initializes the queue through the queue passed as the parameter.
 	 * @param oqueue The queue on which we base the current queue.
 	 */
-	public LinearArrayQueue(Queue<T> oqueue){
+	public LinearArrayFIFOQueue(FIFOQueue<T> oqueue){
 		data = (T[])(new Object[oqueue.size()]);
 		for(T el: oqueue)
 			enqueue(el);
@@ -84,9 +84,9 @@ public class LinearArrayQueue<T> implements Queue<T> {
 	public boolean equals(Object other){
 		if(other == null)
 			return false;
-		if(!(other instanceof Queue<?>))
+		if(!(other instanceof FIFOQueue<?>))
 			return false;
-		Queue<T> oqueue = (Queue<T>)other;
+		FIFOQueue<T> oqueue = (FIFOQueue<T>)other;
 		if(size() != oqueue.size())
 			return false;
 		Iterator<T> ito = oqueue.iterator(), itc = iterator();
@@ -172,7 +172,7 @@ public class LinearArrayQueue<T> implements Queue<T> {
 	@Override
 	public T dequeue() throws EmptyQueueException {
 		if(isEmpty())
-			throw new EmptyQueueException("dequeue(): Queue is empty");
+			throw new EmptyQueueException("dequeue(): FIFOQueue is empty");
 		T el = data[0];
 		shiftLeft();
 		rear--;
@@ -183,7 +183,7 @@ public class LinearArrayQueue<T> implements Queue<T> {
 	@Override
 	public T first() throws EmptyQueueException {
 		if(isEmpty())
-			throw new EmptyQueueException("first(): Queue is empty");
+			throw new EmptyQueueException("first(): FIFOQueue is empty");
 		return data[0];
 	}
 

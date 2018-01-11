@@ -8,100 +8,100 @@ import java.util.Iterator;
 
 import static org.junit.Assert.*;
 
-public class LinearArrayQueueTest {
+public class LinearArrayFIFOQueueTest {
 
 	private int DEFAULT_CAPACITY = 20;
-	private Queue<Integer> integerQueue = new LinearArrayQueue<Integer>();
-	private Queue<String> stringQueue = new LinearArrayQueue<String>();
+	private FIFOQueue<Integer> integerFIFOQueue = new LinearArrayFIFOQueue<Integer>();
+	private FIFOQueue<String> stringFIFOQueue = new LinearArrayFIFOQueue<String>();
 	private String[] veggies = {"Lettuce", "Cucumbers", "Apricots", "Olives", "Tomatoes", "Carrots"};
 	
 	@Test
 	public void testExpandCapacity(){
 		for(int i = 0; i < DEFAULT_CAPACITY; i++)
-			integerQueue.enqueue(i);
+			integerFIFOQueue.enqueue(i);
 		try {
-			integerQueue.enqueue(200); // Just a random int, doesn't matter
+			integerFIFOQueue.enqueue(200); // Just a random int, doesn't matter
 			assertTrue(true);
 		} catch(IndexOutOfBoundsException exc){// Shouldn't be throwing that
 			fail("Should not be throwing an IndexOutOfBounds exception");
 		}
-		integerQueue.clear();
+		integerFIFOQueue.clear();
 	}
 	
 	@Test
 	public void testCopyConstructorAndEquals(){
 		for(String s: veggies)
-			stringQueue.enqueue(s);
+			stringFIFOQueue.enqueue(s);
 		
 		// Phase 1: Compare equality between fifoqueues of the same type.
-		Queue<String> linearArrayQueueCopy = new LinearArrayQueue<String>(stringQueue);
-		assertEquals(linearArrayQueueCopy, stringQueue);
+		FIFOQueue<String> linearArrayFIFOQueueCopy = new LinearArrayFIFOQueue<String>(stringFIFOQueue);
+		assertEquals(linearArrayFIFOQueueCopy, stringFIFOQueue);
 
-		// Phase 2: Copy construct a CircularArrayQueue from a LinearArrayQueue.
-		Queue<String> circularArrayQueueCopy = new CircularArrayQueue<String>(stringQueue);
-		assertEquals(circularArrayQueueCopy, stringQueue);
+		// Phase 2: Copy construct a CircularArrayFIFOQueue from a LinearArrayFIFOQueue.
+		FIFOQueue<String> circularArrayFIFOQueueCopy = new CircularArrayFIFOQueue<String>(stringFIFOQueue);
+		assertEquals(circularArrayFIFOQueueCopy, stringFIFOQueue);
 
-		// Phase 3: Copy construct a LinkedQueue from a LinearArrayQueue.
-		Queue<String> linkedQueueCopy = new LinkedQueue<String>(stringQueue);
-		assertEquals(linkedQueueCopy, stringQueue);
-		stringQueue.clear();
+		// Phase 3: Copy construct a LinkedFIFOQueue from a LinearArrayFIFOQueue.
+		FIFOQueue<String> linkedFIFOQueueCopy = new LinkedFIFOQueue<String>(stringFIFOQueue);
+		assertEquals(linkedFIFOQueueCopy, stringFIFOQueue);
+		stringFIFOQueue.clear();
 	}
 	
 	@Test
 	public void testFirst(){
-		stringQueue.enqueue("Soda");
+		stringFIFOQueue.enqueue("Soda");
 		try {
-			assertEquals(stringQueue.first(), "Soda");
-			assertEquals(stringQueue.size(), 1); // Size should not've been decremented.
+			assertEquals(stringFIFOQueue.first(), "Soda");
+			assertEquals(stringFIFOQueue.size(), 1); // Size should not've been decremented.
 		} catch (EmptyQueueException e) { // This should not've been thrown
 			fail("EmptyQueueException should not've been thrown.");
 		}
-		stringQueue.clear();
+		stringFIFOQueue.clear();
 	}
 	
 	@Test
 	public void testDequeue(){
-		stringQueue.enqueue("Soda");
+		stringFIFOQueue.enqueue("Soda");
 		try {
-			assertEquals(stringQueue.dequeue(), "Soda");
-			assertEquals(stringQueue.size(), 0); // Size SHOULD've been decremented.
+			assertEquals(stringFIFOQueue.dequeue(), "Soda");
+			assertEquals(stringFIFOQueue.size(), 0); // Size SHOULD've been decremented.
 		} catch (EmptyQueueException e) { // This should not've been thrown
 			fail("EmptyQueueException should not've been thrown.");
 		}
-		stringQueue.clear();
+		stringFIFOQueue.clear();
 		
 		for(int i = 0; i < 100; i++)
-			integerQueue.enqueue(i);
+			integerFIFOQueue.enqueue(i);
 		
 		for(int i = 0; i < 100; i++)
 			try {
-				integerQueue.dequeue();
+				integerFIFOQueue.dequeue();
 			} catch (EmptyQueueException e) {
 				fail("Empy queue exception should not've been thrown (i = " + i + ")");
 			}
-		assertTrue(integerQueue.isEmpty());
-		integerQueue.clear();
+		assertTrue(integerFIFOQueue.isEmpty());
+		integerFIFOQueue.clear();
 	}
 	
 	@Test
 	public void testEnqueue(){
-		assertEquals(integerQueue.size(), 0);
+		assertEquals(integerFIFOQueue.size(), 0);
 		for(int i = 0; i < 100; i++)
-			integerQueue.enqueue(i);
-		assertEquals(integerQueue.size(), 100);
+			integerFIFOQueue.enqueue(i);
+		assertEquals(integerFIFOQueue.size(), 100);
 		try {
-			assertEquals(integerQueue.first(), new Integer(0));
+			assertEquals(integerFIFOQueue.first(), new Integer(0));
 		} catch(EmptyQueueException exc){
 			fail("EmptyQueueException should not've been thrown.");
 		}
-		integerQueue.clear();
+		integerFIFOQueue.clear();
 	}
 	
 	@Test
 	public void testIterator(){
-		Iterator<String> its = stringQueue.iterator();
+		Iterator<String> its = stringFIFOQueue.iterator();
 		for(String s: veggies)
-			stringQueue.enqueue(s);
+			stringFIFOQueue.enqueue(s);
 		try {
 			its.next();
 			fail("A ConcurrentModificationException should've been thrown.");
@@ -110,14 +110,14 @@ public class LinearArrayQueueTest {
 			fail("Instead of a ConcurrentModificationException, a " + t.getClass() + 
 					" was thrown, with message: " + t.getMessage() + ".");
 		}
-		its = stringQueue.iterator(); // reset
+		its = stringFIFOQueue.iterator(); // reset
 		int counter = 0;
 		while(its.hasNext()) // verifying correct default output here
 			assertEquals(its.next(), veggies[counter++]);
 
 		for(int i = 10; i < 20; i++)
-			integerQueue.enqueue(i);
-		Iterator<Integer> iti = integerQueue.iterator();
+			integerFIFOQueue.enqueue(i);
+		Iterator<Integer> iti = integerFIFOQueue.iterator();
 		try {
 			iti.remove();
 			fail("An IllegalStateException should've been thrown at this point.");
@@ -135,29 +135,29 @@ public class LinearArrayQueueTest {
 
 		// Let's now check to see if removal of elements via iterators
 		// results in queue consistency.
-		its = stringQueue.iterator();
+		its = stringFIFOQueue.iterator();
 		its.next();
 		its.remove();
 		for(int i = 1; i < veggies.length; i++) // Starting from 1 because we removed one element.
 			assertEquals(its.next(), veggies[i]);
-		integerQueue.clear();
-		stringQueue.clear();
+		integerFIFOQueue.clear();
+		stringFIFOQueue.clear();
 	}
 	
 	@Test
 	public void testEmpty(){
-		assertTrue(stringQueue.isEmpty() && integerQueue.isEmpty());
-		integerQueue.enqueue(3);
-		assertFalse(integerQueue.isEmpty());
-		integerQueue.clear();
+		assertTrue(stringFIFOQueue.isEmpty() && integerFIFOQueue.isEmpty());
+		integerFIFOQueue.enqueue(3);
+		assertFalse(integerFIFOQueue.isEmpty());
+		integerFIFOQueue.clear();
 	}
 	
 	@Test
 	public void testToString(){
 		for(String s: veggies)
-			stringQueue.enqueue(s);
-		assertEquals("[Lettuce, Cucumbers, Apricots, Olives, Tomatoes, Carrots]", stringQueue.toString());
-		stringQueue.clear();
+			stringFIFOQueue.enqueue(s);
+		assertEquals("[Lettuce, Cucumbers, Apricots, Olives, Tomatoes, Carrots]", stringFIFOQueue.toString());
+		stringFIFOQueue.clear();
 	}
 	
 }

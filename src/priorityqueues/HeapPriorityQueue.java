@@ -7,6 +7,7 @@ import trees.MinHeap;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+
 /**
  * <tt>HeapPriorityQueue</tt> is a priority queue implemented as a heap. Adhering
  * to the specifications introduced by the book, we achieve a solution to the
@@ -44,7 +45,7 @@ public class HeapPriorityQueue<T> implements PriorityQueue<T>{
 		try {
 			return data.removeMin().data;
 		}catch(EmptyHeapException e){
-			throw new EmptyQueueException("dequeue(): Queue is empty!");
+			throw new EmptyQueueException("dequeue(): FIFOQueue is empty!");
 		}
 	}
 
@@ -54,7 +55,7 @@ public class HeapPriorityQueue<T> implements PriorityQueue<T>{
 		try {
 			return data.getMin().data;
 		}catch(EmptyHeapException e){
-			throw new EmptyQueueException("first(): Queue is empty!");
+			throw new EmptyQueueException("first(): FIFOQueue is empty!");
 		}
 	}
 
@@ -104,7 +105,7 @@ public class HeapPriorityQueue<T> implements PriorityQueue<T>{
 	}
 	
 	/**
-	 * A PriorityQueueNode is a Comparable type which is used to wrap around
+	 * A PriorityFIFOQueueNode is a Comparable type which is used to wrap around
 	 * the (data, priority) pairs. Its overriding of the compareTo() method
 	 * allows the contained MinHeap in the priority queue to disambiguate between
 	 * the same priority elements, thus establishing a strict ordering in the heap,
@@ -112,7 +113,7 @@ public class HeapPriorityQueue<T> implements PriorityQueue<T>{
 	 * 
 	 * @author Jason Filippou (jasonfil@cs.umd.edu)
 	 *
-	 * @param <T> The Type of element contained in the PriorityQueueNode.
+	 * @param <T> The Type of element contained in the PriorityFIFOQueueNode.
 	 */
 	@SuppressWarnings("hiding")
 	private class PriorityQueueNode<T> implements Comparable<PriorityQueueNode<T>>{

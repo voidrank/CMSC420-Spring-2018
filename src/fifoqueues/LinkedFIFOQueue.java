@@ -5,7 +5,7 @@ import java.util.Iterator;
 
 
 /**
- * A LinkedQueue is a queue which uses a DoublyLinkedList as the underlying implementation.
+ * A LinkedFIFOQueue is a queue which uses a DoublyLinkedList as the underlying implementation.
  * Such a queue never needs data resizing and can grow as long as the system allows it to.
  * We use a DoublyLinkedList instead of a LinkedList for the underlying implementation such that we have 
  * constant time enqueueings and dequeuings (a singly linked list would provide linear time for one
@@ -13,17 +13,17 @@ import java.util.Iterator;
  * 
  * @author Jason Filippou (jasonfil@cs.umd.edu)
  *
- * @param <T> The type of Object contained within the LinkedQueue.
+ * @param <T> The type of Object contained within the LinkedFIFOQueue.
  */
 
-public class LinkedQueue<T> implements Queue<T>{
+public class LinkedFIFOQueue<T> implements FIFOQueue<T> {
 
 	private DoublyLinkedList<T> data;
 
 	/**
 	 * Constructor simply initializes the data structure.
 	 */
-	public LinkedQueue(){
+	public LinkedFIFOQueue(){
 		data = new DoublyLinkedList<T>();
 	}
 
@@ -32,9 +32,9 @@ public class LinkedQueue<T> implements Queue<T>{
 	 * of the parameter object.
 	 * @param oqueue The queue to copy the elements from.
 	 */
-	public LinkedQueue(Queue<T> oqueue){
+	public LinkedFIFOQueue(FIFOQueue<T> oqueue){
 		/* Since we allow copying from any type that implements the
-		 * Queue<T> interface, we cannot straightforwardly do a downcasting of the parameter
+		 * FIFOQueue<T> interface, we cannot straightforwardly do a downcasting of the parameter
 		 * and call the copy constructor for DoublyLinkedLists, because the parameter is not
 		 * guaranteed to be a DoublyLinkedList (the downcasting is unsafe).
 		 */
@@ -53,10 +53,10 @@ public class LinkedQueue<T> implements Queue<T>{
 	public boolean equals(Object other){
 		if(other == null)
 			return false;
-		if(!(other instanceof Queue<?>))
+		if(!(other instanceof FIFOQueue<?>))
 			return false;
 		@SuppressWarnings("unchecked")
-		Queue<T> oqueue = (Queue<T>)other;
+		FIFOQueue<T> oqueue = (FIFOQueue<T>)other;
 		if(size() != oqueue.size())
 			return false;
 		Iterator<T> ito = oqueue.iterator(), itc = iterator();
@@ -100,7 +100,7 @@ public class LinkedQueue<T> implements Queue<T>{
 			retVal = data.getFirst();
 			data.remove(0);
 		} catch (EmptyListException e) {
-			throw new EmptyQueueException("dequeue(): Queue is empty.");
+			throw new EmptyQueueException("dequeue(): FIFOQueue is empty.");
 		} catch(IllegalListAccessException exc){
 			// Dummy catchblock, since this type of exception will never be generated.
 		}
@@ -112,7 +112,7 @@ public class LinkedQueue<T> implements Queue<T>{
 		try {
 			return data.getFirst();
 		}catch(EmptyListException exc){
-			throw new EmptyQueueException("first(): Queue is empty.");
+			throw new EmptyQueueException("first(): FIFOQueue is empty.");
 		}
 	}
 

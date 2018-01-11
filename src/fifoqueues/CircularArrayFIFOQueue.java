@@ -8,10 +8,10 @@ import exceptions.InvalidCapacityException;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 
-/**A CircularArrayQueue is an implementation of a Queue based on a one-dimensional
+/**A CircularArrayFIFOQueue is an implementation of a FIFOQueue based on a one-dimensional
  * array which can wrap around. That is, it is possible for the front of the queue
  * to be at index n and the back of the queue at index m, where n > m. Compared to 
- * LinearArrayQueue, this implementation provides for constant time enqueueing and 
+ * LinearArrayFIFOQueue, this implementation provides for constant time enqueueing and
  * dequeueing, but it requires more attention when coding.
  *   
  * @author Jason Filippou (jasonfil@cs.umd.edu)
@@ -22,14 +22,14 @@ import java.util.Iterator;
  */
 
 @SuppressWarnings("unchecked")
-public class CircularArrayQueue<T> implements Queue<T> {
+public class CircularArrayFIFOQueue<T> implements FIFOQueue<T> {
 
 	private int front, rear, count;
 	private final int DEFAULT_CAPACITY = 50;
 	private T[] data;
 	protected boolean modificationFlag;
 
-	/* Expanding capacity is tricky in the case of a CircularArrayQueue,
+	/* Expanding capacity is tricky in the case of a CircularArrayFIFOQueue,
 	 * because we have to copy a possibly "wrapped around" queue into a 
 	 * "flattened" queue.
 	 */
@@ -46,7 +46,7 @@ public class CircularArrayQueue<T> implements Queue<T> {
 	 * the default capacity of elements.
 	 */
 
-	public CircularArrayQueue(){
+	public CircularArrayFIFOQueue(){
 		data = (T[])(new Object[DEFAULT_CAPACITY]);
 		front = rear = count = 0;
 		modificationFlag = false;
@@ -56,7 +56,7 @@ public class CircularArrayQueue<T> implements Queue<T> {
 	 * the provided capacity of elements.
 	 * @throws InvalidCapacityException If the capacity provided is negative.
 	 */
-	public CircularArrayQueue(int capacity) throws InvalidCapacityException{
+	public CircularArrayFIFOQueue(int capacity) throws InvalidCapacityException{
 		if(capacity < 0)
 			throw new InvalidCapacityException("Invalid capacity provided!");
 		data = (T[])(new Object[capacity]);
@@ -69,7 +69,7 @@ public class CircularArrayQueue<T> implements Queue<T> {
 	 * in the parameter object.
 	 * @param oqueue The queue to copy the elements from.
 	 */
-	public CircularArrayQueue(Queue<T> oqueue){
+	public CircularArrayFIFOQueue(FIFOQueue<T> oqueue){
 		if(oqueue == null)
 			return;
 		data = (T[])(new Object[oqueue.size()]);
@@ -87,9 +87,9 @@ public class CircularArrayQueue<T> implements Queue<T> {
 	 */
 	@Override
 	public boolean equals(Object other){
-		if(!(other instanceof Queue<?>))
+		if(!(other instanceof FIFOQueue<?>))
 			return false;
-		Queue<T> oqueue = (Queue<T>)other;
+		FIFOQueue<T> oqueue = (FIFOQueue<T>)other;
 		if(size() != oqueue.size())
 			return false;
 		Iterator<T> ito = oqueue.iterator(), itc = iterator();
@@ -183,7 +183,7 @@ public class CircularArrayQueue<T> implements Queue<T> {
 	@Override
 	public T dequeue() throws EmptyQueueException {
 		if(isEmpty())
-			throw new EmptyQueueException("dequeue(): Queue is empty.");
+			throw new EmptyQueueException("dequeue(): FIFOQueue is empty.");
 		T retVal = data[front];
 		front = (front + 1) % data.length;
 		count--;
@@ -194,7 +194,7 @@ public class CircularArrayQueue<T> implements Queue<T> {
 	@Override
 	public T first() throws EmptyQueueException {
 		if(isEmpty())
-			throw new EmptyQueueException("first(): Queue is empty.");
+			throw new EmptyQueueException("first(): FIFOQueue is empty.");
 		return data[front];
 	}
 

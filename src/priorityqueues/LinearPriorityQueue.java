@@ -2,9 +2,9 @@ package priorityqueues;
 
 import exceptions.InvalidCapacityException;
 import exceptions.UnsupportedOperationException;
-import fifoqueues.CircularArrayQueue;
+import fifoqueues.CircularArrayFIFOQueue;
 import fifoqueues.EmptyQueueException;
-import fifoqueues.Queue;
+import fifoqueues.FIFOQueue;
 
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
@@ -35,7 +35,7 @@ import java.util.Iterator;
  */
 public class LinearPriorityQueue<T> implements PriorityQueue<T> {
 
-	private ArrayList<PriorityQueueNode<T>> data; // See below for the implementation of the type PriorityQueueNode
+	private ArrayList<PriorityFIFOQueueNode<T>> data; // See below for the implementation of the type PriorityFIFOQueueNode
 	private final int DEFAULT_CAPACITY = 10;
 	protected boolean modificationFlag;
 
@@ -44,7 +44,7 @@ public class LinearPriorityQueue<T> implements PriorityQueue<T> {
 	 * the default capacity.
 	 */
 	public LinearPriorityQueue(){
-		data = new ArrayList<PriorityQueueNode<T>>(DEFAULT_CAPACITY);
+		data = new ArrayList<PriorityFIFOQueueNode<T>>(DEFAULT_CAPACITY);
 		modificationFlag = false;
 	}
 
@@ -57,7 +57,7 @@ public class LinearPriorityQueue<T> implements PriorityQueue<T> {
 	public LinearPriorityQueue(int capacity) throws InvalidCapacityException{
 		if(capacity < 0)
 			throw new InvalidCapacityException("Invalid capacity provided!");
-		data = new ArrayList<PriorityQueueNode<T>>(capacity);
+		data = new ArrayList<PriorityFIFOQueueNode<T>>(capacity);
 		modificationFlag = false;
 	}
 	
@@ -71,7 +71,7 @@ public class LinearPriorityQueue<T> implements PriorityQueue<T> {
 	 * @param other The queue to base the creation of the current object on.
 	 * @throws UnsupportedOperationException always
 	 */
-	public LinearPriorityQueue(Queue<T> other){
+	public LinearPriorityQueue(FIFOQueue<T> other){
 		try {
 			throw new UnsupportedOperationException("Current implementation does not allow for copy construction");
 		} catch (UnsupportedOperationException e) {
@@ -90,10 +90,10 @@ public class LinearPriorityQueue<T> implements PriorityQueue<T> {
 	public boolean equals(Object other){
 		if(other == null)
 			return false;
-		if(!(other instanceof Queue<?>))
+		if(!(other instanceof FIFOQueue<?>))
 			return false;
 		@SuppressWarnings("unchecked")
-		Queue<T> otherq = (Queue<T>)other;
+		FIFOQueue<T> otherq = (FIFOQueue<T>)other;
 		if(otherq.size() != size())
 			return false;
 		Iterator<T> itForThis = iterator(), itForOther = otherq.iterator();
@@ -112,7 +112,7 @@ public class LinearPriorityQueue<T> implements PriorityQueue<T> {
 			}
 			else if(data.get(i).getPriority() > priority){ // Must make a new queue before the currently scanned one.
 				int prev = (i > 0) ? i - 1 : 0;
-				data.add(prev, new PriorityQueueNode<T>(element, priority));
+				data.add(prev, new PriorityFIFOQueueNode<T>(element, priority));
 				return;
 			}
 		}
@@ -120,7 +120,7 @@ public class LinearPriorityQueue<T> implements PriorityQueue<T> {
 		// the lowest priority of all elements already in the priority queue,
 		// and thus a new FIFO queue needs to be initialized with "element"
 		// as its only element, and then added to the back of the ArrayList.
-		data.add(new PriorityQueueNode<T>(element, priority));
+		data.add(new PriorityFIFOQueueNode<T>(element, priority));
 		modificationFlag = true;
 	}
 
@@ -146,7 +146,7 @@ public class LinearPriorityQueue<T> implements PriorityQueue<T> {
 	@Override
 	public int size() {
 		int total = 0;
-		for(PriorityQueueNode<T> node : data)
+		for(PriorityFIFOQueueNode<T> node : data)
 			total += node.size();
 		return total;
 	}
@@ -169,7 +169,7 @@ public class LinearPriorityQueue<T> implements PriorityQueue<T> {
 
 	class LinearPriorityQueueIterator<T2> implements Iterator<T2> {
 
-		private Iterator<PriorityQueueNode<T>> arrayListIt;
+		private Iterator<PriorityFIFOQueueNode<T>> arrayListIt;
 		private Iterator<T> queueIt;
 		private boolean calledNextOnce;
 		
@@ -235,38 +235,38 @@ public class LinearPriorityQueue<T> implements PriorityQueue<T> {
 
 
 	/**
-	 * A PriorityQueueNode is a Queue which is enhanced with an integer
-	 * that dictates its priority. In this case we use a CircularArrayQueue
+	 * A PriorityFIFOQueueNode is a FIFOQueue which is enhanced with an integer
+	 * that dictates its priority. In this case we use a CircularArrayFIFOQueue
 	 * as our preferred queue implementation, but any one of our fifoqueues can
 	 * be used.
 	 * 
 	 * @author Jason Filippou (jasonfil@cs.umd.edu)
 	 *
-	 * @param <T> The type of element held by the PriorityQueueNode.
+	 * @param <T> The type of element held by the PriorityFIFOQueueNode.
 	 */
 	@SuppressWarnings("hiding")
-	private class PriorityQueueNode<T> extends CircularArrayQueue<T>{
+	private class PriorityFIFOQueueNode<T> extends CircularArrayFIFOQueue<T> {
 
 		private int priority;
 
 		/**
 		 * Constructor that supplies the data element and priority
-		 * for the PriorityQueueNode.
-		 * @param data the data element of the PriorityQueueNode
-		 * @param priority the priority of the PriorityQueueNode in the priority queue
+		 * for the PriorityFIFOQueueNode.
+		 * @param data the data element of the PriorityFIFOQueueNode
+		 * @param priority the priority of the PriorityFIFOQueueNode in the priority queue
 		 */
-		public PriorityQueueNode(T data, int priority){
+		public PriorityFIFOQueueNode(T data, int priority){
 			this.priority = priority;
 			if(data != null) // Don't fill up with wasteful references
 				enqueue(data);
 		}
 
 		/**
-		 * Constructor that supplies the data element of the PriorityQueueNode.
+		 * Constructor that supplies the data element of the PriorityFIFOQueueNode.
 		 * Default priority given: -1.
-		 * @param dat the data element of the PriorityQueueNode
+		 * @param dat the data element of the PriorityFIFOQueueNode
 		 */
-		public PriorityQueueNode(T dat){
+		public PriorityFIFOQueueNode(T dat){
 			this(dat, -1);
 		}
 
@@ -274,7 +274,7 @@ public class LinearPriorityQueue<T> implements PriorityQueue<T> {
 		 * Default constructor provides the node with a null data reference 
 		 * and -1 priority.
 		 */
-		public PriorityQueueNode(){
+		public PriorityFIFOQueueNode(){
 			this(null);
 		}
 
@@ -298,7 +298,7 @@ public class LinearPriorityQueue<T> implements PriorityQueue<T> {
 	@Override
 	public String toString(){
 		String retVal ="[";
-		for(PriorityQueueNode<T> pqn : data)
+		for(PriorityFIFOQueueNode<T> pqn : data)
 			for(T el : pqn)
 				retVal += (el + ", ");
 		retVal = retVal.substring(0, retVal.length() - 2); // Eat up last comma (", ")

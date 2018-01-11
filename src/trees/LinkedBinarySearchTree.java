@@ -1,7 +1,7 @@
 package trees;
 
 import fifoqueues.EmptyQueueException;
-import fifoqueues.LinkedQueue;
+import fifoqueues.LinkedFIFOQueue;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -133,7 +133,7 @@ public class LinkedBinarySearchTree<T extends Comparable<T>>  implements BinaryS
 		ArrayList<T> elementList = new ArrayList<T>();
 		try {
 
-			LinkedQueue<Node<T>> nodeQueue = new LinkedQueue<Node<T>>();
+			LinkedFIFOQueue<Node<T>> nodeQueue = new LinkedFIFOQueue<Node<T>>();
 			nodeQueue.enqueue(root);
 			while(!nodeQueue.isEmpty()){
 				Node<T> current = nodeQueue.dequeue();

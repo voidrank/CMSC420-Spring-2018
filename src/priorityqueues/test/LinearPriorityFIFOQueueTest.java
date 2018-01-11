@@ -9,7 +9,7 @@ import java.util.Iterator;
 
 import static org.junit.Assert.*;
 
-public class LinearPriorityQueueTest {
+public class LinearPriorityFIFOQueueTest {
 
 	private PriorityQueue<String> greekPublicSectorQueue = 
 			new LinearPriorityQueue<String>();

@@ -38,18 +38,11 @@ public class DoublyLinkedListTest {
 	@Test
 	public void testCopyConstructorAndEquals(){
 		
-		// First, do a standard copy construction and test it.
+		// Do a standard copy construction and test it.
 		for(String s: strings)
 			stringList.pushBack(s);
 		List<String> stringList2 = new LinkedList<String>(stringList);
 		assertEquals(stringList2, stringList);
-		
-		// Second, create a new list of type ArrayListLinearList<String> and then
-		// see whether you can create an ArrayLinearList<String> by copying *that* list.
-		
-		List<String> stringList3 = new ArrayListBasedList<String>(stringList);
-		assertEquals(stringList3, stringList);
-		assertEquals(stringList3, stringList2);
 	}
 
 	@Test

@@ -9,7 +9,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import static org.junit.Assert.*;
-public class HeapPriorityQueueTest {
+public class HeapPriorityFIFOQueueTest {
 
 	/* We have copied the entire jUnit test case file from
 	 * priorityqueues.LinearPriorityQueue verbatim, replacing the object
