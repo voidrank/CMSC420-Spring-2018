@@ -6,6 +6,7 @@ import priorityqueues.LinearPriorityQueue;
 import priorityqueues.PriorityQueue;
 
 import java.util.Iterator;
+import java.util.Random;
 
 import static org.junit.Assert.*;
 
@@ -21,6 +22,9 @@ public class LinearPriorityQueueTest {
 	private PriorityQueue<String> greekNamesQueue =
 			new LinearPriorityQueue<String>();
 	private PriorityQueue<Double> doubles = new LinearPriorityQueue<Double>();
+	private static final int MAX_NUM_DOUBLES = 1000;
+	private static final long SEED = 47;
+	private Random r = new Random(SEED);
 
 	@Test
 	public void testLinearPQConstructorAndSize(){
@@ -37,50 +41,86 @@ public class LinearPriorityQueueTest {
 		assertTrue("After clearing, a LinearPriorityQueue should be empty.", greekNamesQueue.isEmpty());
 		assertEquals("After clearing, a LinearPriorityQueue's size should be 0.",0,  greekNamesQueue.size());
 	}
+
 	@Test
-	public void testLinearPQEnqueueAndGetMinDifferentPriorities(){
+	public void testLinearPQSimpleEnqueueDifferentPriorities(){
+		greekNamesQueue.enqueue("Filippou", 2);
+		greekNamesQueue.enqueue("Alexandrou", 3);
+		greekNamesQueue.enqueue("Costakis", 1);
+		try {
+			assertEquals("LinearPriorityQueue.getFirst() did not return the correct element.",
+					"Costakis", greekNamesQueue.getFirst());
+		} catch(EmptyPriorityQueueException ignored){
+			fail("Since the queue was not empty upon call to LinearPriorityQueue.getFirst(), an " +
+					"EmptyPriorityQueueException should not have been thrown.");
+		}
+	}
+
+	@Test
+	public void testLinearPQSimpleEnqueueSamePriorities(){
+		greekNamesQueue.enqueue("Filippou", 1);
+		greekNamesQueue.enqueue("Alexandrou", 1);
+		greekNamesQueue.enqueue("Costakis", 1);
+		try {
+			assertEquals("LinearPriorityQueue.getFirst() did not return the correct element. " +
+							"Are you treating same priorities correctly?","Filippou", greekNamesQueue.getFirst());
+		} catch(EmptyPriorityQueueException ignored){
+			fail("Since the queue was not empty upon call to LinearPriorityQueue.getFirst(), an " +
+					"EmptyPriorityQueueException should not have been thrown.");
+		}
+	}
+
+	@Test
+	public void testLinearPQComplexEnqueuesAndDequeues(){
 		greekNamesQueue.enqueue("Filippou", 2);
 		assertEquals("After inserting a single element, a LinearPriorityQueue should have a size of 1", 1,
 				greekNamesQueue.size());
 
 		greekNamesQueue.enqueue("Alexandrou", 10);
-		assertEquals("After inserting 2 elements, the queue should have a size of 2.",2, greekNamesQueue.size());
+		assertEquals("After enqueueing 2 elements, the queue should have a size of 2.",2, greekNamesQueue.size());
 
 		greekNamesQueue.enqueue("Vasilakopoulos", 5);
-		assertEquals("After inserting 3 elements, the queue should have a size of 2.",2, greekNamesQueue.size());
+		assertEquals("After enqueueing 3 elements, the queue should have a size of 3.",3, greekNamesQueue.size());
 		try {
 			assertEquals("LinearPriorityQueue.getFirst() did not return the correct element.",
 					"Filippou", greekNamesQueue.getFirst());
 		} catch(AssertionError ae) {throw(ae);}
-		catch (EmptyPriorityQueueException e) {
+		catch (EmptyPriorityQueueException ignored) {
 			fail("Since the queue was not empty upon call to LinearPriorityQueue.getFirst(), an " +
 					"EmptyPriorityQueueException should not have been thrown.");
 		}
 		try {
-			assertEquals("LinearPriorityQueue.dequeue() did not return the correct element.", greekNamesQueue.dequeue(), "Filippou");
-		} catch (EmptyPriorityQueueException e) {
+			assertEquals("LinearPriorityQueue.dequeue() did not return the correct element.",
+					"Filippou", greekNamesQueue.dequeue());
+		} catch (EmptyPriorityQueueException ignored) {
 			fail("Since the queue was not empty upon call to LinearPriorityQueue.dequeue(), an " +
 					"EmptyPriorityQueueException should not have been thrown.");
 		}
 		try {
-			assertEquals(greekNamesQueue.getFirst(), "Vasilakopoulos");
+			assertEquals( " After a prior dequeueing, LinearPriorityQueue.getFirst() did not return the " +
+					"correct element.", "Vasilakopoulos", greekNamesQueue.getFirst());
 
 		} catch(AssertionError ae) {throw(ae);}
-		catch (EmptyPriorityQueueException e) {
+		  catch (EmptyPriorityQueueException ignored) {
 			fail("Despite a prior dequeue-ing, the queue was still not empty upon call to " +
 					"LinearPriorityQueue.getFirst(), so an EmptyPriorityQueueException should not have been thrown.");
 		}
 		greekNamesQueue.enqueue("Papandreou", 1);
-		greekNamesQueue.enqueue("Mitsotakis", 2);
+		greekNamesQueue.enqueue("Mitsotakis", 1);
+
+		assertEquals("After 3 enqueueings, 1 dequeueing and 2 enqueueings, the size of the LinearPriorityQueue should be 4.",
+				4, greekNamesQueue.size() );
 		try {
-			assertNotEquals(greekNamesQueue.getFirst(), "Vasilakopoulos"); // No longer the first.
-			assertEquals(greekNamesQueue.dequeue(), "Papandreou");
-			assertEquals(greekNamesQueue.dequeue(), "Mitsotakis");
-			assertEquals(greekNamesQueue.dequeue(), "Vasilakopoulos");
+			assertNotEquals("LinearPriorityQueue.dequeue() returned an element that used to be the top element, " +
+					"but is not any more after some recent enqueueings.", greekNamesQueue.dequeue(), "Vasilakopoulos"); // No longer the first.
+			assertEquals("LinearPriorityQueue.dequeue() did not return the correct element. Are you treating same priorities correctly?", greekNamesQueue.dequeue(), "Mitsotakis");
+			assertEquals("LinearPriorityQueue.dequeue() did not return the correct element. Are you treating same priorities correctly?", greekNamesQueue.dequeue(), "Vasilakopoulos");
+			assertEquals("LinearPriorityQueue.dequeue() did not return the correct element. Are you treating same priorities correctly?", greekNamesQueue.dequeue(), "Alexandrou");
 		}
 		catch(AssertionError ae) {throw(ae);}
-		catch(EmptyPriorityQueueException e){
-			fail("EmptyPriorityQueueException should not've been thrown.");
+		catch(EmptyPriorityQueueException ignored){
+			fail("Despite a prior dequeue-ing, the queue was still not empty upon call to LinearPriorityQueue.dequeue(), " +
+					"so an EmptyPriorityQueueException should not have been thrown.");
 		}
 
 		assertEquals("After dequeue-ing every element, the LinearPriorityQueue should have a size of 0",
@@ -90,15 +130,6 @@ public class LinearPriorityQueueTest {
 
 	}
 
-	@Test
-	public void testLinearPQManyEnqueues(){
-
-	}
-
-	@Test
-	public void testLinearPQManyDequeues(){
-
-	}
 
 	@Test
 	public void testLinearPQIterator(){

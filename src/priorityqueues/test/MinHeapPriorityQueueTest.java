@@ -1,6 +1,6 @@
 package priorityqueues.test;
 
-import fifoqueues.EmptyFIFOQueueException;
+import priorityqueues.EmptyPriorityQueueException;
 import org.junit.Test;
 import priorityqueues.MinHeapPriorityQueue;
 import priorityqueues.PriorityQueue;
@@ -46,20 +46,20 @@ public class MinHeapPriorityQueueTest {
 		assertEquals(greekPublicSectorQueue.size(), 2);
 		try {
 			assertEquals(greekPublicSectorQueue.getFirst(), "Filippou");
-		} catch (EmptyFIFOQueueException e) {
-			fail("EmptyFIFOQueueException should not've been thrown.");
+		} catch (EmptyPriorityQueueException e) {
+			fail("EmptyPriorityQueueException should not've been thrown.");
 		}
 		assertEquals(greekPublicSectorQueue.size(), 2);
 		try {
 			assertEquals(greekPublicSectorQueue.dequeue(), "Filippou");
-		} catch (EmptyFIFOQueueException e) {
-			fail("EmptyFIFOQueueException should not've been thrown.");
+		} catch (EmptyPriorityQueueException e) {
+			fail("EmptyPriorityQueueException should not've been thrown.");
 		}
 		assertEquals(greekPublicSectorQueue.size(), 1);
 		try {
 			assertEquals(greekPublicSectorQueue.getFirst(), "Vasilakopoulos");
-		} catch (EmptyFIFOQueueException e) {
-			fail("EmptyFIFOQueueException should not've been thrown.");
+		} catch (EmptyPriorityQueueException e) {
+			fail("EmptyPriorityQueueException should not've been thrown.");
 		}
 		greekPublicSectorQueue.enqueue("Papandreou", 1);
 		greekPublicSectorQueue.enqueue("Mitsotakis", 1);
@@ -68,8 +68,8 @@ public class MinHeapPriorityQueueTest {
 			assertEquals(greekPublicSectorQueue.dequeue(), "Papandreou");
 			assertEquals(greekPublicSectorQueue.dequeue(), "Mitsotakis");
 			assertEquals(greekPublicSectorQueue.dequeue(), "Vasilakopoulos");
-		}catch(EmptyFIFOQueueException e){
-			fail("EmptyFIFOQueueException should not've been thrown.");
+		}catch(EmptyPriorityQueueException e){
+			fail("EmptyPriorityQueueException should not've been thrown.");
 		}
 		assertTrue(greekPublicSectorQueue.isEmpty());
 		greekPublicSectorQueue.clear();

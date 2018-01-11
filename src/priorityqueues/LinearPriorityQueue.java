@@ -65,8 +65,7 @@ public class LinearPriorityQueue<T> implements PriorityQueue<T> {
 				return;
 			}
 			else if(data.get(i).getPriority() > priority){ // Must make a new queue before the currently scanned one.
-				int prev = (i > 0) ? i - 1 : 0;
-				data.add(prev, new PriorityQueueNode<T>(element, priority));
+				data.add(i, new PriorityQueueNode<T>(element, priority));
 				return;
 			}
 		}
