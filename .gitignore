@@ -1,12 +1,33 @@
-# Add any directories, files, or patterns you don't want to be tracked by version control
-
+### Binaries and class files
+/bin
+/build
 *.class
+*.exe
 *.a
 *.o
-*.out
-*.log
-*.synctex.gz
-*.toc
-*.bst
+*.s
+*.pyc
+*.mat
+
+### IntelliJ / Eclipse - related
+/.idea
+*.iml
+*.eclipse
+
+### Hidden and backup files of OSs
 *.~
 *.bak
+*.save
+
+### LaTeX stuff
+*.synctex.gz
+*.dvi
+*.out
+*.log
+*.toc
+*.aux
+*.nav
+*.bst
+
+
+
