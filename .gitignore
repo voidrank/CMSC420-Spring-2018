@@ -1,5 +1,6 @@
 ### Binaries and class files
 /bin
+/out
 /build
 *.class
 *.exe
