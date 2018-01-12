@@ -30,7 +30,7 @@ public class MinHeapPriorityQueueTest {
 	private Random r = new Random(SEED);
 
 	@Test
-	public void testLinearPQConstructorAndSize(){
+	public void testHeapPQConstructorAndSize(){
 		assertTrue("After construction, a HeapPriorityQueue should be empty.",
 				greekNamesQueue.isEmpty());
 		assertEquals("After construction, a HeapPriorityQueue's size should be 0.",0,
@@ -38,7 +38,7 @@ public class MinHeapPriorityQueueTest {
 	}
 
 	@Test
-	public void testLinearPQClear(){
+	public void testHeapPQClear(){
 		greekNamesQueue.enqueue("Alexandrou", 8);
 		greekNamesQueue.clear();
 		assertTrue("After clearing, a HeapPriorityQueue should be empty.", greekNamesQueue.isEmpty());
@@ -46,7 +46,7 @@ public class MinHeapPriorityQueueTest {
 	}
 
 	@Test
-	public void testLinearPQSimpleEnqueueDifferentPriorities(){
+	public void testHeapPQSimpleEnqueueDifferentPriorities(){
 		greekNamesQueue.enqueue("Filippou", 2);
 		greekNamesQueue.enqueue("Alexandrou", 3);
 		greekNamesQueue.enqueue("Costakis", 1);
@@ -60,7 +60,7 @@ public class MinHeapPriorityQueueTest {
 	}
 
 	@Test
-	public void testLinearPQSimpleEnqueueSamePriorities(){
+	public void testHeapPQSimpleEnqueueSamePriorities(){
 		greekNamesQueue.enqueue("Filippou", 1);
 		greekNamesQueue.enqueue("Alexandrou", 1);
 		greekNamesQueue.enqueue("Costakis", 1);
@@ -74,7 +74,7 @@ public class MinHeapPriorityQueueTest {
 	}
 
 	@Test
-	public void testLinearPQComplexEnqueuesAndDequeues(){
+	public void testHeapPQComplexEnqueuesAndDequeues(){
 		greekNamesQueue.enqueue("Filippou", 2);
 		assertEquals("After inserting a single element, a HeapPriorityQueue should have a size of 1", 1,
 				greekNamesQueue.size());
@@ -174,7 +174,7 @@ public class MinHeapPriorityQueueTest {
 
 
 	@Test
-	public void testLinearPQIteratorAndConcurrentModifications(){
+	public void testHeapPQIteratorAndConcurrentModifications(){
 		String[] strings = {"Karathodori", "Stergiou", "Tasou", "Pipinis", "Papandreou", "Mitsotakis"};
 		for(int i = 0; i < strings.length; i++)
 			greekNamesQueue.enqueue(strings[i], strings.length - 1 - i);
