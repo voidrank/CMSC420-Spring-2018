@@ -5,8 +5,9 @@ import priorityqueues.EmptyPriorityQueueException;
 import priorityqueues.LinearPriorityQueue;
 import priorityqueues.PriorityQueue;
 
-import java.util.Iterator;
-import java.util.Random;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static org.junit.Assert.*;
 
@@ -22,7 +23,8 @@ public class LinearPriorityQueueTest {
 	private PriorityQueue<String> greekNamesQueue =
 			new LinearPriorityQueue<String>();
 	private PriorityQueue<Double> doubles = new LinearPriorityQueue<Double>();
-	private static final int MAX_NUM_DOUBLES = 1000;
+
+	private static final int MAX_PRIORITY = 10;
 	private static final long SEED = 47;
 	private Random r = new Random(SEED);
 
@@ -132,32 +134,65 @@ public class LinearPriorityQueueTest {
 
 
 	@Test
-	public void testLinearPQIterator(){
+	public void testManyEnqueues() {
+		List<Integer> priorities = IntStream.range(0, MAX_PRIORITY).boxed().collect(Collectors.toList());
+		Collections.shuffle(priorities, r);
+		for (int cnt = 0; cnt < MAX_PRIORITY; cnt++) {
+			try {
+				doubles.enqueue(r.nextDouble(), priorities.get(cnt));
+			} catch (Throwable t) {
+				fail("During the enqueueing of element #" + cnt + ", we caught a " + t.getClass().getSimpleName()
+						+ " with message " + t.getMessage());
+			}
+		}
+		assertEquals("After enqueueing " + MAX_PRIORITY + " elements, the size of the LinearPriorityQueue " +
+				"should be " + MAX_PRIORITY + ".", MAX_PRIORITY, doubles.size());
+	}
+
+
+	@Test
+	public void testManyDequeues(){
+		List<Integer> priorities = IntStream.range(0, MAX_PRIORITY).boxed().collect(Collectors.toList());
+		Collections.shuffle(priorities, r);
+		priorities.forEach(pr->doubles.enqueue(r.nextDouble(), pr)); // Insert a bunch of doubles with randomly shuffled priorities
+		List<Integer> prioritiesSorted = IntStream.of(0, MAX_PRIORITY).boxed().collect(Collectors.toList());
+		for (int cnt = 0; cnt < MAX_PRIORITY; cnt++) {
+			try {
+				doubles.dequeue();
+			} catch (Throwable t) {
+				fail("During the dequeueing of element #" + cnt + ", we caught a " + t.getClass().getSimpleName()
+						+ " with message " + t.getMessage());
+			}
+		}
+		assertEquals("After dequeueing all the elements of the LinearPriorityQueue, its size should be 0.",
+				0, doubles.size());
+		assertTrue("After dequeueing all the elements of the LinearPriorityQueue, its size should be 0.",
+				doubles.isEmpty());
+	}
+
+
+
+	@Test
+	public void testLinearPQIteratorAndConcurrentModifications(){
 		String[] strings = {"Karathodori", "Stergiou", "Tasou", "Pipinis", "Papandreou", "Mitsotakis"};
 		for(int i = 0; i < strings.length; i++)
 			greekNamesQueue.enqueue(strings[i], strings.length - 1 - i);
 		Iterator<String> it = greekNamesQueue.iterator();
-		assertTrue(it.hasNext());
-		try {
-			it.remove();
-		} catch(IllegalStateException ile){}
-		catch(Throwable t){
-			fail("Instead of an IllegalStateException, call threw a " + 
-					t.getClass() + " with message: " + t.getMessage() + ".");
-		}
+		assertTrue("Since we have some elements in the LinearPriorityQueue, the iterator's hasNext()" +
+				" method should return true.", it.hasNext());
+
 
 		for(int i = strings.length - 1; i > -1; i--)
-			assertEquals(it.next(), strings[i]);
-		assertFalse(it.hasNext());
+			assertEquals("The iterator's next() method did not return the expected element.", strings[i], it.next());
+		assertFalse("After looping through all the elements with next(), the iterator's hasNext() method" +
+				" should return false.", it.hasNext());
 		it = greekNamesQueue.iterator(); // reset iterator
+
 		it.next();
-		try {
-			it.remove();
-		} catch(IllegalStateException ile){
-			fail("An IllegalStateException should not have been thrown by this call.");
-		}
+		it.remove();
+
 		for(int i = strings.length - 2; i > -1; i--) // Above zero, since we removed one element
-			assertEquals(strings[i], it.next());
+			assertEquals("The iterator's next() method did not return the expected element.", strings[i], it.next());
 		greekNamesQueue.clear();
 		
 		// Now we will also check iterations over a queue that has 
@@ -166,26 +201,35 @@ public class LinearPriorityQueueTest {
 		// Give the getFirst 4 people in that array a priority of 2, and the last
 		// 2 people a priority of 1:
 		
-		for(int i = 0; i < strings.length; i++)
-			if(i < 4)
+		for(int i = 0; i < strings.length; i++) {
+			if (i < 4)
 				greekNamesQueue.enqueue(strings[i], 2);
 			else
 				greekNamesQueue.enqueue(strings[i], 1);
-		it = greekNamesQueue.iterator();
-		try {
-			it.remove();
-			fail("Call should have thrown an IllegalStateException.");
-		} catch(IllegalStateException ile){}
-		catch(Throwable t){
-			fail("Instead of an IllegalStateException, call threw a " 
-					+ t.getClass() + " with a message of: " + t.getMessage() + ".");
 		}
-		assertTrue(it.hasNext());
-		assertEquals(it.next(), "Papandreou");
-		assertEquals(it.next(), "Mitsotakis");
+		it = greekNamesQueue.iterator();
+
+		assertTrue("Before looping through the LinearPriorityQueue, its iterator's hasNext() method should " +
+						" return true.", it.hasNext());
+		assertEquals("The iterator's next() method did not return the expected element.",  "Papandreou", it.next());
+		assertEquals("The iterator's next() method did not return the expected element.", "Mitsotakis", it.next());
 		for(int i = 0; i < 4; i++)
-			assertEquals(it.next(), strings[i]);
-		assertFalse(it.hasNext());
-		greekNamesQueue.clear();
+			assertEquals("The iterator's next() method did not return the expected element.", it.next(), strings[i]);
+		assertFalse("After looping through all the elements with next(), the iterator's hasNext() method" +
+				" should return false.", it.hasNext());
+
+		// Finally, check the proper throwing of a ConcurrentModificationException
+
+		it = greekNamesQueue.iterator();
+		it.next();
+		greekNamesQueue.enqueue("Stamatopoulos", 9);
+		try {
+			it.next();
+		} catch(ConcurrentModificationException ignored){
+			// ok
+		} catch(Throwable t){
+			fail("Instead of a ConcurrentModificationException, we were thrown a " + t.getClass().getSimpleName() +
+			" with message: " + t.getMessage() + ".");
+		}
 	}
 }
