@@ -25,14 +25,14 @@ public interface MinHeap<T extends Comparable<T>> extends Iterable<T>{
 	public void insert(T element);
 	
 	/**
-	 * Removes and returns the minimum element from the <tt>MinHeap</tt>.
+	 * Returns <b>and removes</b> the minimum element from the <tt>MinHeap</tt>.
 	 * @return The minimum element of the <tt>MinHeap</tt>.
 	 * @throws EmptyHeapException if the <tt>MinHeap</tt> is empty.
 	 */
 	public T deleteMin() throws EmptyHeapException;
 
 	/**
-	 * Returns the minimum element of the <tt>MinHeap</tt>.
+	 * Returns, <b>but does not remove</b>, the minimum element of the <tt>MinHeap</tt>.
 	 * @return The minimum element of the <tt>MinHeap</tt>.
 	 * @throws EmptyHeapException If the <tt>MinHeap</tt> is empty.
 	 */

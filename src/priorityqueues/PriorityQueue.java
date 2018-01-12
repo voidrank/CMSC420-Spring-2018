@@ -42,7 +42,6 @@ public interface PriorityQueue<T> extends Iterable<T> {
 	/**
 	 * Returns the number of elements currently in the <tt>PriorityQueue</tt>.
 	 * @return The number of elements currently in the <tt>PriorityQueue</tt>.
-	 * @throws EmptyPriorityQueueException if the <tt>PriorityQueue</tt> is empty.
 	 */
 	public int size();
 	
