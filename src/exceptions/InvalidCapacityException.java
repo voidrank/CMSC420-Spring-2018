@@ -19,7 +19,6 @@ import java.util.ArrayList;
 
  * @author  <a href="mailto:jasonfil@cs.umd.edu">Jason Filippou</a>
  *
- * @see UnimplementedMethodException
  *
  */
 public class InvalidCapacityException extends Exception {
