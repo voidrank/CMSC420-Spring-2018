@@ -261,16 +261,4 @@ public class LinearPriorityQueue<T> implements PriorityQueue<T> {
 			this.priority = priority;
 		}
 	}
-	
-	@Override
-	public String toString(){
-		String retVal ="[";
-		for(PriorityQueueNode<T> pqn : data)
-			for(T el : pqn)
-				retVal += (el + ", ");
-		retVal = retVal.substring(0, retVal.length() - 2); // Eat up last comma (", ")
-		return retVal + "]";
-	}
-
-
 }
