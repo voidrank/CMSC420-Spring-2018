@@ -1,0 +1,3 @@
+- (01-04-2017). Should either change code base to hold entirety of course code base
+in master, or hold different branches. Gotta be careful with package structure because 
+of the submit server configuration.

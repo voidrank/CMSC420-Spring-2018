@@ -1,8 +1,13 @@
-package priorityqueues;
+package priorityqueues; // ******* <---  DO NOT ERASE THIS LINE!!!! *******
+
+/* *****************************************************************************************
+ * THE FOLLOWING IMPORTS ARE HERE ONLY TO MAKE THE JAVADOC AND iterator() method signature
+ * "SEE" THE RELEVANT CLASSES. SOME OF THOSE IMPORTS MIGHT *NOT* BE NEEDED BY YOUR OWN
+ * IMPLEMENTATION, AND IT IS COMPLETELY FINE TO ERASE THEM. THE CHOICE IS YOURS.
+ * ********************************************************************************** */
 
 import exceptions.InvalidCapacityException;
 import fifoqueues.FIFOQueue;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -103,13 +108,4 @@ public class LinearPriorityQueue<T> implements PriorityQueue<T> {
 	public Iterator<T> iterator() {
 		throw UNIMPL_METHOD; /* ERASE THIS LINE AFTER IMPLEMENTING THE METHOD. */
 	}
-
-
-	
-	@Override
-	public String toString(){
-		throw UNIMPL_METHOD; /* ERASE THIS LINE AFTER IMPLEMENTING THE METHOD. */
-	}
-
-
 }

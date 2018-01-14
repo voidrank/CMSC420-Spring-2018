@@ -1,7 +1,12 @@
-package priorityqueues;
+package priorityqueues; // ******* <---  DO NOT ERASE THIS LINE!!!! *******
+
+/* *****************************************************************************************
+ * THE FOLLOWING IMPORTS ARE HERE ONLY TO MAKE THE JAVADOC AND iterator() method signature
+ * "SEE" THE RELEVANT CLASSES. SOME OF THOSE IMPORTS MIGHT *NOT* BE NEEDED BY YOUR OWN
+ * IMPLEMENTATION, AND IT IS COMPLETELY FINE TO ERASE THEM. THE CHOICE IS YOURS.
+ * ********************************************************************************** */
 
 import heaps.MinHeap;
-
 import java.util.Iterator;
 
 /**
