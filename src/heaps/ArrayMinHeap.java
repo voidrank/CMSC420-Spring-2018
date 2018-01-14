@@ -20,8 +20,7 @@ import java.util.Iterator;
  * @see MinHeap
  * @see ArrayMinHeap
   */
-
-public class ArrayMinHeap<T extends Comparable<T>> implements MinHeap<T> {
+public class ArrayMinHeap<T extends Comparable<T>> implements MinHeap<T> { // *** <-- DO NOT CHANGE THIS LINE!!! ***
 
 	private static RuntimeException UNIMPL_METHOD = new RuntimeException("Implement this method!");
 

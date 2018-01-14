@@ -1,10 +1,12 @@
 package priorityqueues; // ******* <---  DO NOT ERASE THIS LINE!!!! *******
 
 /* *****************************************************************************************
- * THE FOLLOWING IMPORTS ARE HERE ONLY TO MAKE THE JAVADOC AND iterator() method signature
- * "SEE" THE RELEVANT CLASSES. SOME OF THOSE IMPORTS MIGHT *NOT* BE NEEDED BY YOUR OWN
- * IMPLEMENTATION, AND IT IS COMPLETELY FINE TO ERASE THEM. THE CHOICE IS YOURS.
- * ********************************************************************************** */
+ * THE FOLLOWING IMPORTS WILL BE NEEDED BY YOUR CODE, BECAUSE WE REQUIRE THAT YOU USE
+ * ANY ONE OF YOUR EXISTING MINHEAP IMPLEMENTATIONS TO IMPLEMENT THIS CLASS. TO ACCESS
+ * YOUR MINHEAP'S METHODS YOU NEED THEIR SIGNATURES, WHICH ARE DECLARED IN THE MINHEAP
+ * INTERFACE. ALSO, SINCE THE PRIORITYQUEUE INTERFACE THAT YOU EXTEND IS ITERABLE, THE IMPORT OF ITERATOR
+ * IS NEEDED IN ORDER TO MAKE YOUR CODE COMPILABLE.
+ ** ********************************************************************************** */
 
 import heaps.MinHeap;
 import java.util.Iterator;
@@ -22,7 +24,7 @@ import java.util.Iterator;
  * @see LinearPriorityQueue
  * @see MinHeap
  */
-public class MinHeapPriorityQueue<T> implements PriorityQueue<T>{
+public class MinHeapPriorityQueue<T> implements PriorityQueue<T>{ // *** <-- DO NOT CHANGE THIS LINE!!! ***
 
 	private static RuntimeException UNIMPL_METHOD = new RuntimeException("Implement this method!");
 
@@ -36,9 +38,10 @@ public class MinHeapPriorityQueue<T> implements PriorityQueue<T>{
 
 	/* ***********************************************************************************
 	 * YOU SHOULD IMPLEMENT THE FOLLOWING METHODS. BESIDES THE INTERFACE METHODS,
-	 * THOSE INCLUDE CONSTRUCTORS (DEFAULT, NON-DEFAULT, COPY) AS WELL AS EQUALS().
-	 * PLEASE MAKE SURE YOU RECALL HOW ONE SHOULD MAKE A CLASS-SAFE EQUALS() FROM EARLIER
-	 * JAVA COURSES!
+	 * THOSE INCLUDE A SIMPLE DEFAULT CONSTRUCTOR. FOR THE PRIORITY QUEUE CLASSES, YOU
+	 * WILL *NOT* NEED TO IMPLEMENT COPY CONSTRUCTORS AND EQUALS(), BUT IF YOU WOULD LIKE TO
+	 * IMPLEMENT THOSE TO FACILITATE YOUR OWN TESTS AND CLIENT CODE, PLEASE FEEL FREE TO DO SO!
+	 * THE CHOICE IS YOURS.
 	 *
 	 * YOU SHOULD NOT CHANGE *ANY* METHOD SIGNATURES! IF YOU DO, YOUR CODE WILL NOT RUN
 	 * AGAINST OUR TESTS!
