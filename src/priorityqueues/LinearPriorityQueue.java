@@ -5,7 +5,7 @@ package priorityqueues; // ******* <---  DO NOT ERASE THIS LINE!!!! *******
  * "SEE" THE RELEVANT CLASSES. SOME OF THOSE IMPORTS MIGHT *NOT* BE NEEDED BY YOUR OWN
  * IMPLEMENTATION, AND IT IS COMPLETELY FINE TO ERASE THEM. THE CHOICE IS YOURS.
  * ********************************************************************************** */
-
+import exceptions.InvalidPriorityException;
 import exceptions.InvalidCapacityException;
 import fifoqueues.FIFOQueue;
 import java.util.ArrayList;
@@ -73,9 +73,8 @@ public class LinearPriorityQueue<T> implements PriorityQueue<T> { // *** <-- DO 
 	}
 
 	@Override
-	public void enqueue(T element, int priority) {
+	public void enqueue(T element, int priority) throws InvalidPriorityException{
 		throw UNIMPL_METHOD; /* ERASE THIS LINE AFTER IMPLEMENTING THE METHOD. */
-
 	}
 
 	@Override

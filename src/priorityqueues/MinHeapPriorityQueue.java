@@ -1,5 +1,6 @@
 package priorityqueues; // ******* <---  DO NOT ERASE THIS LINE!!!! *******
 
+
 /* *****************************************************************************************
  * THE FOLLOWING IMPORTS WILL BE NEEDED BY YOUR CODE, BECAUSE WE REQUIRE THAT YOU USE
  * ANY ONE OF YOUR EXISTING MINHEAP IMPLEMENTATIONS TO IMPLEMENT THIS CLASS. TO ACCESS
@@ -7,6 +8,9 @@ package priorityqueues; // ******* <---  DO NOT ERASE THIS LINE!!!! *******
  * INTERFACE. ALSO, SINCE THE PRIORITYQUEUE INTERFACE THAT YOU EXTEND IS ITERABLE, THE IMPORT OF ITERATOR
  * IS NEEDED IN ORDER TO MAKE YOUR CODE COMPILABLE.
  ** ********************************************************************************** */
+
+import exceptions.InvalidPriorityException;
+import heaps.MinHeap;
 
 import heaps.MinHeap;
 import java.util.Iterator;
@@ -55,8 +59,8 @@ public class MinHeapPriorityQueue<T> implements PriorityQueue<T>{ // *** <-- DO 
 	}
 
 	@Override
-	public void enqueue(T element, int priority) {
-		throw UNIMPL_METHOD; /* ERASE THIS LINE AFTER IMPLEMENTING THE METHOD. */
+	public void enqueue(T element, int priority) throws InvalidPriorityException{
+			throw UNIMPL_METHOD; /* ERASE THIS LINE AFTER IMPLEMENTING THE METHOD. */
 	}
 
 
