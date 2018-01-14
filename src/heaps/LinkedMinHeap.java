@@ -29,7 +29,7 @@ public class LinkedMinHeap<T extends Comparable<T>> implements MinHeap<T> {
 	private MinHeapNode<T> root, last;
 	private int count;
 	protected boolean modificationFlag;
-	
+
 	/**
 	 *  Default constructor sets pointers to null and count to 0.
 	 */
@@ -40,9 +40,9 @@ public class LinkedMinHeap<T extends Comparable<T>> implements MinHeap<T> {
 	}
 
 	/**
-	 *  Second constructor creates a root node with the element provided 
+	 *  Second constructor creates a root node with the element provided
 	 *  as the content.
-	 *  @param rootElement the element to create teh root with.
+	 *  @param rootElement the element to create the root with.
 	 */
 	public LinkedMinHeap(T rootElement){
 		root = last = new MinHeapNode<T>(rootElement);
