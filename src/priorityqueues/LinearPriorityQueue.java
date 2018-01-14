@@ -57,7 +57,6 @@ public class LinearPriorityQueue<T> implements PriorityQueue<T> {
 	 */
 	public LinearPriorityQueue(){
 		throw UNIMPL_METHOD; /* ERASE THIS LINE AFTER IMPLEMENTING THE METHOD. */
-
 	}
 
 	/**

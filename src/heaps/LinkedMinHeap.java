@@ -1,4 +1,9 @@
-package heaps;
+package heaps; // ******* <---  DO NOT ERASE THIS LINE!!!! *******
+
+/* *****************************************************************************************
+ * THE FOLLOWING IMPORT IS NECESSARY FOR THE ITERATOR() METHOD'S SIGNATURE. FOR THIS
+ * REASON, YOU SHOULD NOT ERASE IT! YOUR CODE WILL BE UNCOMPILABLE IF YOU DO!
+ * ********************************************************************************** */
 
 import java.util.Iterator;
 /**
@@ -88,11 +93,13 @@ public class LinkedMinHeap<T extends Comparable<T>> implements MinHeap<T> {
 
 	@Override
 	public int size() {
+
 		throw UNIMPL_METHOD; /* ERASE THIS LINE AFTER IMPLEMENTING THE METHOD. */
 	}
 
 	@Override
 	public void clear() {
+
 		throw UNIMPL_METHOD; /* ERASE THIS LINE AFTER IMPLEMENTING THE METHOD. */
 	}
 

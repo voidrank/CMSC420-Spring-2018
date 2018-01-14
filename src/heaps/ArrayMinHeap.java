@@ -1,4 +1,9 @@
-package heaps;
+package heaps; // ******* <---  DO NOT ERASE THIS LINE!!!! *******
+
+/* *****************************************************************************************
+ * THE FOLLOWING IMPORT IS NECESSARY FOR THE ITERATOR() METHOD'S SIGNATURE. FOR THIS
+ * REASON, YOU SHOULD NOT ERASE IT! YOUR CODE WILL BE UNCOMPILABLE IF YOU DO!
+ * ********************************************************************************** */
 
 import java.util.Iterator;
 /**
