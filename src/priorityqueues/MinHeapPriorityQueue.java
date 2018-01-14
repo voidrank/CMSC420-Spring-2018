@@ -1,6 +1,6 @@
 package priorityqueues;
 
-import fifoqueues.EmptyFIFOQueueException;
+import exceptions.InvalidPriorityException;
 import heaps.EmptyHeapException;
 import heaps.LinkedMinHeap;
 import heaps.MinHeap;
@@ -35,7 +35,9 @@ public class MinHeapPriorityQueue<T> implements PriorityQueue<T>{
 	}
 
 	@Override
-	public void enqueue(T element, int priority) {
+	public void enqueue(T element, int priority) throws InvalidPriorityException{
+		if(priority < 1)
+			throw new InvalidPriorityException("Invalid priority " + priority + " provided.");
 		data.insert(new PriorityQueueNode<T>(element, priority));
 	}
 

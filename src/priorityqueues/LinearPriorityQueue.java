@@ -1,5 +1,6 @@
 package priorityqueues;
 
+import exceptions.InvalidPriorityException;
 import fifoqueues.EmptyFIFOQueueException;
 import exceptions.InvalidCapacityException;
 import fifoqueues.FIFOQueue;
@@ -58,7 +59,9 @@ public class LinearPriorityQueue<T> implements PriorityQueue<T> {
 	}
 
 	@Override
-	public void enqueue(T element, int priority) { 
+	public void enqueue(T element, int priority) throws InvalidPriorityException{
+		if(priority < 1)
+			throw new InvalidPriorityException("Invalid priority " + priority + " provided.");
 		for(int i = 0; i < data.size(); i++){
 			if(data.get(i).getPriority() == priority){ // FIFO case
 				data.get(i).enqueue(element); 

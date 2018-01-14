@@ -1,5 +1,7 @@
 package priorityqueues;
 
+import exceptions.InvalidPriorityException;
+
 /**<p> A <tt>PriorityQueue</tt> is an extension of a classic FIFO queue. Instead of traditional
  * FIFO processing, a <tt>PriorityQueue</tt> inserts elements with a higher priority
  * getFirst, where "higher" is typically interpreted as "lower" in the arithmetic
@@ -22,8 +24,9 @@ public interface PriorityQueue<T> extends Iterable<T> {
 	 * Enqueues the provided element taking into account its prority.
 	 * @param element The element to enqueue.
 	 * @param priority The priority of the element that will be enqueued.
+	 * @throws InvalidPriorityException if the priority provided is less than 1.
 	 */
-	public void enqueue(T element, int priority);
+	public void enqueue(T element, int priority) throws InvalidPriorityException;
 	
 	/**
 	 * Returns <b>and deletes</b> the top element of the <tt>PriorityQueue</tt>.
