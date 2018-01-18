@@ -30,7 +30,7 @@ import java.util.Iterator;
  */
 public class LinearPriorityQueue<T> implements PriorityQueue<T> { // *** <-- DO NOT CHANGE THIS LINE!!! ***
 
-	private static RuntimeException UNIMPL_METHOD = new RuntimeException("Implement this method!");
+	private static final RuntimeException UNIMPL_METHOD = new RuntimeException("Implement this method!");
 
 	/* *********************************************
 	 * PLACE YOUR PRIVATE AND PROTECTED FIELDS HERE!

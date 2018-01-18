@@ -12,7 +12,6 @@ package priorityqueues; // ******* <---  DO NOT ERASE THIS LINE!!!! *******
 import exceptions.InvalidPriorityException;
 import heaps.MinHeap;
 
-import heaps.MinHeap;
 import java.util.Iterator;
 
 /**
@@ -30,7 +29,7 @@ import java.util.Iterator;
  */
 public class MinHeapPriorityQueue<T> implements PriorityQueue<T>{ // *** <-- DO NOT CHANGE THIS LINE!!! ***
 
-	private static RuntimeException UNIMPL_METHOD = new RuntimeException("Implement this method!");
+	private static final RuntimeException UNIMPL_METHOD = new RuntimeException("Implement this method!");
 
 	/* *********************************************
 	 * PLACE YOUR PRIVATE AND PROTECTED FIELDS HERE!
