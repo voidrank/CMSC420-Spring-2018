@@ -326,7 +326,7 @@ public class LinkedMinHeap<T extends Comparable<T>> implements MinHeap<T> {
 			try {
 				retVal = tempHeap.deleteMin();
 			} catch (EmptyHeapException e) {
-				throw new NoSuchElementException("Heap is empty!");
+				throw new NoSuchElementException("next() attempted to access element beyond end of heap!");
 			}
 			return retVal;
 		}

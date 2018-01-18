@@ -211,18 +211,20 @@ public class LinkedMinHeapTest {
 		Arrays.sort(ints); // Arrays.sort always sorts in ascending order.
 		int currentIndex = 0;
 		for(Integer i : intMinHeap)
-			assertEquals("ArrayMinHeap iterator doesn't seem to be exposing elements in proper order.", ints[currentIndex++], i);
+			assertEquals("LinkedMinHeap iterator doesn't seem to be exposing elements in proper order.", ints[currentIndex++], i);
 
 		Iterator<Integer> it = intMinHeap.iterator();
 		it.next();
 		intMinHeap.insert(13);
+		ConcurrentModificationException cme = null;
 		try {
 			it.next();
-		} catch(ConcurrentModificationException ignored){ /* ok */}
+		} catch(ConcurrentModificationException cmeThrown){ cme = cmeThrown;}
 		catch(Throwable t) {
 			fail("When testing for appropriate fail-fast behavior of LinkedMinHeap's Iterator, we received a " +
 					t.getClass().getSimpleName() + " with message: " + t.getMessage() + " instead of a ConcurrentModificationException.");
 		}
+		assertNotNull("LinkedMinHeap iterator should have thrown a ConcurrentModificationException",cme);
 		intMinHeap.clear();
 		it = intMinHeap.iterator(); // Reset iterator
 		assertFalse( "Iterator's hasNext() method should return false when " +

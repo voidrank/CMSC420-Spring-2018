@@ -143,6 +143,7 @@ public class ArrayMinHeap<T extends Comparable<T>> implements MinHeap<T> {
 			parent = parent/ 2;
 		}
 		last++;
+		modificationFlag = true;
 	}
 
 	@Override

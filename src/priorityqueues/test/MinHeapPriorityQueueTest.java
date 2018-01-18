@@ -277,14 +277,16 @@ public class MinHeapPriorityQueueTest {
 			it = greekNamesQueue.iterator();
 			it.next();
 			greekNamesQueue.enqueue("Stamatopoulos", 9);
+			ConcurrentModificationException cme = null;
 			try {
 				it.next();
-			} catch (ConcurrentModificationException ignored) {
-				// ok
+			} catch (ConcurrentModificationException cmeThrown) {
+				cme = cmeThrown;
 			} catch (Throwable t) {
 				fail("Instead of a ConcurrentModificationException, we were thrown a " + t.getClass().getSimpleName() +
 						" with message: " + t.getMessage() + ".");
 			}
+			assertNotNull("MinHeapPQ Iterator should have thrown a ConcurrentModificationException. ", cme);
 		}catch(InvalidPriorityException ignored){
 			fail(INVALID_PRIORITY_MSG);
 		}

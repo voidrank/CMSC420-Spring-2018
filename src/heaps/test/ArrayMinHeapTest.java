@@ -217,6 +217,15 @@ public class ArrayMinHeapTest {
 		Iterator<Integer> it = intMinHeap.iterator();
 		it.next();
 		intMinHeap.insert(13);
+		ConcurrentModificationException cme = null;
+		try {
+			it.next();
+		} catch(ConcurrentModificationException cmeThrown){ cme = cmeThrown;}
+		catch(Throwable t) {
+			fail("When testing for appropriate fail-fast behavior of ArrayMinHeap's Iterator, we received a " +
+					t.getClass().getSimpleName() + " with message: " + t.getMessage() + " instead of a ConcurrentModificationException.");
+		}
+		assertNotNull("ArrayMinHeap iterator should have thrown a ConcurrentModificationException.",cme);
 		try {
 			it.next();
 		} catch(ConcurrentModificationException ignored){ /* ok */}

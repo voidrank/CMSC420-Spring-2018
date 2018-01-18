@@ -30,7 +30,7 @@ import java.util.Iterator;
 public class LinearPriorityQueue<T> implements PriorityQueue<T> {
 
 	private ArrayList<PriorityQueueNode<T>> data; // See below for the implementation of the type PriorityQueueNode
-	private final int DEFAULT_CAPACITY = 10;
+	private static final int DEFAULT_CAPACITY = 10;
 	protected boolean modificationFlag;
 
 	/**
