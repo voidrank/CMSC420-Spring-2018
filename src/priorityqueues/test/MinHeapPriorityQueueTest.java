@@ -16,7 +16,7 @@ import static org.junit.Assert.*;
  *
  * @author  <a href="mailto:jasonfil@cs.umd.edu">Jason Filippou</a>
  *
- * @see LinearPriorityQueueTest
+ * @see MinHeapPriorityQueueTest
  */
 public class MinHeapPriorityQueueTest {
 
@@ -33,37 +33,37 @@ public class MinHeapPriorityQueueTest {
 	private Random r = new Random(SEED);
 
 	@Test
-	public void testLinearPQConstructorAndSize() {
-		assertTrue("After construction, a LinearPriorityQueue should be empty.",
+	public void testMinHeapPQConstructorAndSize() {
+		assertTrue("After construction, a MinHeapPriorityQueue should be empty.",
 				greekNamesQueue.isEmpty());
-		assertEquals("After construction, a LinearPriorityQueue's size should be 0.", 0,
+		assertEquals("After construction, a MinHeapPriorityQueue's size should be 0.", 0,
 				greekNamesQueue.size());
 	}
 
 	@Test
-	public void testLinearPQClear() {
+	public void testMinHeapPQClear() {
 		try {
 			greekNamesQueue.enqueue("Alexandrou", 8);
 			greekNamesQueue.clear();
-			assertTrue("After clearing, a LinearPriorityQueue should be empty.", greekNamesQueue.isEmpty());
-			assertEquals("After clearing, a LinearPriorityQueue's size should be 0.", 0, greekNamesQueue.size());
+			assertTrue("After clearing, a MinHeapPriorityQueue should be empty.", greekNamesQueue.isEmpty());
+			assertEquals("After clearing, a MinHeapPriorityQueue's size should be 0.", 0, greekNamesQueue.size());
 		} catch (InvalidPriorityException ignored) {
 			fail(INVALID_PRIORITY_MSG);
 		}
 	}
 
 	@Test
-	public void testLinearPQSimpleEnqueueDifferentPriorities() {
+	public void testMinHeapPQSimpleEnqueueDifferentPriorities() {
 		try {
 			greekNamesQueue.enqueue("Filippou", 2);
 			greekNamesQueue.enqueue("Alexandrou", 3);
 			greekNamesQueue.enqueue("Costakis", 1);
 
 			try {
-				assertEquals("LinearPriorityQueue.getFirst() did not return the correct element.",
+				assertEquals("MinHeapPriorityQueue.getFirst() did not return the correct element.",
 						"Costakis", greekNamesQueue.getFirst());
 			} catch (EmptyPriorityQueueException ignored) {
-				fail("Since the queue was not empty upon call to LinearPriorityQueue.getFirst(), an " +
+				fail("Since the queue was not empty upon call to MinHeapPriorityQueue.getFirst(), an " +
 						"EmptyPriorityQueueException should not have been thrown.");
 			}
 		} catch (InvalidPriorityException ignored) {
@@ -72,7 +72,7 @@ public class MinHeapPriorityQueueTest {
 	}
 
 	@Test
-	public void testLinearPQInvalidPriorities() {
+	public void testMinHeapPQInvalidPriorities() {
 		try {
 			greekNamesQueue.enqueue("Grigoris", 0);
 		} catch(InvalidPriorityException exc) {
@@ -92,17 +92,17 @@ public class MinHeapPriorityQueueTest {
 	}
 
 	@Test
-	public void testLinearPQSimpleEnqueueSamePriorities() {
+	public void testMinHeapPQSimpleEnqueueSamePriorities() {
 		try {
 			greekNamesQueue.enqueue("Filippou", 1);
 			greekNamesQueue.enqueue("Alexandrou", 1);
 			greekNamesQueue.enqueue("Costakis", 1);
 
 			try {
-				assertEquals("LinearPriorityQueue.getFirst() did not return the correct element. " +
+				assertEquals("MinHeapPriorityQueue.getFirst() did not return the correct element. " +
 						"Are you treating same priorities correctly?", "Filippou", greekNamesQueue.getFirst());
 			} catch (EmptyPriorityQueueException ignored) {
-				fail("Since the queue was not empty upon call to LinearPriorityQueue.getFirst(), an " +
+				fail("Since the queue was not empty upon call to MinHeapPriorityQueue.getFirst(), an " +
 						"EmptyPriorityQueueException should not have been thrown.");
 			}
 		} catch (InvalidPriorityException ignored) {
@@ -111,11 +111,11 @@ public class MinHeapPriorityQueueTest {
 	}
 
 	@Test
-	public void testLinearPQComplexEnqueuesAndDequeues() {
+	public void testMinHeapPQComplexEnqueuesAndDequeues() {
 		try {
 			greekNamesQueue.enqueue("Filippou", 2);
 
-			assertEquals("After inserting a single element, a LinearPriorityQueue should have a size of 1", 1,
+			assertEquals("After inserting a single element, a MinHeapPriorityQueue should have a size of 1", 1,
 					greekNamesQueue.size());
 
 			greekNamesQueue.enqueue("Alexandrou", 10);
@@ -124,52 +124,52 @@ public class MinHeapPriorityQueueTest {
 			greekNamesQueue.enqueue("Vasilakopoulos", 5);
 			assertEquals("After enqueueing 3 elements, the queue should have a size of 3.", 3, greekNamesQueue.size());
 			try {
-				assertEquals("LinearPriorityQueue.getFirst() did not return the correct element.",
+				assertEquals("MinHeapPriorityQueue.getFirst() did not return the correct element.",
 						"Filippou", greekNamesQueue.getFirst());
 			} catch (AssertionError ae) {
 				throw (ae);
 			} catch (EmptyPriorityQueueException ignored) {
-				fail("Since the queue was not empty upon call to LinearPriorityQueue.getFirst(), an " +
+				fail("Since the queue was not empty upon call to MinHeapPriorityQueue.getFirst(), an " +
 						"EmptyPriorityQueueException should not have been thrown.");
 			}
 			try {
-				assertEquals("LinearPriorityQueue.dequeue() did not return the correct element.",
+				assertEquals("MinHeapPriorityQueue.dequeue() did not return the correct element.",
 						"Filippou", greekNamesQueue.dequeue());
 			} catch (EmptyPriorityQueueException ignored) {
-				fail("Since the queue was not empty upon call to LinearPriorityQueue.dequeue(), an " +
+				fail("Since the queue was not empty upon call to MinHeapPriorityQueue.dequeue(), an " +
 						"EmptyPriorityQueueException should not have been thrown.");
 			}
 			try {
-				assertEquals(" After a prior dequeueing, LinearPriorityQueue.getFirst() did not return the " +
+				assertEquals(" After a prior dequeueing, MinHeapPriorityQueue.getFirst() did not return the " +
 						"correct element.", "Vasilakopoulos", greekNamesQueue.getFirst());
 
 			} catch (AssertionError ae) {
 				throw (ae);
 			} catch (EmptyPriorityQueueException ignored) {
 				fail("Despite a prior dequeue-ing, the queue was still not empty upon call to " +
-						"LinearPriorityQueue.getFirst(), so an EmptyPriorityQueueException should not have been thrown.");
+						"MinHeapPriorityQueue.getFirst(), so an EmptyPriorityQueueException should not have been thrown.");
 			}
 			greekNamesQueue.enqueue("Papandreou", 1);
 			greekNamesQueue.enqueue("Mitsotakis", 1);
 
-			assertEquals("After 3 enqueueings, 1 dequeueing and 2 enqueueings, the size of the LinearPriorityQueue should be 4.",
+			assertEquals("After 3 enqueueings, 1 dequeueing and 2 enqueueings, the size of the MinHeapPriorityQueue should be 4.",
 					4, greekNamesQueue.size());
 			try {
-				assertNotEquals("LinearPriorityQueue.dequeue() returned an element that used to be the top element, " +
+				assertNotEquals("MinHeapPriorityQueue.dequeue() returned an element that used to be the top element, " +
 						"but is not any more after some recent enqueueings.", greekNamesQueue.dequeue(), "Vasilakopoulos"); // No longer the first.
-				assertEquals("LinearPriorityQueue.dequeue() did not return the correct element. Are you treating same priorities correctly?", greekNamesQueue.dequeue(), "Mitsotakis");
-				assertEquals("LinearPriorityQueue.dequeue() did not return the correct element. Are you treating same priorities correctly?", greekNamesQueue.dequeue(), "Vasilakopoulos");
-				assertEquals("LinearPriorityQueue.dequeue() did not return the correct element. Are you treating same priorities correctly?", greekNamesQueue.dequeue(), "Alexandrou");
+				assertEquals("MinHeapPriorityQueue.dequeue() did not return the correct element. Are you treating same priorities correctly?", greekNamesQueue.dequeue(), "Mitsotakis");
+				assertEquals("MinHeapPriorityQueue.dequeue() did not return the correct element. Are you treating same priorities correctly?", greekNamesQueue.dequeue(), "Vasilakopoulos");
+				assertEquals("MinHeapPriorityQueue.dequeue() did not return the correct element. Are you treating same priorities correctly?", greekNamesQueue.dequeue(), "Alexandrou");
 			} catch (AssertionError ae) {
 				throw (ae);
 			} catch (EmptyPriorityQueueException ignored) {
-				fail("Despite a prior dequeue-ing, the queue was still not empty upon call to LinearPriorityQueue.dequeue(), " +
+				fail("Despite a prior dequeue-ing, the queue was still not empty upon call to MinHeapPriorityQueue.dequeue(), " +
 						"so an EmptyPriorityQueueException should not have been thrown.");
 			}
 
-			assertEquals("After dequeue-ing every element, the LinearPriorityQueue should have a size of 0",
+			assertEquals("After dequeue-ing every element, the MinHeapPriorityQueue should have a size of 0",
 					0, greekNamesQueue.size());
-			assertTrue("After dequeue-ing every element, the LinearPriorityQueue should be empty.",
+			assertTrue("After dequeue-ing every element, the MinHeapPriorityQueue should be empty.",
 					greekNamesQueue.isEmpty());
 		} catch (InvalidPriorityException ignored) {
 			fail("We caught an InvalidPriorityException when enqueuing with valid priorities.");
@@ -178,7 +178,7 @@ public class MinHeapPriorityQueueTest {
 
 
 	@Test
-	public void testLinearPQManyEnqueues() {
+	public void testMinHeapPQManyEnqueues() {
 
 		List<Integer> priorities = IntStream.range(1, MAX_PRIORITY + 1).boxed().collect(Collectors.toList());
 		Collections.shuffle(priorities, r);
@@ -190,13 +190,13 @@ public class MinHeapPriorityQueueTest {
 						+ " with message " + t.getMessage());
 			}
 		}
-		assertEquals("After enqueueing " + MAX_PRIORITY + " elements, the size of the LinearPriorityQueue " +
+		assertEquals("After enqueueing " + MAX_PRIORITY + " elements, the size of the MinHeapPriorityQueue " +
 				"should be " + MAX_PRIORITY + ".", MAX_PRIORITY, doubles.size());
 	}
 
 
 	@Test
-	public void testLinearPQManyDequeues() {
+	public void testMinHeapPQManyDequeues() {
 
 		List<Integer> priorities = IntStream.range(1, MAX_PRIORITY + 1).boxed().collect(Collectors.toList());
 		Collections.shuffle(priorities, r);
@@ -216,9 +216,9 @@ public class MinHeapPriorityQueueTest {
 						+ " with message " + t.getMessage());
 			}
 		}
-		assertEquals("After dequeueing all the elements of the LinearPriorityQueue, its size should be 0.",
+		assertEquals("After dequeueing all the elements of the MinHeapPriorityQueue, its size should be 0.",
 				0, doubles.size());
-		assertTrue("After dequeueing all the elements of the LinearPriorityQueue, its size should be 0.",
+		assertTrue("After dequeueing all the elements of the MinHeapPriorityQueue, its size should be 0.",
 				doubles.isEmpty());
 
 	}
@@ -226,13 +226,13 @@ public class MinHeapPriorityQueueTest {
 
 
 	@Test
-	public void testLinearPQIteratorAndConcurrentModifications() {
+	public void testMinHeapPQIteratorAndConcurrentModifications() {
 		try {
 			String[] strings = {"Karathodori", "Stergiou", "Tasou", "Pipinis", "Papandreou", "Mitsotakis"};
 			for (int i = 0; i < strings.length; i++)
 				greekNamesQueue.enqueue(strings[i], strings.length - i);
 			Iterator<String> it = greekNamesQueue.iterator();
-			assertTrue("Since we have some elements in the LinearPriorityQueue, the iterator's hasNext()" +
+			assertTrue("Since we have some elements in the MinHeapPriorityQueue, the iterator's hasNext()" +
 					" method should return true.", it.hasNext());
 
 
@@ -263,7 +263,7 @@ public class MinHeapPriorityQueueTest {
 			}
 			it = greekNamesQueue.iterator();
 
-			assertTrue("Before looping through the LinearPriorityQueue, its iterator's hasNext() method should " +
+			assertTrue("Before looping through the MinHeapPriorityQueue, its iterator's hasNext() method should " +
 					" return true.", it.hasNext());
 			assertEquals("The iterator's next() method did not return the expected element.", "Papandreou", it.next());
 			assertEquals("The iterator's next() method did not return the expected element.", "Mitsotakis", it.next());

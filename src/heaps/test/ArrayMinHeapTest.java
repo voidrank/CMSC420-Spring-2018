@@ -212,7 +212,7 @@ public class ArrayMinHeapTest {
 		Arrays.sort(ints); // Arrays.sort always sorts in ascending order.
 		int currentIndex = 0;
 		for(Integer i : intMinHeap)
-			assertEquals(i, ints[currentIndex++]);
+			assertEquals("ArrayMinHeap iterator doesn't seem to be exposing elements in proper order.", ints[currentIndex++], i);
 
 		Iterator<Integer> it = intMinHeap.iterator();
 		it.next();
