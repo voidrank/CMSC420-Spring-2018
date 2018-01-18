@@ -11,6 +11,12 @@ import java.util.zip.ZipOutputStream;
  * <b>erasing the <tt>.git</tt> directory which might make the submission too heavy for submit.cs.</b>
  * Execute as Java application. Tested on Eclipse and IntelliJ.
  *
+<<<<<<< HEAD
+=======
+ * Do <b>not</b> edit this file! It is provided to you as a script that you should run as a Java application
+ * from your IDE every time you want to submit your project.
+ * 
+>>>>>>> 5d4b6771e2b8065c65a649be16f616cef09246c9
  * @author <a href = "ahmdtaha@cs.umd.edu">Ahmed Taha</a>
  */
 public class Archiver {
