@@ -57,7 +57,7 @@ public class LinearPriorityQueue<T> implements PriorityQueue<T> { // *** <-- DO 
 	 * underlying data structure that you will choose to use to implement this class.
 	 */
 	public LinearPriorityQueue(){
-		throw UNIMPL_METHOD; /* ERASE THIS LINE AFTER IMPLEMENTING THE METHOD. */
+		/* FILL THIS IN WITH YOUR IMPLEMENTATION OF A DEFAULT CONSTRUCTOR, IF ANY. */
 	}
 
 	/**

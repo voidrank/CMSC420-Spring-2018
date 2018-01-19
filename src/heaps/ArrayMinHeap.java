@@ -47,7 +47,7 @@ public class ArrayMinHeap<T extends Comparable<T>> implements MinHeap<T> { // **
 	 *  Default constructor.
 	 */
 	public ArrayMinHeap(){
-		throw UNIMPL_METHOD; /* ERASE THIS LINE AFTER IMPLEMENTING THE METHOD. */
+		/* FILL THIS IN WITH YOUR IMPLEMENTATION OF A DEFAULT CONSTRUCTOR, IF ANY. */
 	}
 
 	/**

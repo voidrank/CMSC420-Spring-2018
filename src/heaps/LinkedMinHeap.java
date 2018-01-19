@@ -54,7 +54,7 @@ public class LinkedMinHeap<T extends Comparable<T>> implements MinHeap<T> { // *
 	 *  Default constructor.
 	 */
 	public LinkedMinHeap(){
-		throw UNIMPL_METHOD; /* ERASE THIS LINE AFTER IMPLEMENTING THE METHOD. */
+		/* FILL THIS IN WITH YOUR IMPLEMENTATION OF A DEFAULT CONSTRUCTOR, IF ANY. */
 	}
 
 	/**

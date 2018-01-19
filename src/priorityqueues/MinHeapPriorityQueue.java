@@ -54,7 +54,7 @@ public class MinHeapPriorityQueue<T> implements PriorityQueue<T>{ // *** <-- DO 
 	 * Simple default constructor.
 	 */
 	public MinHeapPriorityQueue(){
-		throw UNIMPL_METHOD; /* ERASE THIS LINE AFTER IMPLEMENTING THE METHOD. */
+		/* FILL THIS IN WITH YOUR IMPLEMENTATION OF A DEFAULT CONSTRUCTOR, IF ANY. */
 	}
 
 	@Override
