@@ -25,7 +25,7 @@ import java.util.NoSuchElementException;
 public class MinHeapPriorityQueue<T> implements PriorityQueue<T> {
 
 	private int orderCounter;
-	private MinHeap<PriorityQueueNode<T>> data;
+	private MinHeap<PriorityQueueNode> data;
 	private boolean modificationFlag;
 
 	/**
@@ -41,7 +41,7 @@ public class MinHeapPriorityQueue<T> implements PriorityQueue<T> {
 	public void enqueue(T element, int priority) throws InvalidPriorityException {
 		if (priority < 1)
 			throw new InvalidPriorityException("Invalid priority " + priority + " provided.");
-		data.insert(new PriorityQueueNode<T>(element, priority));
+		data.insert(new PriorityQueueNode(element, priority));
 		modificationFlag = true;
 	}
 
@@ -69,27 +69,32 @@ public class MinHeapPriorityQueue<T> implements PriorityQueue<T> {
 	}
 
 	public Iterator<T> iterator() {
-		return new MinHeapPQIterator<T>();
+		return new MinHeapPQIterator();
 	}
 
-	private class MinHeapPQIterator<T> implements Iterator<T> {
+	private class MinHeapPQIterator implements Iterator<T> {
 
-		// We will make a deep-copy of the data so that applications of next()
-		// perform a deleteMin() operation.
-		private Iterator<PriorityQueueNode<T>> currentIt;
+
+		private Iterator<PriorityQueueNode> currentIt;
 
 		public MinHeapPQIterator() {
-			currentIt = data.iterator();
+			currentIt = data.iterator(); // falling back to MinHeap's iterator().
+			modificationFlag = false; // Necessary otherwise next() will never work.
 		}
 
 		@Override
 		public boolean hasNext() {
-			return false;
+			return currentIt.hasNext();
 		}
 
 		@Override
 		public T next() throws ConcurrentModificationException, NoSuchElementException {
-			return null;
+			if(!currentIt.hasNext())
+				throw new NoSuchElementException("next(): No further elements!");
+			if(modificationFlag)
+				throw new ConcurrentModificationException("next(): modification of MinHeap detected while " +
+				" iterating through it.");
+			return currentIt.next().data;
 		}
 
 
@@ -119,10 +124,9 @@ public class MinHeapPriorityQueue<T> implements PriorityQueue<T> {
 	 * the same priority elements, thus establishing a strict ordering in the heap,
 	 * such that the root is always uniquely defined.
 	 *
-	 * @param <T> The Type of element contained in the PriorityQueueNode.
-	 * @author Jason Filippou (jasonfil@cs.umd.edu)
+	 * @author <a href="mailto:jasonfil@cs.umd.edu">Jason Filippou</a>
 	 */
-	private class PriorityQueueNode<T> implements Comparable<PriorityQueueNode<T>> {
+	private class PriorityQueueNode implements Comparable<PriorityQueueNode> {
 
 		private T data;
 		private int priority;
@@ -143,7 +147,7 @@ public class MinHeapPriorityQueue<T> implements PriorityQueue<T> {
 		}
 
 		@Override
-		public int compareTo(PriorityQueueNode<T> o) {
+		public int compareTo(PriorityQueueNode o) {
 			// Remember that a numerically smaller priority
 			// is actually considered larger in priority
 			// queue terms. Also recall that we are using a
@@ -164,4 +168,4 @@ public class MinHeapPriorityQueue<T> implements PriorityQueue<T> {
 	}
 
 }
-}
+

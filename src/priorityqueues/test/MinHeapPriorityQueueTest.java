@@ -230,7 +230,7 @@ public class MinHeapPriorityQueueTest {
 		try {
 			String[] strings = {"Karathodori", "Stergiou", "Tasou", "Pipinis", "Papandreou", "Mitsotakis"};
 			for (int i = 0; i < strings.length; i++)
-				greekNamesQueue.enqueue(strings[i], strings.length - i);
+				greekNamesQueue.enqueue(strings[i], strings.length - i); // Reverse order of priority. such that Mitsotakis is first.
 			Iterator<String> it = greekNamesQueue.iterator();
 			assertTrue("Since we have some elements in the MinHeapPriorityQueue, the iterator's hasNext()" +
 					" method should return true.", it.hasNext());
@@ -240,13 +240,7 @@ public class MinHeapPriorityQueueTest {
 				assertEquals("The iterator's next() method did not return the expected element.", strings[i], it.next());
 			assertFalse("After looping through all the elements with next(), the iterator's hasNext() method" +
 					" should return false.", it.hasNext());
-			it = greekNamesQueue.iterator(); // reset iterator
 
-			it.next();
-			it.remove();
-
-			for (int i = strings.length - 2; i > -1; i--) // Above zero, since we removed one element
-				assertEquals("The iterator's next() method did not return the expected element.", strings[i], it.next());
 			greekNamesQueue.clear();
 
 			// Now we will also check iterations over a queue that has

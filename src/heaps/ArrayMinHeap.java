@@ -194,7 +194,7 @@ public class ArrayMinHeap<T extends Comparable<T>> implements MinHeap<T> {
 
 	@Override
 	public Iterator<T> iterator() {
-		return new ArrayMinHeapIterator<T>();
+		return new ArrayMinHeapIterator();
 	}
 	
 	/**
@@ -202,15 +202,15 @@ public class ArrayMinHeap<T extends Comparable<T>> implements MinHeap<T> {
 	 * @author Jason Filippou (jasonfil@cs.umd.edu)	 
 	 * @param <T2> the type of element accessed by the Iterator.
 	 */
-	class ArrayMinHeapIterator<T2 extends Comparable<T2>> implements Iterator<T2>{
+	class ArrayMinHeapIterator implements Iterator<T>{
 
-		private MinHeap<T2> tempHeap;
+		private MinHeap<T> tempHeap;
 
 		public ArrayMinHeapIterator(){
-			tempHeap = new ArrayMinHeap<T2>();
+			tempHeap = new ArrayMinHeap<T>();
 			for(Object el: data)
 				if(el != null) // Recall that an array-based Heap might have null references...
-					tempHeap.insert((T2)el);
+					tempHeap.insert((T)el);
 			modificationFlag = false;
 		}
 
@@ -220,17 +220,17 @@ public class ArrayMinHeap<T extends Comparable<T>> implements MinHeap<T> {
 		}
 
 		@Override
-		public T2 next() throws ConcurrentModificationException, NoSuchElementException{
+		public T next() throws ConcurrentModificationException, NoSuchElementException{
 			if(modificationFlag)
 				throw new ConcurrentModificationException("next(): "
 						+ "attempted to traverse the heap through an Iterator after extraneous modifications.");
-			T2 retVal = null;
+			T retVal = null;
 			try {
 				retVal = tempHeap.deleteMin();
 			} catch(EmptyHeapException e){
 				throw new NoSuchElementException("next(): heap is empty."); 
 			}
-			return (T2) retVal;
+			return retVal;
 		}
 
 		/**

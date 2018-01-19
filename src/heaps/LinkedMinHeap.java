@@ -296,19 +296,19 @@ public class LinkedMinHeap<T extends Comparable<T>> implements MinHeap<T> {
 
 	@Override
 	public Iterator<T> iterator() {
-		return new LinkedMinHeapIterator<T>();
+		return new LinkedMinHeapIterator();
 	}
 	
-	class LinkedMinHeapIterator<T2 extends Comparable<T2>> implements Iterator<T2>{
+	class LinkedMinHeapIterator implements Iterator<T>{
 	
-		private MinHeap<T2> tempHeap;
+		private MinHeap<T> tempHeap;
 		
 		@SuppressWarnings("unchecked")
 		
 		public LinkedMinHeapIterator(){ // The meat
-			tempHeap = new LinkedMinHeap<T2>();
+			tempHeap = new LinkedMinHeap<T>();
 			if(root != null)
-				root.gatherAllElements((MinHeap<T>) tempHeap);
+				root.gatherAllElements(tempHeap);
 			modificationFlag = false;
 		}
 		
@@ -318,11 +318,11 @@ public class LinkedMinHeap<T extends Comparable<T>> implements MinHeap<T> {
 		}
 
 		@Override
-		public T2 next() throws ConcurrentModificationException, NoSuchElementException {
+		public T next() throws ConcurrentModificationException, NoSuchElementException {
 			if(modificationFlag)
 				throw new ConcurrentModificationException("next():"
 						+ " cannot traverse the LinkedMaxHeap through an iterator after externally modifying it.");
-			T2 retVal = null;
+			T retVal = null;
 			try {
 				retVal = tempHeap.deleteMin();
 			} catch (EmptyHeapException e) {

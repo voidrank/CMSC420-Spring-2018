@@ -42,9 +42,9 @@ public class LinearPriorityQueueTest {
     public void testLinearPQClear() {
         try {
             greekNamesQueue.enqueue("Alexandrou", 8);
-        greekNamesQueue.clear();
-        assertTrue("After clearing, a LinearPriorityQueue should be empty.", greekNamesQueue.isEmpty());
-        assertEquals("After clearing, a LinearPriorityQueue's size should be 0.", 0, greekNamesQueue.size());
+            greekNamesQueue.clear();
+            assertTrue("After clearing, a LinearPriorityQueue should be empty.", greekNamesQueue.isEmpty());
+            assertEquals("After clearing, a LinearPriorityQueue's size should be 0.", 0, greekNamesQueue.size());
         } catch (InvalidPriorityException ignored) {
             fail(INVALID_PRIORITY_MSG);
         }
@@ -57,13 +57,13 @@ public class LinearPriorityQueueTest {
             greekNamesQueue.enqueue("Alexandrou", 3);
             greekNamesQueue.enqueue("Costakis", 1);
 
-        try {
-            assertEquals("LinearPriorityQueue.getFirst() did not return the correct element.",
-                    "Costakis", greekNamesQueue.getFirst());
-        } catch (EmptyPriorityQueueException ignored) {
-            fail("Since the queue was not empty upon call to LinearPriorityQueue.getFirst(), an " +
-                    "EmptyPriorityQueueException should not have been thrown.");
-        }
+            try {
+                assertEquals("LinearPriorityQueue.getFirst() did not return the correct element.",
+                        "Costakis", greekNamesQueue.getFirst());
+            } catch (EmptyPriorityQueueException ignored) {
+                fail("Since the queue was not empty upon call to LinearPriorityQueue.getFirst(), an " +
+                        "EmptyPriorityQueueException should not have been thrown.");
+            }
         } catch (InvalidPriorityException ignored) {
             fail(INVALID_PRIORITY_MSG);
         }
@@ -73,13 +73,14 @@ public class LinearPriorityQueueTest {
     public void testLinearPQInvalidPriorities() {
         try {
             greekNamesQueue.enqueue("Grigoris", 0);
-        } catch(InvalidPriorityException exc) {
+        } catch (InvalidPriorityException exc) {
             // ok, expected behavior.
-        }catch (Throwable t) {
+        } catch (Throwable t) {
 
             fail("When enqueueing an element with priority -1, we expected an InvalidPriorityException, "
-                + "but we instead got a " + t.getClass() + " with message: " + t.getMessage() + ".");
-        }try {
+                    + "but we instead got a " + t.getClass() + " with message: " + t.getMessage() + ".");
+        }
+        try {
             greekNamesQueue.enqueue("Grigoris", -1);
         } catch (InvalidPriorityException ignored) {
             // ok, expected behavior.
@@ -96,16 +97,16 @@ public class LinearPriorityQueueTest {
             greekNamesQueue.enqueue("Alexandrou", 1);
             greekNamesQueue.enqueue("Costakis", 1);
 
-        try {
-            assertEquals("LinearPriorityQueue.getFirst() did not return the correct element. " +
-                    "Are you treating same priorities correctly?", "Filippou", greekNamesQueue.getFirst());
-        } catch (EmptyPriorityQueueException ignored) {
-            fail("Since the queue was not empty upon call to LinearPriorityQueue.getFirst(), an " +
-                    "EmptyPriorityQueueException should not have been thrown.");
+            try {
+                assertEquals("LinearPriorityQueue.getFirst() did not return the correct element. " +
+                        "Are you treating same priorities correctly?", "Filippou", greekNamesQueue.getFirst());
+            } catch (EmptyPriorityQueueException ignored) {
+                fail("Since the queue was not empty upon call to LinearPriorityQueue.getFirst(), an " +
+                        "EmptyPriorityQueueException should not have been thrown.");
+            }
+        } catch (InvalidPriorityException ignored) {
+            fail(INVALID_PRIORITY_MSG);
         }
-    } catch (InvalidPriorityException ignored) {
-        fail(INVALID_PRIORITY_MSG);
-    }
     }
 
     @Test
@@ -196,32 +197,31 @@ public class LinearPriorityQueueTest {
     @Test
     public void testLinearPQManyDequeues() {
 
-            List<Integer> priorities = IntStream.range(1, MAX_PRIORITY + 1).boxed().collect(Collectors.toList());
-            Collections.shuffle(priorities, r);
+        List<Integer> priorities = IntStream.range(1, MAX_PRIORITY + 1).boxed().collect(Collectors.toList());
+        Collections.shuffle(priorities, r);
 
-                priorities.forEach(pr -> {
-                            try {
-                                doubles.enqueue(r.nextDouble(), pr);
-                            } catch (InvalidPriorityException ignored) { //
-                                fail(INVALID_PRIORITY_MSG);
-                            } // Insert a bunch of doubles with randomly shuffled priorities
-                });
+        priorities.forEach(pr -> {
+            try {
+                doubles.enqueue(r.nextDouble(), pr);
+            } catch (InvalidPriorityException ignored) { //
+                fail(INVALID_PRIORITY_MSG);
+            } // Insert a bunch of doubles with randomly shuffled priorities
+        });
 
-            for (int cnt = 0; cnt < MAX_PRIORITY ; cnt++) {
-                try {
-                    doubles.dequeue();
-                } catch (Throwable t) {
-                    fail("During the dequeueing of element #" + cnt + ", we caught a " + t.getClass().getSimpleName()
-                            + " with message " + t.getMessage());
-                }
+        for (int cnt = 0; cnt < MAX_PRIORITY; cnt++) {
+            try {
+                doubles.dequeue();
+            } catch (Throwable t) {
+                fail("During the dequeueing of element #" + cnt + ", we caught a " + t.getClass().getSimpleName()
+                        + " with message " + t.getMessage());
             }
-            assertEquals("After dequeueing all the elements of the LinearPriorityQueue, its size should be 0.",
-                    0, doubles.size());
-            assertTrue("After dequeueing all the elements of the LinearPriorityQueue, its size should be 0.",
-                    doubles.isEmpty());
+        }
+        assertEquals("After dequeueing all the elements of the LinearPriorityQueue, its size should be 0.",
+                0, doubles.size());
+        assertTrue("After dequeueing all the elements of the LinearPriorityQueue, its size should be 0.",
+                doubles.isEmpty());
 
     }
-
 
 
     @Test
@@ -229,9 +229,9 @@ public class LinearPriorityQueueTest {
         try {
             String[] strings = {"Karathodori", "Stergiou", "Tasou", "Pipinis", "Papandreou", "Mitsotakis"};
             for (int i = 0; i < strings.length; i++)
-                greekNamesQueue.enqueue(strings[i], strings.length - i);
+                greekNamesQueue.enqueue(strings[i], strings.length - i); // Reverse order of priority. such that Mitsotakis is first.
             Iterator<String> it = greekNamesQueue.iterator();
-            assertTrue("Since we have some elements in the LinearPriorityQueue, the iterator's hasNext()" +
+            assertTrue("Since we have some elements in the MinHeapPriorityQueue, the iterator's hasNext()" +
                     " method should return true.", it.hasNext());
 
 
@@ -239,13 +239,7 @@ public class LinearPriorityQueueTest {
                 assertEquals("The iterator's next() method did not return the expected element.", strings[i], it.next());
             assertFalse("After looping through all the elements with next(), the iterator's hasNext() method" +
                     " should return false.", it.hasNext());
-            it = greekNamesQueue.iterator(); // reset iterator
 
-            it.next();
-            it.remove();
-
-            for (int i = strings.length - 2; i > -1; i--) // Above zero, since we removed one element
-                assertEquals("The iterator's next() method did not return the expected element.", strings[i], it.next());
             greekNamesQueue.clear();
 
             // Now we will also check iterations over a queue that has
@@ -280,14 +274,15 @@ public class LinearPriorityQueueTest {
             try {
                 it.next();
             } catch (ConcurrentModificationException cmeThrown) {
-                    cme = cmeThrown;
+                cme = cmeThrown;
             } catch (Throwable t) {
                 fail("Instead of a ConcurrentModificationException, we were thrown a " + t.getClass().getSimpleName() +
                         " with message: " + t.getMessage() + ".");
             }
-            assertNotNull("LinearPQ Iterator should have thrown a ConcurrentModificationException. ", cme);
-        }catch(InvalidPriorityException ignored){
+            assertNotNull("MinHeapPQ Iterator should have thrown a ConcurrentModificationException. ", cme);
+        } catch (InvalidPriorityException ignored) {
             fail(INVALID_PRIORITY_MSG);
         }
     }
 }
+
