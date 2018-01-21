@@ -48,7 +48,7 @@ public interface Tree<T> extends Iterable<T> {
 	/**
 	 * Generates a preorder traversal for the tree.
 	 * @return An iterator which traverses the tree in preorder
-	 * fashion. (left subtree-&gt; node -&gt; right subtree).
+	 * fashion. (node -&gt; left subtree-&gt; right subtree).
 	 * @throws EmptyTreeException if the tree is empty.
 	 */
 	public Iterator<T> preorder() throws EmptyTreeException;
