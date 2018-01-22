@@ -109,10 +109,10 @@ public class CircularArrayFIFOQueue<T> implements FIFOQueue<T> {
 
 	@Override
 	public Iterator<T> iterator() {
-		return new CircularArrayQueueIterator<T>();
+		return new CircularArrayQueueIterator();
 	}
 
-	class CircularArrayQueueIterator<T2> implements Iterator<T2>{
+	class CircularArrayQueueIterator implements Iterator<T>{
 
 		private int current;
 		boolean calledNextOnce; // This is needed for delete().
@@ -128,13 +128,13 @@ public class CircularArrayFIFOQueue<T> implements FIFOQueue<T> {
 		}
 
 		@Override
-		public T2 next() throws ConcurrentModificationException{
+		public T next() throws ConcurrentModificationException{
 			if(modificationFlag)
 				throw new ConcurrentModificationException("next(): Attempted to traverse queue after element removal.");
 			calledNextOnce = true;
 			T retVal = data[current];
 			current = (current + 1) % data.length; // May wrap around; it's ok
-			return (T2) retVal;
+			return  retVal;
 		}
 
 		@Override

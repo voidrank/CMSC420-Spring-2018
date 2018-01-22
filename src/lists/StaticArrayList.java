@@ -250,10 +250,10 @@ public class StaticArrayList<T> implements List<T> {
 	 */
 	@Override
 	public Iterator<T> iterator() {
-		return new StaticArrayListIterator<T>();
+		return new StaticArrayListIterator();
 	}
 
-	class StaticArrayListIterator<T2> implements Iterator<T2>{
+	class StaticArrayListIterator implements Iterator<T>{
 
 		private int currentIndex = 0;
 		private int previous = 0;
@@ -268,11 +268,11 @@ public class StaticArrayList<T> implements List<T> {
 		}
 
 		@Override
-		public T2 next() throws ConcurrentModificationException{
+		public T next() throws ConcurrentModificationException{
 			if(modificationFlag)
 				throw new ConcurrentModificationException("next(): Attempted to traverse a list after removal.");
 			previous = currentIndex;
-			return (T2) data[currentIndex++];
+			return  data[currentIndex++];
 		}
 
 		@Override

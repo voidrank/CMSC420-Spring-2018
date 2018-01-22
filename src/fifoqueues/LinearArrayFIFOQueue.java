@@ -131,10 +131,10 @@ public class LinearArrayFIFOQueue<T> implements FIFOQueue<T> {
 
 	@Override
 	public Iterator<T> iterator() {
-		return new LinearArrayQueueIterator<T>();
+		return new LinearArrayQueueIterator();
 	}
 
-	class LinearArrayQueueIterator<T2> implements Iterator<T2>{
+	class LinearArrayQueueIterator implements Iterator<T>{
 
 		private int current;
 		
@@ -149,10 +149,10 @@ public class LinearArrayFIFOQueue<T> implements FIFOQueue<T> {
 		}
 
 		@Override
-		public T2 next() throws ConcurrentModificationException{
+		public T next() throws ConcurrentModificationException{
 			if(modificationFlag)
 				throw new ConcurrentModificationException("next(): Attempted to traverse queue after element removal.");
-			return (T2)data[current++];
+			return data[current++];
 		}
 
 		@Override

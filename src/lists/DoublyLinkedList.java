@@ -20,7 +20,7 @@ import java.util.NoSuchElementException;
 public class DoublyLinkedList<T> extends LinkedList<T>{
 
 
-	private DoublyLinkedNode<T> head;
+	private DoublyLinkedNode head;
 	
 	public DoublyLinkedList(){
 		size = 0;
@@ -56,19 +56,19 @@ public class DoublyLinkedList<T> extends LinkedList<T>{
 
 	@Override
 	public Iterator<T> iterator(){
-		return new DoublyLinkedListIterator<T>();
+		return new DoublyLinkedListIterator();
 	}
 
 	/* Inner class which implements a fail-fast iterator
 	 * for DoublyLinkedLists.*/
 	@SuppressWarnings("unchecked")
-	class DoublyLinkedListIterator<T2> implements Iterator<T2> {
+	class DoublyLinkedListIterator implements Iterator<T> {
 		
-		private DoublyLinkedNode<T2> current;
+		private DoublyLinkedNode current;
 		private boolean fullCircle;
 
 		public DoublyLinkedListIterator(){
-			current = (DoublyLinkedNode<T2>)head;
+			current = head;
 			modificationFlag = false;
 			fullCircle = false;
 		}
@@ -77,12 +77,12 @@ public class DoublyLinkedList<T> extends LinkedList<T>{
 			return current != null && !fullCircle;
 		}
 
-		public T2 next()  throws ConcurrentModificationException, NoSuchElementException{
+		public T next()  throws ConcurrentModificationException, NoSuchElementException{
 			if(modificationFlag)
 				throw new ConcurrentModificationException("next(): List was modified while traversing it through iterator.");
 			if(fullCircle)
 				throw new NoSuchElementException("next(): Iterator exhausted elements.");
-			T2 currData = current.getData();
+			T currData = current.getData();
 			current = current.next;
 			if(current == head)				
 				fullCircle = true;
@@ -99,7 +99,7 @@ public class DoublyLinkedList<T> extends LinkedList<T>{
 				fullCircle = true;
 			} else {
 				if(current.previous == head) // Special case where we need to update head as well.
-					head = (DoublyLinkedNode<T>) current;
+					head =  current;
 				current.previous.previous.next = current;
 				current.previous = current.previous.previous;	
 			}
@@ -112,7 +112,7 @@ public class DoublyLinkedList<T> extends LinkedList<T>{
 	public void pushBack(T element){
 		modificationFlag = true; // will always push back.
 		if(head == null){ // recall that "head" is a "protected" data member
-			head = new DoublyLinkedNode<T>(element);
+			head = new DoublyLinkedNode(element);
 			head.next = head;
 			head.previous = head;
 			size++;
@@ -121,7 +121,7 @@ public class DoublyLinkedList<T> extends LinkedList<T>{
 		/* Inserting at the end of a DoublyLinkedLinearList is faster
 		 * than in the case of a LinkedLinearList.
 		 */
-		DoublyLinkedNode<T> newNode = new DoublyLinkedNode<T>(element, head.previous, head);
+		DoublyLinkedNode newNode = new DoublyLinkedNode(element, head.previous, head);
 		newNode.previous.next = newNode;
 		newNode.next.previous = newNode; 
 		size++;
@@ -132,13 +132,13 @@ public class DoublyLinkedList<T> extends LinkedList<T>{
 	public void pushFront(T element){
 		modificationFlag = true; // will always push front.
 		if(head == null){
-			head = new DoublyLinkedNode<T>(element);
+			head = new DoublyLinkedNode(element);
 			head.next = head;
 			head.previous = head;
 			size++;
 			return;
 		}
-		DoublyLinkedNode<T> newNode = new DoublyLinkedNode<T>(element, head.previous, head);
+		DoublyLinkedNode newNode = new DoublyLinkedNode(element, head.previous, head);
 		newNode.previous.next = newNode;
 		newNode.next.previous = newNode;
 		head = newNode; // Touching head reference.
@@ -175,7 +175,7 @@ public class DoublyLinkedList<T> extends LinkedList<T>{
 		if(index < 0 || index >= size())
 			throw new IllegalListAccessException("get(): index of " + index + " is out-of-bounds for this List.");
 		int counter = 0;
-		DoublyLinkedNode<T> current = head;
+		DoublyLinkedNode current = head;
 		// We can optimize the search to go forward or backward depending
 		// on whether the index of the element to be found is above or below
 		// the mid-point of the list.
@@ -195,7 +195,7 @@ public class DoublyLinkedList<T> extends LinkedList<T>{
 	public boolean contains(T element){
 		if(head == null)
 			return false;
-		DoublyLinkedNode<T> current = head;
+		DoublyLinkedNode current = head;
 		while(current.next != head){ // Iterate up until one node before the head
 			if(current.getData().equals(element))
 				return true;
@@ -208,7 +208,7 @@ public class DoublyLinkedList<T> extends LinkedList<T>{
 
 	@Override
 	public boolean delete(T element){
-		DoublyLinkedNode<T> current = head;
+		DoublyLinkedNode current = head;
 		while(current.next != head){ // Again, iterate until one node before the head.
 			if(current.getData().equals(element)){
 				if(current == head){// Special case of head of the list
@@ -271,7 +271,7 @@ public class DoublyLinkedList<T> extends LinkedList<T>{
 			size--;
 			return;
 		}
-		DoublyLinkedNode<T> current = head;
+		DoublyLinkedNode current = head;
 		for(int i = 0; i < index; i++)
 			current = current.next;
 		current.previous.next = current.next;
@@ -283,7 +283,7 @@ public class DoublyLinkedList<T> extends LinkedList<T>{
 	@Override 
 	public String toString(){
 		String retVal = "[";
-		DoublyLinkedNode<T> current = head;
+		DoublyLinkedNode current = head;
 		while(current.next != head){
 			retVal += current.getData();
 			retVal += ", ";
@@ -297,32 +297,32 @@ public class DoublyLinkedList<T> extends LinkedList<T>{
 	/* Inner class which describes the type of node held by a
 	 * DoublyLinked list.
 	 */
-	private class DoublyLinkedNode<Type>{
+	private class DoublyLinkedNode{
 
-		Type data;
-		public DoublyLinkedNode<Type> previous, next;
+		T data;
+		public DoublyLinkedNode previous, next;
 
 		/* Constructors... */
-		public DoublyLinkedNode(Type data, DoublyLinkedNode<Type> previous, DoublyLinkedNode<Type> next){
+		public DoublyLinkedNode(T data, DoublyLinkedNode previous, DoublyLinkedNode next){
 			this.data = data;
 			this.next = next;
 			this.previous = previous;
 		}
 
-		public DoublyLinkedNode(Type data, DoublyLinkedNode<Type> previous){
+		public DoublyLinkedNode(T data, DoublyLinkedNode previous){
 			this(data, previous, null);
 		}
 
-		public DoublyLinkedNode(Type data){
+		public DoublyLinkedNode(T data){
 			this(data, null);
 		}
 
 		@SuppressWarnings("unused")
-		public void setData(Type data){
+		public void setData(T data){
 			this.data = data;
 		}
 
-		public Type getData(){
+		public T getData(){
 			return data;
 		}
 	};

@@ -21,7 +21,7 @@ import java.util.Iterator;
  */
 public class LinkedBinarySearchTree<T extends Comparable<T>>  implements BinarySearchTree<T>{
 
-	protected Node<T> root;
+	protected LinkedBSTNode root;
 	protected int count; // To facilitate size queries.
 
 	/**
@@ -137,10 +137,10 @@ public class LinkedBinarySearchTree<T extends Comparable<T>>  implements BinaryS
 		ArrayList<T> elementList = new ArrayList<T>();
 		try {
 
-			LinkedFIFOQueue<Node<T>> nodeQueue = new LinkedFIFOQueue<Node<T>>();
+			LinkedFIFOQueue<LinkedBSTNode> nodeQueue = new LinkedFIFOQueue<LinkedBSTNode>();
 			nodeQueue.enqueue(root);
 			while(!nodeQueue.isEmpty()){
-				Node<T> current = nodeQueue.dequeue();
+				LinkedBSTNode current = nodeQueue.dequeue();
 				elementList.add(current.getElement());
 				if(current.left != null)
 					nodeQueue.enqueue(current.left);
@@ -157,7 +157,7 @@ public class LinkedBinarySearchTree<T extends Comparable<T>>  implements BinaryS
 	public T getMin() throws EmptyTreeException{
 		if(root == null)
 			throw new EmptyTreeException("getMin(): tree is empty.");
-		Node<T> current = root;
+		LinkedBSTNode current = root;
 		while(current.getLeft() != null)
 			current = current.getLeft();
 		return current.getElement();
@@ -168,7 +168,7 @@ public class LinkedBinarySearchTree<T extends Comparable<T>>  implements BinaryS
 	public T getMax() throws EmptyTreeException {
 		if(root == null)
 			throw new EmptyTreeException("getMax(): tree is empty.");
-		Node<T> current = root;
+		LinkedBSTNode current = root;
 		while(current.getRight() != null)
 			current = current.getRight();
 		return current.getElement();
@@ -195,7 +195,7 @@ public class LinkedBinarySearchTree<T extends Comparable<T>>  implements BinaryS
 	@Override
 	public void add(T element) {
 		if(root == null)
-			root = new Node<T>(element);
+			root = new LinkedBSTNode(element);
 		else
 			root.add(element);
 		count++;
@@ -221,41 +221,33 @@ public class LinkedBinarySearchTree<T extends Comparable<T>>  implements BinaryS
 		return root.height();
 	}
 
-	/* The book complicates things unnecessarily here, because it also assumes the
-	 * BinaryTree class which has a Node type of its own, declared protected and extended
-	 * by the node type of this class. We ditchthe idea of a non-search BinaryTree altogether 
-	 * because we find it unrealistic in practice (it does not allow for a well-defined way to 
-	 * insert or delete elements,rather it depends on combining "singleton" trees).
-	 * 
-	 * All methods that require some sort of depth-getFirst traversal will be implemented as methods
-	 * of the Node<T> class.
-	 */
-	protected class Node<Type extends Comparable<Type>>{
-		protected Type data;
-		protected Node<Type> left, right;
 
-		public Node(Type element){
+	protected class LinkedBSTNode{
+		protected T data;
+		protected LinkedBSTNode left, right;
+
+		public LinkedBSTNode(T element){
 			data = element;
 			left = right = null;
 		}
 
-		public Node<Type> getLeft(){
+		public LinkedBSTNode getLeft(){
 			return left;
 		}
 
-		public Node<Type> getRight(){
+		public LinkedBSTNode getRight(){
 			return right;
 		}
 
-		public void setLeft(Node<Type> left){
+		public void setLeft(LinkedBSTNode left){
 			this.left = left;
 		}
 
-		public void setRight(Node<Type> right){
+		public void setRight(LinkedBSTNode right){
 			this.right = right;
 		}
 
-		public Type getElement(){
+		public T getElement(){
 			return data;
 		}
 
@@ -268,9 +260,9 @@ public class LinkedBinarySearchTree<T extends Comparable<T>>  implements BinaryS
 			return count;
 		}
 
-		public Type find(Type element){
+		public T find(T element){
 			// Preorder traversal makes most sense when wanting to find an element.
-			Type retVal = null;
+			T retVal = null;
 			if(data.compareTo(element) == 0)
 				retVal = data;
 			else // Check recursively over elements. Could be null, eventually.
@@ -283,13 +275,13 @@ public class LinkedBinarySearchTree<T extends Comparable<T>>  implements BinaryS
 
 		/* Binary search trees allow us to insert nodes at specific places. The
 		 * new node inserted will always be a leaf node.*/
-		public void add(Type element){
+		public void add(T element){
 
 			// Case 1: If the element to insert is smaller than the currently encountered
 			// node, insert it at the left subtree of the node.
 			if(element.compareTo(data) < 0){
 				if(left == null)
-					left = new Node<Type>(element);
+					left = new LinkedBSTNode(element);
 				else
 					left.add(element);
 
@@ -297,7 +289,7 @@ public class LinkedBinarySearchTree<T extends Comparable<T>>  implements BinaryS
 				// encountered node, insert it at the right subtree of the node.
 			} else if(element.compareTo(data) >= 0){
 				if(right == null)
-					right = new Node<Type>(element);
+					right = new LinkedBSTNode(element);
 				else
 					right.add(element);
 			}
@@ -306,23 +298,23 @@ public class LinkedBinarySearchTree<T extends Comparable<T>>  implements BinaryS
 		/* The following method removes a specific node from the tree
 		 * and returns the node that replaces it. It is recursive in nature.
 		 */
-		public Node<Type> remove(Type element){
-			Node<Type> retVal = this;
+		public LinkedBSTNode remove(T element){
+			LinkedBSTNode retVal = this;
 			if(element.compareTo(data) == 0){// Current node should be removed
 
-				// Case #1: Node is a leaf: return null.
+				// Case #1: LinkedBSTNode is a leaf: return null.
 				if(left == null && right == null)
 					retVal = null;
 
-				// Case #2: Node is a pre-leaf with left child null: return the right child.
+				// Case #2: LinkedBSTNode is a pre-leaf with left child null: return the right child.
 				else if(left == null && right != null)
 					retVal = right;
 
-				// Case #3: Node is a pre-leaf with right child null: return the left child.
+				// Case #3: LinkedBSTNode is a pre-leaf with right child null: return the left child.
 				else if(left != null && right == null)
 					retVal = left;
 
-				// Case #4: Node is an inner node with rooted subtrees. Find its inorder successor
+				// Case #4: LinkedBSTNode is an inner node with rooted subtrees. Find its inorder successor
 				//		and replace the node with it. Set the left child to whatever was left before
 				//		and the right child to whatever was right before.
 				else {
@@ -341,8 +333,8 @@ public class LinkedBinarySearchTree<T extends Comparable<T>>  implements BinaryS
 		}
 
 		// The inorder successor of an inner node is the leftmost node of its right subtree.
-		private Node<Type> getInorderSuccessor(){
-			Node<Type> current = right;
+		private LinkedBSTNode getInorderSuccessor(){
+			LinkedBSTNode current = right;
 			while(current.left != null)
 				current = current.left;
 			right.remove(current.getElement()); // The successor is a leaf node, so it boils down to a previous case.
@@ -351,7 +343,7 @@ public class LinkedBinarySearchTree<T extends Comparable<T>>  implements BinaryS
 
 		/* Preorder, inorder and postorder traversal methods. */
 
-		public void preorderTraversal(ArrayList<Type> elements){
+		public void preorderTraversal(ArrayList<T> elements){
 			elements.add(data);
 			if(left != null)
 				left.preorderTraversal(elements);
@@ -359,7 +351,7 @@ public class LinkedBinarySearchTree<T extends Comparable<T>>  implements BinaryS
 				right.preorderTraversal(elements);
 		}
 
-		public void inorderTraversal(ArrayList<Type> elements){
+		public void inorderTraversal(ArrayList<T> elements){
 			if(left != null)
 				left.inorderTraversal(elements);
 			elements.add(data);
@@ -367,7 +359,7 @@ public class LinkedBinarySearchTree<T extends Comparable<T>>  implements BinaryS
 				right.inorderTraversal(elements);
 		}
 
-		public void postorderTraversal(ArrayList<Type> elements){
+		public void postorderTraversal(ArrayList<T> elements){
 			if(left != null)
 				left.postorderTraversal(elements);
 			if(right != null)

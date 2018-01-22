@@ -21,7 +21,7 @@ import java.util.Iterator;
  */
 public class LinkedList<T> implements List<T> {
 
-	private Node<T> head; // head of the list
+	private LinkedListNode head; // head of the list
 	protected boolean modificationFlag; // helps with fail-fast iteration
 
 	// Keeping a count of the number of list elements as we insert
@@ -48,7 +48,7 @@ public class LinkedList<T> implements List<T> {
 
 	@Override
 	public Iterator<T> iterator() {
-		return new LinkedListIterator<T>();
+		return new LinkedListIterator();
 	}
 
 	/* Inner class which implements a fail-fast Iterator.
@@ -56,24 +56,24 @@ public class LinkedList<T> implements List<T> {
 	 */
 
 	@SuppressWarnings("unchecked")
-	class LinkedListIterator<T2> implements Iterator<T2>{
+	class LinkedListIterator implements Iterator<T>{
 		
-		private Node<T2> current, previous; 
+		private LinkedListNode current, previous;
 		
 		public LinkedListIterator(){
 			modificationFlag = false;
-			previous = (Node<T2>) null;
-			current = (Node<T2>) head;
+			previous =  null;
+			current = head;
 		}
 
 		public boolean hasNext(){
 			return current != null;
 		}
 
-		public T2 next() throws ConcurrentModificationException{
+		public T next() throws ConcurrentModificationException{
 			if(modificationFlag) // fail fast
 				throw new ConcurrentModificationException("next(): Attempted to traverse a list after removal.");
-			T2 currData = current.getData();
+			T currData = current.getData();
 			previous = current;
 			current = current.next;
 			return currData;
@@ -87,22 +87,21 @@ public class LinkedList<T> implements List<T> {
 				throw new IllegalStateException("Need at least one call to next() before attempting removal.");
 		}
 		
-		private void removeNodeAt(Node<T2> target){
+		private void removeNodeAt(LinkedListNode target){
 			if(target == head)
 				head = head.next;
 			else{
-				Node<T2> iterator = (Node<T2>)head;
+				LinkedListNode iterator = head;
 				while(iterator.next != target)
 					iterator = iterator.next;
 				iterator.next = target.next;
 			}
 		}
-	};
+	}
 
 	@Override
 	public void pushFront(T element) {
-		Node<T> newHead = new Node<T>(element, head);
-		head = newHead;
+		head  = new LinkedListNode(element, head); // new head points to the old head
 		size++;
 		modificationFlag = true;
 	}
@@ -110,14 +109,14 @@ public class LinkedList<T> implements List<T> {
 	@Override
 	public void pushBack(T element) {
 		if(head == null){
-			head = new Node<T>(element);
+			head = new LinkedListNode(element);
 			size++;
 			return;
 		}
-		Node<T> current = head;
+		LinkedListNode current = head;
 		while(current.next != null)
 			current = current.next;
-		current.next = new Node<T>(element);
+		current.next = new LinkedListNode(element);
 		size++;
 		modificationFlag = true;
 	}
@@ -156,7 +155,7 @@ public class LinkedList<T> implements List<T> {
 		if(index < 0 || index >= size())
 			throw new IllegalListAccessException("get(): Index of "+ index + " was beyond appropriate bounds.");
 		int currInd = 0;
-		Node<T> currNode = head;
+		LinkedListNode currNode = head;
 		while(currInd++ < index)
 			currNode = currNode.next;
 		return currNode.getData();
@@ -166,7 +165,7 @@ public class LinkedList<T> implements List<T> {
 	public boolean contains(T element) {
 		if(head == null)
 			return false;
-		Node<T> current = head;
+		LinkedListNode current = head;
 		while(current != null){ // Not current.next!
 			if(current.getData().equals(element))
 				return true;
@@ -179,7 +178,7 @@ public class LinkedList<T> implements List<T> {
 	public boolean delete(T element) {
 		// In this method, we will need to keep control of the previous node
 		// at every step of the iteration.
-		Node<T> previous = head, current = head;
+		LinkedListNode previous = head, current = head;
 		while(current != null){
 			if(current.getData().equals(element)){
 				if(current == head){// Special case of head of the list
@@ -211,7 +210,7 @@ public class LinkedList<T> implements List<T> {
 			modificationFlag = true;
 			return;
 		}
-		Node<T> previous = head, current = head;
+		LinkedListNode previous = head, current = head;
 		for(int i = 0; i < index; i++){
 			previous = current;
 			current = current.next;
@@ -257,7 +256,7 @@ public class LinkedList<T> implements List<T> {
 	@Override 
 	public String toString(){
 		String retVal = "[";
-		Node<T> current = head;
+		LinkedListNode current = head;
 		while(current != null){
 			retVal += current.getData();
 			if(current.next != null)
@@ -295,26 +294,26 @@ public class LinkedList<T> implements List<T> {
 		return true;
 	}
 
-	protected class Node<Type>{ // Using <Type> instead of <T> to suppress warnings about type shadowing.
+	protected class LinkedListNode{
 
-		public Node<Type> next; // We keep the "next" reference public for easy accessing.
-		protected Type data;
+		public LinkedListNode next; // We keep the "next" reference public for easy accessing.
+		protected T data;
 
 		/* Two constructors */
-		public Node(Type data, Node<Type> next){
+		public LinkedListNode(T data, LinkedListNode next){
 			this.data = data;
 			this.next = next;
 		}
 
-		public Node(Type data){ // This constructor is useful for placing a node at the end of the list (pushBack).
+		public LinkedListNode(T data){ // This constructor is useful for placing a node at the end of the list (pushBack).
 			this(data, null);
 		}
 
-		public Type getData(){
+		public T getData(){
 			return data;
 		}
 
-		public void setData(Type data){
+		public void setData(T data){
 			this.data = data;
 		}
 	}
