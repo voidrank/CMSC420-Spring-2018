@@ -1,8 +1,11 @@
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -43,6 +46,21 @@ public class Archiver {
         try {
             System.out.println(System.getProperty("user.dir"));
             String source = System.getProperty("user.dir");
+            File file = new File(source);
+            List<String> names = Arrays.asList(file.list());
+            if(! names.contains("src")) // Something is wrong. Try parent directory
+            {
+                System.out.println("Something is wrong with your project structure. Trying automatic fix");
+                source = source.substring(0, source.lastIndexOf("/")); // check parent dir
+                file = new File(source);
+                names = Arrays.asList(file.list());
+                if(! names.contains("src")) // Something is wrong.
+                {
+                    System.err.println("Automatic fix failed. Contact course TAs");
+                    System.exit(1);
+                }
+            }
+
             String zipTarget = source + ".zip";
             Files.deleteIfExists(FileSystems.getDefault().getPath(zipTarget));
             pack(source, zipTarget);
