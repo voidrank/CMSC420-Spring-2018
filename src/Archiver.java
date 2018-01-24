@@ -29,7 +29,7 @@ public class Archiver {
             Files.walk(pp)
                     .filter(path -> !Files.isDirectory(path) && (!path.toString().contains(".git")))
                     .forEach(path -> {
-                        ZipEntry zipEntry = new ZipEntry(pp.relativize(path).toString());
+                        ZipEntry zipEntry = new ZipEntry(pp.relativize(path).toString().replace("\\", "/"));
                         try {
                             zs.putNextEntry(zipEntry);
                             Files.copy(path, zs);
