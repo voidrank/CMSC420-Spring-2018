@@ -13,7 +13,7 @@ public class YitanTests {
 
     @Test
     public void easyTest(){
-        AVLGTree<Integer> intTree = new AVLGTree<>();
+        ThreadedAVLTree<Integer> intTree = new ThreadedAVLTree<>();
         assertTrue("The tree should be empty!", intTree.isEmpty());
         Assert.assertEquals("The tree should have a height of -1!", -1 , intTree.height());
         intTree.insert(8);
@@ -31,7 +31,7 @@ public class YitanTests {
 
     @Test
     public void tougherTest(){
-        AVLGTree<Integer> intTree = new AVLGTree<>();
+        ThreadedAVLTree<Integer> intTree = new ThreadedAVLTree<>();
         Integer[] arr = {50, 10, 56, 43, 25, 94, 20};
         for(Integer i:arr){
             try {

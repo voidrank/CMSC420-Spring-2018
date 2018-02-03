@@ -12,10 +12,10 @@ import static org.junit.Assert.*;
  * 
  * @author <a href="https://github.com/jasonfil" alt="Jason Filippou's GitHub page">Jason Filippou</a>
  */
-public class AVLGTreeTests {
+public class ThreadedAVLTreeTests {
 
-	private AVLGTree<Integer> intTree;
-	private AVLGTree<String> stringTree;
+	private ThreadedAVLTree<Integer> intTree;
+	private ThreadedAVLTree<String> stringTree;
 	private static final Integer ZERO = 0;
 	private static final int NUMS = 150;
 
@@ -24,8 +24,8 @@ public class AVLGTreeTests {
 	 */
 	@Before
 	public void setUp() {
-		intTree = new AVLGTree<Integer>();
-		stringTree = new AVLGTree<String>();
+		intTree = new ThreadedAVLTree<Integer>();
+		stringTree = new ThreadedAVLTree<String>();
 	}
 
 	@Test
@@ -64,7 +64,7 @@ public class AVLGTreeTests {
 				0, intTree.height());
 		assertEquals("Incorrect root key.", ZERO, intTree.getRoot());
 
-		// Look up the key through the lookup() method.
+		// Look up the key through the search() method.
 		assertEquals("Looking up the single inserted key in the tree failed.", 
 				ZERO, intTree.search(ZERO));
 
@@ -342,7 +342,7 @@ public class AVLGTreeTests {
 		 * *about the root* properly. We will first begin with a RL rotation:
 		 */
 
-		intTree = new AVLGTree<Integer>();
+		intTree = new ThreadedAVLTree<Integer>();
 		Integer[] keys1 = {ZERO, 5, 3}; 
 		for(Integer k: keys1)
 			intTree.insert(k);
@@ -362,7 +362,7 @@ public class AVLGTreeTests {
 				1, intTree.height());
 
 		/* And then also check LR rotations: */
-		stringTree = new AVLGTree<String>();
+		stringTree = new ThreadedAVLTree<String>();
 		String[] keys2 = {"gea", "beq", "car"};
 		for(String k: keys2)
 			stringTree.insert(k);
@@ -387,7 +387,7 @@ public class AVLGTreeTests {
 
 		/* Our goal will be to check whether students deal correctly with deletions
 		 * that should cause rotations as well as deletions that should not cause rotations.
-		 * After every deletion, we will also perform a lookup() operation to make sure the 
+		 * After every deletion, we will also perform a search() operation to make sure the
 		 * element cannot be found in the data structure. We are also interested in deleting
 		 * both inner nodes as well as leaf nodes (directly).
 		 * 
@@ -519,7 +519,7 @@ public class AVLGTreeTests {
 		 *   		 5	   10	
 		 */
 
-		intTree = new AVLGTree<Integer>();
+		intTree = new ThreadedAVLTree<Integer>();
 		keys = new Integer[]{10, 5, 15, 7};
 		for(Integer k: keys)
 			intTree.insert(k);
@@ -551,7 +551,7 @@ public class AVLGTreeTests {
 		 * 			Karen     Linda
 		 */
 
-		stringTree = new AVLGTree<String>();
+		stringTree = new ThreadedAVLTree<String>();
 		String[] keys2 = new String[]{"Karen", "Jake", "Linda", "Lauren"};
 		for(String k: keys2)
 			stringTree.insert(k);
@@ -589,7 +589,7 @@ public class AVLGTreeTests {
 		 *    Let's check whether it does:
 		 */
 
-		intTree = new AVLGTree<Integer>();
+		intTree = new ThreadedAVLTree<Integer>();
 		keys = new Integer[]{45, 20, 60, 10, 30, 50, 65, 25}; // Inserting them in this order guarantees the tree above.
 		for(Integer k : keys)
 			intTree.insert(k);
@@ -624,7 +624,7 @@ public class AVLGTreeTests {
 		 *   		  ar  dog  mad	rod
 		 */					
 
-		stringTree = new AVLGTree<String>();
+		stringTree = new ThreadedAVLTree<String>();
 		keys2 = new String[]{"kal", "bet", "rod", "ar", "dog", "mad", "zed", "nac"};
 		for(String k: keys2)
 			stringTree.insert(k);
@@ -652,7 +652,7 @@ public class AVLGTreeTests {
 		 *  			  25
 		 */
 
-		intTree = new AVLGTree<Integer>();
+		intTree = new ThreadedAVLTree<Integer>();
 		keys = new Integer[]{45, 20, 60, 10, 30, 50, 65, 25};
 		for(Integer k : keys)
  			intTree.insert(k);
@@ -707,7 +707,7 @@ public class AVLGTreeTests {
 		 *  					 62						
 		 */
 		
-		intTree = new AVLGTree<Integer>();
+		intTree = new ThreadedAVLTree<Integer>();
 		keys = new Integer[]{45, 25, 60, 10, 30, 50, 65, 62};
 		for(Integer k: keys)
 			intTree.insert(k);
@@ -797,7 +797,7 @@ public class AVLGTreeTests {
 						", the return value of delete() did not match the key. Instead, it was: " + retVal + ".",
 						collector.get(i), retVal);
 				assertTrue("In iteration " + i +", after deleting key " + retVal +
-						", lookup() determined the key to still exist inside the tree.", 
+						", search() determined the key to still exist inside the tree.",
 						intTree.search(retVal) == null);
 			}catch(Throwable t){
 				fail("Caught a " + t.getClass() + " with message: " + t.getMessage() + 
