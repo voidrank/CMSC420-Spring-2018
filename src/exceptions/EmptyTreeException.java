@@ -1,4 +1,4 @@
-package lists;
+package exceptions;
 
 /**
  * <p>A {@link Exception} thrown by tree-based data structures when the tree is empty.</p>
@@ -12,14 +12,13 @@ package lists;
  *
  * <p>You should <b>not</b> edit this class! It is given to you as a resource for your project.</p>
  *
- * @author  <a href="mailto:jasonfil@cs.umd.edu">Jason Filippou</a>
+ * @author <a href="https://github.com/jasonfil" alt="Jason Filippou's GitHub page">Jason Filippou</a>
  *
- * @see lists.EmptyListException
- * @see trees.EmptyTreeException
- * @see heaps.EmptyHeapException
+
  */
-public class EmptyListException extends Exception{
-	public EmptyListException(String msg){
-		super(msg); // Another way to ensure that the message is saved. Pretty straightforward.
+public class EmptyTreeException extends Exception{
+	public EmptyTreeException(String msg){
+		super(msg);
 	}
+
 }

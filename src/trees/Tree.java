@@ -1,4 +1,6 @@
 package trees;
+import exceptions.EmptyTreeException;
+
 import java.util.Iterator;
 
 /**

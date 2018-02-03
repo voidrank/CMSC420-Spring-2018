@@ -1,5 +1,7 @@
 package trees;
 
+import exceptions.EmptyTreeException;
+
 /**
  * <p>A <tt>BinarySearchTree</tt> is a {@link Tree} with a maximum of 2 children nodes per node
  * which allows for adding and removing nodes in a sorted manner. As such, it will extend
@@ -27,7 +29,7 @@ public interface BinarySearchTree<T extends Comparable<T>> extends Tree<T>{
 	 * (see description of the class), whereas general Trees do not.
 	 * @param element The element to insert.
 	 */
-	public void add(T element);
+	public void insert(T element);
 	
 	/**
 	 * Removes the specified element from the tree and returns it.

@@ -17,7 +17,7 @@ import java.util.ArrayList;
  *
  * <p>You should <b>not</b> edit this class! It is given to you as a resource for your project.</p>
 
- * @author  <a href="mailto:jasonfil@cs.umd.edu">Jason Filippou</a>
+ * @author <a href="https://github.com/jasonfil" alt="Jason Filippou's GitHub page">Jason Filippou</a>
  *
  *
  */
