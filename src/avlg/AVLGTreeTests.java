@@ -1,15 +1,16 @@
 package avlg;
 
+import exceptions.EmptyTreeException;
+import exceptions.InvalidBalanceException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.security.InvalidParameterException;
 import java.util.Collections;
 import java.util.LinkedList;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
 import java.util.stream.IntStream;
-import java.util.Collection;
 import static org.junit.Assert.*;
 
 /** A class containing jUnit tests to test the students' code with.
@@ -18,33 +19,53 @@ import static org.junit.Assert.*;
  */
 public class AVLGTreeTests {
 
-    private Collection<AVLGTree> trees;
+    private ArrayList<AVLGTree> trees;
     private static final int MAX_IMBALANCE=10;
     private static final Integer ZERO = 0;
     private static final int NUMS = 150;
-
+    AVLGTree<Integer> intAVL1Tree;
+    AVLGTree<String> stringAVL1Tree;
     /**
      * Set-up the trees that we will use for our tests.
      */
     @Before
     public void setUp() {
-       IntStream.rangeClosed(1, MAX_IMBALANCE).forEach(imb->trees.add(new AVLGTree<Integer>(imb)));
+        try {
+            IntStream.rangeClosed(1, MAX_IMBALANCE).forEach(imb ->
+            {
+                try {
+                    trees.add(new AVLGTree<Integer>(imb));
+                } catch (InvalidBalanceException i) {
+                    throw new RuntimeException(i.getMessage());
+                }
+            });
+            intAVL1Tree= new AVLGTree<>(1);
+            stringAVL1Tree = new AVLGTree<>(1);
+        } catch(InvalidBalanceException i){
+            fail("Caught an InvalidBalanceException with message: " + i.getMessage());
+        }
     }
-
     @Test
     public void easyTest(){
-        assertTrue("The tree should be empty!", AVLTrees[0].isEmpty());
-        assertEquals("The tree should have a height of -1!", -1 , AVLTrees[0].height());
-        AVLTrees[0].insert(8);
-        assertFalse("The tree should be empty!", AVLTrees[0].isEmpty());
-        assertEquals("The tree should have a height of 0!", 0, AVLTrees[0].height());
-        AVLTrees[0].delete(8);
-        assertTrue("The tree should be empty!", AVLTrees[0].isEmpty());
-        assertEquals("The tree should have a height of -1!", -1 , AVLTrees[0].height());
         try {
-            AVLTrees[0].delete(-1); // This shouldn't do anything, but it's interesting to investigate if it throws an exception
-        } catch(Throwable t) {
-            fail("Caught a " + t.getClass().getSimpleName() + " in easyTest(). The message was: " + t.getMessage() + ".");
+            assertTrue("The tree should be empty!", intAVL1Tree.isEmpty());
+            assertEquals("The tree should have a height of -1!", -1 , intAVL1Tree.height());
+            intAVL1Tree.insert(8);
+            assertFalse("The tree should be empty!", intAVL1Tree.isEmpty());
+            assertEquals("The tree should have a height of 0!", 0, intAVL1Tree.height());
+            intAVL1Tree.delete(8);
+            assertTrue("The tree should be empty!", intAVL1Tree.isEmpty());
+            assertEquals("The tree should have a height of -1!", -1 , intAVL1Tree.height());
+            try {
+                intAVL1Tree.delete(-1); // This shouldn't do anything, but it's interesting to investigate if it throws an exception
+            } catch(EmptyTreeException exc){
+                fail("Caught an EmptyTreeException when deleting a key that's not in the tree," +
+                        " and the tree itself non-empty. Message: " + exc.getMessage() + ".");
+            }catch(Throwable t) {
+                fail("Caught a " + t.getClass().getSimpleName() + " in easyTest(). The message was: " + t.getMessage() + ".");
+            }
+        }catch(EmptyTreeException exc){
+            fail("Caught an EmptyTreeException with message: " + exc.getMessage() + ".");
         }
     }
 
@@ -54,28 +75,32 @@ public class AVLGTreeTests {
      */
     @Test
     public void testEmptyAndStubTree(){
-        // Make sure that an empty tree is indeed empty:
-        assertTrue("Tree should be empty.", AVLTrees[0].isEmpty() && stringAVL1Tree.isEmpty());
-        assertTrue("Empty tree should have a height of -1.",
-                AVLTrees[0].height() == -1 && stringAVL1Tree.height() == -1);
+        try {
+            // Make sure that an empty tree is indeed empty:
+            assertTrue("Tree should be empty.", intAVL1Tree.isEmpty() && stringAVL1Tree.isEmpty());
+            assertTrue("Empty tree should have a height of -1.",
+                    intAVL1Tree.height() == -1 && stringAVL1Tree.height() == -1);
 
-        // Make a single insertion and check the tree's status.
-        AVLTrees[0].insert(ZERO);
-        assertFalse("After a single insertion, the tree should no longer be empty.",
-                AVLTrees[0].isEmpty());
-        assertEquals("After a single insertion, tree's height should be 0.",
-                0, AVLTrees[0].height());
-        assertEquals("Incorrect root key.", ZERO, AVLTrees[0].getRoot());
+            // Make a single insertion and check the tree's status.
+            intAVL1Tree.insert(ZERO);
+            assertFalse("After a single insertion, the tree should no longer be empty.",
+                    intAVL1Tree.isEmpty());
+            assertEquals("After a single insertion, tree's height should be 0.",
+                    0, intAVL1Tree.height());
+            assertEquals("Incorrect root key.", ZERO, intAVL1Tree.getRoot());
 
-        // Look up the key through the search() method.
-        assertEquals("Looking up the single inserted key in the tree failed.",
-                ZERO, AVLTrees[0].search(ZERO));
+            // Look up the key through the search() method.
+            assertEquals("Looking up the single inserted key in the tree failed.",
+                    ZERO, intAVL1Tree.search(ZERO));
 
-        // Delete the tree and make it back into a stub.
-        assertEquals("Deleting the single key should return the key itself.",
-                ZERO, AVLTrees[0].delete(ZERO));
-        assertTrue("Tree should now be empty again.", AVLTrees[0].isEmpty());
-        assertEquals("Tree should now have a height of -1 once more.", -1, AVLTrees[0].height());
+            // Delete the tree and make it back into a stub.
+            assertEquals("Deleting the single key should return the key itself.",
+                    ZERO, intAVL1Tree.delete(ZERO));
+            assertTrue("Tree should now be empty again.", intAVL1Tree.isEmpty());
+            assertEquals("Tree should now have a height of -1 once more.", -1, intAVL1Tree.height());
+        }catch(EmptyTreeException exc){
+            fail("Caught an EmptyTreeException with message: " + exc.getMessage() + ".");
+        }
     }
 
     /** Test the "AVL" part of the structure: Does the tree re-balance itself
@@ -84,310 +109,315 @@ public class AVLGTreeTests {
      */
     @Test
     public void testBalancedInsertions(){
+        try {
+            /* First tree will be very simple, yet effective at uncovering
+             * basic errors.
+             */
 
-        /* First tree will be very simple, yet effective at uncovering
-         * basic errors.
-         */
+            intAVL1Tree.insert(-1);
+            intAVL1Tree.insert(-2);
 
-        AVLTrees[0].insert(-1);
-        AVLTrees[0].insert(-2);
+            /* Tree is now like this (we're not drawing the threads):
+             *
+             * 				-1
+             * 				/
+             * 			   /
+             * 			 -2
+             *
+             * Let us first make sure that it is this way, and then insert a new element.
+             */
 
-        /* Tree is now like this (we're not drawing the threads):
-         *
-         * 				-1
-         * 				/
-         * 			   /
-         * 			 -2
-         *
-         * Let us first make sure that it is this way, and then insert a new element.
-         */
+            assertEquals("Incorrect tree height. Everything ok with your insertions?",
+                    1, intAVL1Tree.height());
+            assertEquals("Incorrect key detected at root: Are you performing " +
+                    "unnecessary rotations?", new Integer(-1), intAVL1Tree.getRoot());
+            assertEquals("Looking up the key we just inserted should return a reference " +
+                    "to the key itself.", new Integer(-2), intAVL1Tree.search(-2));
+            assertFalse("The code tells us that a tree where we inserted two keys is empty.",
+                    intAVL1Tree.isEmpty());
 
-        assertEquals("Incorrect tree height. Everything ok with your insertions?",
-                1, AVLTrees[0].height());
-        assertEquals("Incorrect key detected at root: Are you performing " +
-                "unnecessary rotations?", new Integer(-1), AVLTrees[0].getRoot());
-        assertEquals("Looking up the key we just inserted should return a reference " +
-                "to the key itself.", new Integer(-2), AVLTrees[0].search(-2));
-        assertFalse("The code tells us that a tree where we inserted two keys is empty.",
-                AVLTrees[0].isEmpty());
+            /* TODO: Should you expand those tests by making sure the inorder traversal
+             * works as it should?... */
 
-        /* TODO: Should you expand those tests by making sure the inorder traversal
-         * works as it should?... */
+            intAVL1Tree.insert(-5);
 
-        AVLTrees[0].insert(-5);
+            /* The tree should now be like this after a right rotation about the root:
+             *
+             *  			-2
+             *  			/ \
+             *  		   /   \
+             *  		 -5	   -1
+             *
+             *  So it should have a height of 1 and the root should be -2!
+             */
+            assertEquals("Tree not re-balanced properly.", 1, intAVL1Tree.height());
+            assertEquals("Incorrect key detected at root: are you rotating *right* properly?", new Integer(-2), intAVL1Tree.getRoot());
+            assertEquals("Looking up the key we just inserted should return a reference " +
+                    "to the key itself.", new Integer(-5), intAVL1Tree.search(-5));
+            assertFalse("The code tells us that a tree where we inserted three keys is empty.",
+                    intAVL1Tree.isEmpty());
 
-        /* The tree should now be like this after a right rotation about the root:
-         *
-         *  			-2
-         *  			/ \
-         *  		   /   \
-         *  		 -5	   -1
-         *
-         *  So it should have a height of 1 and the root should be -2!
-         */
-        assertEquals("Tree not re-balanced properly.", 1, AVLTrees[0].height());
-        assertEquals("Incorrect key detected at root: are you rotating *right* properly?", new Integer(-2), AVLTrees[0].getRoot());
-        assertEquals("Looking up the key we just inserted should return a reference " +
-                "to the key itself.",	new Integer(-5), AVLTrees[0].search(-5));
-        assertFalse("The code tells us that a tree where we inserted three keys is empty.",
-                AVLTrees[0].isEmpty());
+            /* We will also make similar tests, for a right-heavy tree this time. */
 
-        /* We will also make similar tests, for a right-heavy tree this time. */
+            stringAVL1Tree.insert("fad");
+            stringAVL1Tree.insert("hom");
 
-        stringAVL1Tree.insert("fad");
-        stringAVL1Tree.insert("hom");
+            /* This tree should now look like:
+             *
+             * 			fad
+             *			   \
+             *				\
+             *  			hom
+             *
+             *  Let's make sure that it does indeed look that way:
+             */
 
-        /* This tree should now look like:
-         *
-         * 			fad
-         *			   \
-         *				\
-         *  			hom
-         *
-         *  Let's make sure that it does indeed look that way:
-         */
+            assertEquals("Incorrect tree height.", 1, stringAVL1Tree.height());
+            assertEquals("Incorrect key detected at root: Are you performing " +
+                    "unnecessary rotations?", "fad", stringAVL1Tree.getRoot());
+            assertEquals("Looking up the key we just inserted should return a reference " +
+                    "to the key itself.", "hom", stringAVL1Tree.search("hom"));
+            assertFalse("The code tells us that a tree where we inserted two keys is empty.",
+                    stringAVL1Tree.isEmpty());
+            stringAVL1Tree.insert("qer");
 
-        assertEquals("Incorrect tree height.", 1, stringAVL1Tree.height());
-        assertEquals("Incorrect key detected at root: Are you performing " +
-                "unnecessary rotations?", "fad", stringAVL1Tree.getRoot());
-        assertEquals("Looking up the key we just inserted should return a reference " +
-                "to the key itself.", "hom", stringAVL1Tree.search("hom"));
-        assertFalse("The code tells us that a tree where we inserted two keys is empty.",
-                stringAVL1Tree.isEmpty());
-        stringAVL1Tree.insert("qer");
+            /* After the insertion of "qer", we would need the tree to re-balance itself
+             * via a left rotation about the root, like so:
+             *
+             * 				hom
+             * 			   /   \
+             * 			  /     \
+             * 			fad		qer
+             *
+             * So let's make sure that it does!
+             */
 
-        /* After the insertion of "qer", we would need the tree to re-balance itself
-         * via a left rotation about the root, like so:
-         *
-         * 				hom
-         * 			   /   \
-         * 			  /     \
-         * 			fad		qer
-         *
-         * So let's make sure that it does!
-         */
+            assertEquals("Tree not re-balanced properly.", 1, stringAVL1Tree.height());
+            assertEquals("Incorrect key detected at root: are you rotating *left* properly?",
+                    "hom", stringAVL1Tree.getRoot());
+            assertEquals("Looking up the key we just inserted should return a reference " +
+                    "to the key itself.", "qer", stringAVL1Tree.search("qer"));
+            assertFalse("The code tells us tells us that a tree where we inserted " +
+                    "three keys is empty.", stringAVL1Tree.isEmpty());
 
-        assertEquals("Tree not re-balanced properly.", 1, stringAVL1Tree.height());
-        assertEquals("Incorrect key detected at root: are you rotating *left* properly?",
-                "hom", stringAVL1Tree.getRoot());
-        assertEquals("Looking up the key we just inserted should return a reference " +
-                "to the key itself.","qer", stringAVL1Tree.search("qer"));
-        assertFalse("The code tells us tells us that a tree where we inserted " +
-                "three keys is empty.", stringAVL1Tree.isEmpty());
+            /* Now we will sequentially insert couple nodes which should not cause
+             * rotations. That is, after any insertion, the tree should be of the same height.
+             *
+             * Recall that the integer tree should look like this now:
+             *
+             * 				-2
+             * 			   /  \
+             * 			  -5  -1
+             *
+             * Inserting another subtree on the left should not cause any rotations.
+             */
 
-        /* Now we will sequentially insert couple nodes which should not cause
-         * rotations. That is, after any insertion, the tree should be of the same height.
-         *
-         * Recall that the integer tree should look like this now:
-         *
-         * 				-2
-         * 			   /  \
-         * 			  -5  -1
-         *
-         * Inserting another subtree on the left should not cause any rotations.
-         */
+            intAVL1Tree.insert(-10);
+            assertEquals("Incorrect tree height after another insertion.", 2, intAVL1Tree.height());
+            assertEquals("Key at root changed unnecessarily", new Integer(-2), intAVL1Tree.getRoot());
+            // Will no longer test lookups and empties, that's
+            // just unnecessary at this point.
 
-        AVLTrees[0].insert(-10);
-        assertEquals("Incorrect tree height after another insertion.", 2, AVLTrees[0].height());
-        assertEquals("Key at root changed unnecessarily", new Integer(-2), AVLTrees[0].getRoot());
-        // Will no longer test lookups and empties, that's
-        // just unnecessary at this point.
+            intAVL1Tree.insert(-4);
+            assertEquals("Incorrect tree height after another insertion.", 2, intAVL1Tree.height());
+            assertEquals("Key at root changed unnecessarily.", new Integer(-2), intAVL1Tree.getRoot());
 
-        AVLTrees[0].insert(-4);
-        assertEquals("Incorrect tree height after another insertion.", 2, AVLTrees[0].height());
-        assertEquals("Key at root changed unnecessarily.", new Integer(-2), AVLTrees[0].getRoot());
+            /* If every test passed, the tree should now look like this:
+             *
+             * 				-2
+             * 			   /  \
+             * 			  /    \
+             * 			-5		-1
+             * 		   /  \
+             * 		  /	   \
+             * 		-10     -4
+             *
+             * Inserting -20 should cause an imbalance detected at the root, and corrective action via
+             * a right rotation about the root will need to be taken. Specifically, the tree
+             * should look like this:
+             *
+             * 					-5
+             * 				   /  \
+             * 				  /    \
+             * 				-10    -2
+             * 				/  \   / \
+             * 			  -20	x -4  -1
+             */
 
-        /* If every test passed, the tree should now look like this:
-         *
-         * 				-2
-         * 			   /  \
-         * 			  /    \
-         * 			-5		-1
-         * 		   /  \
-         * 		  /	   \
-         * 		-10     -4
-         *
-         * Inserting -20 should cause an imbalance detected at the root, and corrective action via
-         * a right rotation about the root will need to be taken. Specifically, the tree
-         * should look like this:
-         *
-         * 					-5
-         * 				   /  \
-         * 				  /    \
-         * 				-10    -2
-         * 				/  \   / \
-         * 			  -20	x -4  -1
-         */
-
-        AVLTrees[0].insert(-20);
-        assertEquals("Incorrect root detected: Are you rotating *right* properly?",
-                new Integer(-5), AVLTrees[0].getRoot());
-        assertEquals("Incorrect tree height after another insertion: " +
-                "are you balancing properly?", 2, AVLTrees[0].height());
+            intAVL1Tree.insert(-20);
+            assertEquals("Incorrect root detected: Are you rotating *right* properly?",
+                    new Integer(-5), intAVL1Tree.getRoot());
+            assertEquals("Incorrect tree height after another insertion: " +
+                    "are you balancing properly?", 2, intAVL1Tree.height());
 
 
-        /* A similar situation, only this time on the right side, should happen with the string tree.
-         * Recall the current form of the string tree:
-         *
-         *
-         * 				hom
-         * 			   /   \
-         * 			  /     \
-         * 			fad		qer
-         *
-         *
-         *  Inserting "job" and "rad" should not affect the tree's height in any fashion, leading
-         *  us to the tree:
-         *
-         *  			hom
-         *  		   /  \
-         *  		  /    \
-         *  		fad    qer
-         *  		      /  \
-         *  		     job rad
-         */
+            /* A similar situation, only this time on the right side, should happen with the string tree.
+             * Recall the current form of the string tree:
+             *
+             *
+             * 				hom
+             * 			   /   \
+             * 			  /     \
+             * 			fad		qer
+             *
+             *
+             *  Inserting "job" and "rad" should not affect the tree's height in any fashion, leading
+             *  us to the tree:
+             *
+             *  			hom
+             *  		   /  \
+             *  		  /    \
+             *  		fad    qer
+             *  		      /  \
+             *  		     job rad
+             */
 
-        stringAVL1Tree.insert("job");
-        assertEquals("Incorrect tree height after another insertion.", 2, stringAVL1Tree.height());
-        assertEquals("Key at root changed unnecessarily.", "hom", stringAVL1Tree.getRoot());
-        stringAVL1Tree.insert("rad");
-        assertEquals("Incorrect tree height after another insertion.", 2, stringAVL1Tree.height());
-        assertEquals("Key at root changed unnecessarily.", "hom", stringAVL1Tree.getRoot());
+            stringAVL1Tree.insert("job");
+            assertEquals("Incorrect tree height after another insertion.", 2, stringAVL1Tree.height());
+            assertEquals("Key at root changed unnecessarily.", "hom", stringAVL1Tree.getRoot());
+            stringAVL1Tree.insert("rad");
+            assertEquals("Incorrect tree height after another insertion.", 2, stringAVL1Tree.height());
+            assertEquals("Key at root changed unnecessarily.", "hom", stringAVL1Tree.getRoot());
 
-        /* If the above tests passed, our tree should look like this:
-         *
-         * 			    hom
-         * 			   /   \
-         * 			  /     \
-         * 			fad		qer
-         * 					/ \
-         * 				   /   \
-         * 				 job   rad
-         *
-         * Inserting "red" should cause an imbalance detected at the root, solvable via a left
-         * rotation about the root. The tree should look like this:
-         *
-         *	  			 qer
-         *	  		   /	 \
-         *	  		  /		  \
-         *	        hom	  	  rad
-         *	       /	\    /   \
-         *	      fad	job x	  red
-         */
+            /* If the above tests passed, our tree should look like this:
+             *
+             * 			    hom
+             * 			   /   \
+             * 			  /     \
+             * 			fad		qer
+             * 					/ \
+             * 				   /   \
+             * 				 job   rad
+             *
+             * Inserting "red" should cause an imbalance detected at the root, solvable via a left
+             * rotation about the root. The tree should look like this:
+             *
+             *	  			 qer
+             *	  		   /	 \
+             *	  		  /		  \
+             *	        hom	  	  rad
+             *	       /	\    /   \
+             *	      fad	job x	  red
+             */
 
-        stringAVL1Tree.insert("red");
-        assertEquals("Incorrect root detected after another insertion: Are you rotating *left* properly?",
-                "qer", stringAVL1Tree.getRoot());
-        assertEquals("Incorrect tree height after another insertion: "+
-                "are you balancing properly?", 2, stringAVL1Tree.height());
+            stringAVL1Tree.insert("red");
+            assertEquals("Incorrect root detected after another insertion: Are you rotating *left* properly?",
+                    "qer", stringAVL1Tree.getRoot());
+            assertEquals("Incorrect tree height after another insertion: " +
+                    "are you balancing properly?", 2, stringAVL1Tree.height());
 
-        /* Finally, we need to check for some cases of LR and RL rotations.
-         * We will check LR on the integer tree and RL on the string tree.
-         *
-         * Recall the current form of the integer tree:
-         *
-         *
-         *  				-5
-         * 				   /  \
-         * 				  /    \
-         * 				-10    -2
-         * 				/  \   / \
-         * 			  -20	x -4  -1
-         *
-         *
-         *	Inserting -15 should cause an imbalance detected at node -10, addressible via a
-         *  LR rotation about it which should modify the tree as follows:
-         *
-         *					-5
-         *				   /   \
-         *				  /     \
-         *				-15		 -2
-         *				/  \	 / \
-         * 			  -20  -10  -4  -1
-         */
+            /* Finally, we need to check for some cases of LR and RL rotations.
+             * We will check LR on the integer tree and RL on the string tree.
+             *
+             * Recall the current form of the integer tree:
+             *
+             *
+             *  				-5
+             * 				   /  \
+             * 				  /    \
+             * 				-10    -2
+             * 				/  \   / \
+             * 			  -20	x -4  -1
+             *
+             *
+             *	Inserting -15 should cause an imbalance detected at node -10, addressible via a
+             *  LR rotation about it which should modify the tree as follows:
+             *
+             *					-5
+             *				   /   \
+             *				  /     \
+             *				-15		 -2
+             *				/  \	 / \
+             * 			  -20  -10  -4  -1
+             */
 
-        AVLTrees[0].insert(-15);
-        assertEquals("Incorrect root detected after another insertion: are you performing unnecessary rotations?",
-                new Integer(-5), AVLTrees[0].getRoot());
-        assertEquals("Incorrect tree height after another insertion: are you balancing properly?",
-                2, AVLTrees[0].height());
+            intAVL1Tree.insert(-15);
+            assertEquals("Incorrect root detected after another insertion: are you performing unnecessary rotations?",
+                    new Integer(-5), intAVL1Tree.getRoot());
+            assertEquals("Incorrect tree height after another insertion: are you balancing properly?",
+                    2, intAVL1Tree.height());
 
-        /*	Now we will work on the string tree to see whether RL rotations work. As a reminder,
-         *  this is what our tree should look like right now:
-         *
-         *
-         * 				qer
-         *	  		   /   \
-         *	  		  /		\
-         *	        hom	  	rad
-         *	       /	\   /  \
-         *	      fad  job x   red
-         *
-         *	Inserting "rbd" should cause an imbalance detected at "rad", addressible via a
-         *	RL rotation which should modify the tree as follows:
-         *
-         *
-         *				 qer
-         *	  		   /	 \
-         *	  		  /		  \
-         *	        hom	  	  rbd
-         *	       /	\    /   \
-         *	      fad	job rad	  red
-         */
+            /*	Now we will work on the string tree to see whether RL rotations work. As a reminder,
+             *  this is what our tree should look like right now:
+             *
+             *
+             * 				qer
+             *	  		   /   \
+             *	  		  /		\
+             *	        hom	  	rad
+             *	       /	\   /  \
+             *	      fad  job x   red
+             *
+             *	Inserting "rbd" should cause an imbalance detected at "rad", addressible via a
+             *	RL rotation which should modify the tree as follows:
+             *
+             *
+             *				 qer
+             *	  		   /	 \
+             *	  		  /		  \
+             *	        hom	  	  rbd
+             *	       /	\    /   \
+             *	      fad	job rad	  red
+             */
 
-        stringAVL1Tree.insert("rbd");
-        assertEquals("Incorrect root detected after another insertion: are you performing unnecessary rotations?",
-                "qer", stringAVL1Tree.getRoot());
-        assertEquals("Incorrect tree height after another insertion: are you balancing properly?",
-                2, stringAVL1Tree.height());
+            stringAVL1Tree.insert("rbd");
+            assertEquals("Incorrect root detected after another insertion: are you performing unnecessary rotations?",
+                    "qer", stringAVL1Tree.getRoot());
+            assertEquals("Incorrect tree height after another insertion: are you balancing properly?",
+                    2, stringAVL1Tree.height());
 
-        /* For our final tests on insertion, we will see whether the students handle RL and LR rotations
-         * *about the root* properly. We will first begin with a RL rotation:
-         */
+            /* For our final tests on insertion, we will see whether the students handle RL and LR rotations
+             * *about the root* properly. We will first begin with a RL rotation:
+             */
 
-        AVLTrees[0] = new AVLGTree<Integer>();
-        Integer[] keys1 = {ZERO, 5, 3};
-        for(Integer k: keys1)
-            AVLTrees[0].insert(k);
+            intAVL1Tree = new AVLGTree<Integer>();
+            Integer[] keys1 = {ZERO, 5, 3};
+            for (Integer k : keys1)
+                intAVL1Tree.insert(k);
 
-        /* Tree should be as follows after an RL rotation about the root triggered
-         * at the insertion of '3':
-         *
-         * 				3
-         * 			   / \
-         * 			  /   \
-         * 			 0	   5
-         */
+            /* Tree should be as follows after an RL rotation about the root triggered
+             * at the insertion of '3':
+             *
+             * 				3
+             * 			   / \
+             * 			  /   \
+             * 			 0	   5
+             */
 
-        assertEquals("Incorrect root detected: check your RL rotations!",
-                new Integer(3), AVLTrees[0].getRoot());
-        assertEquals("Incorrect tree height detected: check your RL rotations!",
-                1, AVLTrees[0].height());
+            assertEquals("Incorrect root detected: check your RL rotations!",
+                    new Integer(3), intAVL1Tree.getRoot());
+            assertEquals("Incorrect tree height detected: check your RL rotations!",
+                    1, intAVL1Tree.height());
 
-        /* And then also check LR rotations: */
-        stringAVL1Tree = new AVLGTree<String>();
-        String[] keys2 = {"gea", "beq", "car"};
-        for(String k: keys2)
-            stringAVL1Tree.insert(k);
+            /* And then also check LR rotations: */
+            stringAVL1Tree = new AVLGTree<String>();
+            String[] keys2 = {"gea", "beq", "car"};
+            for (String k : keys2)
+                stringAVL1Tree.insert(k);
 
-        /* The tree should look this way:
-         *
-         * 			car
-         * 		   /  \
-         * 		  /	   \
-         * 		beq     gea
-         */
+            /* The tree should look this way:
+             *
+             * 			car
+             * 		   /  \
+             * 		  /	   \
+             * 		beq     gea
+             */
 
-        assertEquals("Incorrect root detected: check your LR rotations!",
-                "car", stringAVL1Tree.getRoot());
-        assertEquals("Incorrect tree height detected: check your LR rotations!",
-                1, stringAVL1Tree.height());
+            assertEquals("Incorrect root detected: check your LR rotations!",
+                    "car", stringAVL1Tree.getRoot());
+            assertEquals("Incorrect tree height detected: check your LR rotations!",
+                    1, stringAVL1Tree.height());
+        } catch(EmptyTreeException | InvalidBalanceException exc){
+            fail("Caught a "+ exc.getClass().getSimpleName() + " with message: " +
+                        exc.getMessage());
+        }
     }
 
     /** Deletion tests. */
     @Test
     public void testBalancedDeletions(){
 
+        try {
         /* Our goal will be to check whether students deal correctly with deletions
          * that should cause rotations as well as deletions that should not cause rotations.
          * After every deletion, we will also perform a search() operation to make sure the
@@ -400,7 +430,7 @@ public class AVLGTreeTests {
 
         Integer[] keys = {ZERO, 5, 3};
         for(Integer k : keys)
-            AVLTrees[0].insert(k);
+            intAVL1Tree.insert(k);
 
         /* Reminder: After all those insertions, the tree should look
          * like this:
@@ -413,23 +443,23 @@ public class AVLGTreeTests {
          * Removing 0 should not affect the tree's height:
          */
 
-        assertEquals("Removing a leaf node should return itself to the caller.", ZERO, AVLTrees[0].delete(ZERO));
-        assertTrue("Once we remove a key, we should no longer be able to find it " + "in the tree.", AVLTrees[0].search(ZERO) == null);
+        assertEquals("Removing a leaf node should return itself to the caller.", ZERO, intAVL1Tree.delete(ZERO));
+        assertTrue("Once we remove a key, we should no longer be able to find it " + "in the tree.", intAVL1Tree.search(ZERO) == null);
         assertEquals("After this particular deletion, the tree's height should remain " +
-                "the same.", 1, AVLTrees[0].height());
+                "the same.", 1, intAVL1Tree.height());
 
         /* However, deleting 5 should make it into a stub tree. */
 
         assertEquals("Removing a leaf node should return itself to the caller.",
-                new Integer(5), AVLTrees[0].delete(5));
+                new Integer(5), intAVL1Tree.delete(5));
         assertTrue("Once we remove a key, we should no longer be able to find it " +
-                "in the tree.", AVLTrees[0].search(5) == null);
-        assertEquals("Incorrect tree height detected after deletions.", 0, AVLTrees[0].height());
+                "in the tree.", intAVL1Tree.search(5) == null);
+        assertEquals("Incorrect tree height detected after deletions.", 0, intAVL1Tree.height());
 
         /* After all these deletions, the root should be 3. We will make sure of this. */
 
         assertEquals("Incorrect root detected after deletions.",
-                new Integer(3), AVLTrees[0].getRoot());
+                new Integer(3), intAVL1Tree.getRoot());
 
         /* Now that we have a stub tree consisting of just the number 3,
          * we will need to expand the tree to perform a deletion that will
@@ -444,9 +474,9 @@ public class AVLGTreeTests {
          *
          */
 
-        AVLTrees[0].insert(1);
-        AVLTrees[0].insert(5);
-        AVLTrees[0].insert(6);
+        intAVL1Tree.insert(1);
+        intAVL1Tree.insert(5);
+        intAVL1Tree.insert(6);
 
         /* Now, deleting 1 should cause an imbalance detected at the root.
          * This should be solved via a left rotation of the root, resulting in
@@ -458,13 +488,13 @@ public class AVLGTreeTests {
          *				3	   6
          */
 
-        AVLTrees[0].delete(1); // No more need to check return values here.
+        intAVL1Tree.delete(1); // No more need to check return values here.
         assertTrue("Once we remove a key, we should no longer be able to find it " +
-                "in the tree.", AVLTrees[0].search(1) == null);
+                "in the tree.", intAVL1Tree.search(1) == null);
         assertEquals("Incorrect tree root. Are you rotating *left* correctly " +
-                "after deletions?", new Integer(5), AVLTrees[0].getRoot());
+                "after deletions?", new Integer(5), intAVL1Tree.getRoot());
         assertEquals("Incorrect tree height. Are you " +
-                "re-balancing correctly after deletions?", 1, AVLTrees[0].height());
+                "re-balancing correctly after deletions?", 1, intAVL1Tree.height());
 
         /* Let's try the same scenario, only this time with a deletion that should trigger
          * a right root rotation. We will use the string tree to do this.
@@ -522,17 +552,17 @@ public class AVLGTreeTests {
          *   		 5	   10
          */
 
-        AVLTrees[0] = new AVLGTree<Integer>();
+        intAVL1Tree = new AVLGTree<Integer>();
         keys = new Integer[]{10, 5, 15, 7};
         for(Integer k: keys)
-            AVLTrees[0].insert(k);
-        AVLTrees[0].delete(15);
+            intAVL1Tree.insert(k);
+        intAVL1Tree.delete(15);
         assertTrue("Once we remove a key, we should no longer be able to find it " +
-                "in the tree.", AVLTrees[0].search(15) == null);
+                "in the tree.", intAVL1Tree.search(15) == null);
         assertEquals("Incorrect tree root. Are you rotating *LR* correctly after deletions?",
-                new Integer(7), AVLTrees[0].getRoot());
+                new Integer(7), intAVL1Tree.getRoot());
         assertEquals("Incorrect tree height. Are you re-balancing correctly after deletions?",
-                1, AVLTrees[0].height());
+                1, intAVL1Tree.height());
 
         /* We will now use the string tree to test whether students rotate *RL*
          * correctly after deletions. We will create the following tree:
@@ -592,18 +622,18 @@ public class AVLGTreeTests {
          *    Let's check whether it does:
          */
 
-        AVLTrees[0] = new AVLGTree<Integer>();
+        intAVL1Tree = new AVLGTree<Integer>();
         keys = new Integer[]{45, 20, 60, 10, 30, 50, 65, 25}; // Inserting them in this order guarantees the tree above.
         for(Integer k : keys)
-            AVLTrees[0].insert(k);
-        AVLTrees[0].delete(10);
+            intAVL1Tree.insert(k);
+        intAVL1Tree.delete(10);
         assertTrue("Once we remove a key, we should no longer be able to find it " +
-                "in the tree.", AVLTrees[0].search(10) == null);
+                "in the tree.", intAVL1Tree.search(10) == null);
         assertEquals("Tree root should not have changed after the last deletion. " +
                         "Are you perhaps rotating too aggressively after deletions?" ,
-                new Integer(45), AVLTrees[0].getRoot());
+                new Integer(45), intAVL1Tree.getRoot());
         assertEquals("Incorrect tree height. Are you re-balancing correctly after deletions?",
-                2, AVLTrees[0].height());
+                2, intAVL1Tree.height());
 
         /* We will use the string tree to impose the symmetric test of the above
          * and conclude the deletion tests. We will create the following tree:
@@ -638,7 +668,7 @@ public class AVLGTreeTests {
                         "Are you perhaps rotating too aggressively after deletions?" ,
                 "kal", stringAVL1Tree.getRoot());
         assertEquals("Incorrect tree height. Are you re-balancing correctly after deletions?",
-                2, AVLTrees[0].height());
+                2, intAVL1Tree.height());
 
         /* Up until now, we have always deleted keys from the leaf level. We also
          * need to make sure that students correctly delete keys from inner nodes.
@@ -655,10 +685,10 @@ public class AVLGTreeTests {
          *  			  25
          */
 
-        AVLTrees[0] = new AVLGTree<Integer>();
+        intAVL1Tree = new AVLGTree<Integer>();
         keys = new Integer[]{45, 20, 60, 10, 30, 50, 65, 25};
         for(Integer k : keys)
-            AVLTrees[0].insert(k);
+            intAVL1Tree.insert(k);
 
         /* Now, deleting 20 should promote 25 in its place, yet trigger no rotations:
          *
@@ -670,11 +700,11 @@ public class AVLGTreeTests {
          *  		   10  30 50  65
          */
 
-        AVLTrees[0].delete(20);
+        intAVL1Tree.delete(20);
         assertEquals("After a deletion of an inner node, the height of the tree was not " +
-                "properly updated.", 2, AVLTrees[0].height());
+                "properly updated.", 2, intAVL1Tree.height());
         assertEquals("After a deletion of an inner node, the root was found to be needlessly changed.",
-                new Integer(45), AVLTrees[0].getRoot());
+                new Integer(45), intAVL1Tree.getRoot());
 
         /* Now we will delete the root. This should result in the following tree:
          *
@@ -688,11 +718,11 @@ public class AVLGTreeTests {
          *  Again, no rotations occur.
          */
 
-        AVLTrees[0].delete(45);
+        intAVL1Tree.delete(45);
         assertEquals("After root deletion, the height of the tree needlessly changed.",
-                2, AVLTrees[0].height());
+                2, intAVL1Tree.height());
         assertEquals("After root deletion, the new root of the tree was incorrect.",
-                new Integer(50), AVLTrees[0].getRoot());
+                new Integer(50), intAVL1Tree.getRoot());
 
         /* We will perform one last test on deletions, which will be our most complex one.
          * In this scenario, we delete the tree's root. This results in recursively deleting
@@ -710,10 +740,10 @@ public class AVLGTreeTests {
          *  					 62
          */
 
-        AVLTrees[0] = new AVLGTree<Integer>();
+        intAVL1Tree = new AVLGTree<Integer>();
         keys = new Integer[]{45, 25, 60, 10, 30, 50, 65, 62};
         for(Integer k: keys)
-            AVLTrees[0].insert(k);
+            intAVL1Tree.insert(k);
 
 
         /* And here's what it should look like after we delete 45, the root:
@@ -731,15 +761,19 @@ public class AVLGTreeTests {
         // students to the right direction.
 
         try {
-            AVLTrees[0].delete(45);
+            intAVL1Tree.delete(45);
         }catch(Throwable t){
             fail("In a deletion of the root which should also involve a local rotation, " +
                     "the code threw a " + t.getClass() + " with message:" + t.getMessage() + ".");
         }
         assertEquals("After deletion of the root, the new root promoted was incorrect.",
-                new Integer(50), AVLTrees[0].getRoot());
+                new Integer(50), intAVL1Tree.getRoot());
         assertEquals("After deletion of the root, the height of the new tree was incorrect.",
-                2, AVLTrees[0].height());
+                2, intAVL1Tree.height());
+        } catch(EmptyTreeException | InvalidBalanceException exc){
+            fail("Caught a "+ exc.getClass().getSimpleName() + " with message: " +
+                    exc.getMessage());
+        }
     }
 
 
@@ -760,7 +794,7 @@ public class AVLGTreeTests {
          */
         for(int i = 0; i < collector.size(); i++){
             try {
-                AVLTrees[0].insert(collector.get(i));
+                intAVL1Tree.insert(collector.get(i));
             }catch(Throwable t){
                 fail("Caught a " + t.getClass() + " with message: " + t.getMessage() +
                         " in iteration " + i + ", when inserting key " + collector.get(i) + ".");
@@ -774,6 +808,7 @@ public class AVLGTreeTests {
      */
     @Test
     public void testManyDeletions(){
+
         LinkedList<Integer> collector = new LinkedList<Integer>();
         for(int i = 0; i < NUMS; i++)
             collector.add(i);
@@ -785,7 +820,7 @@ public class AVLGTreeTests {
          */
         for(int i = 0; i < collector.size(); i++){
             try {
-                AVLTrees[0].insert(collector.get(i));
+                intAVL1Tree.insert(collector.get(i));
             }catch(Throwable t){
                 fail("Caught a " + t.getClass() + " with message: " + t.getMessage() +
                         " in iteration " + i + ", when inserting key " + collector.get(i) + ".");
@@ -795,13 +830,13 @@ public class AVLGTreeTests {
         // Now, delete all of the keys.
         for(int i = 0; i < collector.size(); i++){
             try {
-                Integer retVal = AVLTrees[0].delete(collector.get(i));
+                Integer retVal = intAVL1Tree.delete(collector.get(i));
                 assertEquals("In iteration " + i +", when attempting to delete key " + collector.get(i) +
                                 ", the return value of delete() did not match the key. Instead, it was: " + retVal + ".",
                         collector.get(i), retVal);
                 assertTrue("In iteration " + i +", after deleting key " + retVal +
                                 ", search() determined the key to still exist inside the tree.",
-                        AVLTrees[0].search(retVal) == null);
+                        intAVL1Tree.search(retVal) == null);
             }catch(Throwable t){
                 fail("Caught a " + t.getClass() + " with message: " + t.getMessage() +
                         " in iteration " + i + ", with the key " + collector.get(i) + ".");
@@ -809,7 +844,7 @@ public class AVLGTreeTests {
         }
         // After deletion, the tree had better be empty!
         assertTrue("We deleted all items that should be in the tree, yet the code " +
-                "believes the tree is not empty.", AVLTrees[0].isEmpty());
+                "believes the tree is not empty.", intAVL1Tree.isEmpty());
     }
 
     /** Destroy the trees after every test. We could sequentially delete all nodes, but we will be
@@ -818,7 +853,9 @@ public class AVLGTreeTests {
     @After
     public void tearDown() {
         // Allow garbage collection to occur....
-        AVLTrees[0] = null;
+        // Could have made call to clear(), but what's the benefit to it? Constructors
+        // are already called in setUp()...
+        intAVL1Tree = null;
         stringAVL1Tree = null;
     }
 

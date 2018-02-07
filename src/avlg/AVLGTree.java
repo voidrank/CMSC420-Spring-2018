@@ -38,6 +38,7 @@ public class AVLGTree<T extends Comparable<T>> {
      **********************************************************************/
     private Node root;
     private int maxImbalance;
+    private int count;
 
     /* Definition of  private node class */
     private class Node {
@@ -244,7 +245,7 @@ public class AVLGTree<T extends Comparable<T>> {
 
     /* Check if the subtree obeys the BST property. */
     private boolean isBST(Node n) {
-        if (n == null || n.left == null && n.right == null) { // leaves are trivially BSTs )
+        if (n == null || (n.left == null && n.right == null)) { // leaves are trivially BSTs )
             return true;
         } else if (n.left != null && n.right == null) { // Non-null left child, null right child
             if (n.left.key.compareTo(n.key) >= 0)
@@ -276,14 +277,15 @@ public class AVLGTree<T extends Comparable<T>> {
 
     /**
      * The class constructor provides the tree with its maximum maxImbalance allowed.
-     * @param imbalance The maximum imbalance allowed by the AVL-G Tree.
-     * @throws InvalidBalanceException if <tt>imbalance</tt> is a value smaller than 1.
+     * @param maxImbalance The maximum maxImbalance allowed by the AVL-G Tree.
+     * @throws InvalidBalanceException if <tt>maxImbalance</tt> is a value smaller than 1.
      */
-    public AVLGTree(int imbalance) throws InvalidBalanceException {
-        if (imbalance < 1)
+    public AVLGTree(int maxImbalance) throws InvalidBalanceException {
+        if (maxImbalance < 1)
             throw new InvalidBalanceException("AVLGTree constructor: Imbalance value has to be " +
-                    "at least 1 (provided: " + imbalance + ").");
-        this.maxImbalance = imbalance;
+                    "at least 1 (provided: " + maxImbalance + ").");
+        this.maxImbalance = maxImbalance;
+        count = 0;
     }
 
     /**
@@ -295,6 +297,7 @@ public class AVLGTree<T extends Comparable<T>> {
             root = new Node(key);
         else
             root = insert(root, key);
+        count++;
     }
 
     /**
@@ -312,10 +315,12 @@ public class AVLGTree<T extends Comparable<T>> {
          * application would search keys first anyway).
          */
         if (isEmpty())
-            throw new EmptyTreeException("AVLGTree.delete(): Cannot delete from an empty tree.")
+            throw new EmptyTreeException("AVLGTree.delete(): Cannot delete from an empty tree.");
         T retVal = search(key);
-        if (retVal != null)
+        if (retVal != null) {
             root = delete(root, key);
+            count--;
+        }
         return retVal; // null or otherwise.
     }
 
@@ -391,4 +396,21 @@ public class AVLGTree<T extends Comparable<T>> {
         return isAVLGBalanced(root);
     }
 
+    /**
+     * <p>Empties the <tt>AVLGTree</tt> of all its elements. After a call to this method, the
+     * tree should have <b>0</b> elements.</p>
+     */
+    public void clear(){
+        root = null;
+        count = 0;
+    }
+
+
+    /**
+     * <p>Return the number of elements in the tree.</p>
+     * @return  The number of elements in the tree.
+     */
+    public int getCount(){
+        return count;
+    }
 }
