@@ -8,7 +8,7 @@ package exceptions;
 
  * @author <a href="https://github.com/jasonfil" alt="Jason Filippou's GitHub page">Jason Filippou</a>
  *
- * @see InvalidCapacityException
+ * @see EmptyTreeException
 */
 public class InvalidBalanceException extends Exception {
     public InvalidBalanceException(String msg){

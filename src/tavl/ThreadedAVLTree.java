@@ -1,4 +1,4 @@
-/**<p> <tt>ThreadedAVLTree</tt> implements threaded Adelson-Velsky-Landis (AVL) trees.
+package tavl; /**<p> <tt>tavl.ThreadedAVLTree</tt> implements threaded Adelson-Velsky-Landis (AVL) trees.
  * Those trees allow efficient search, insertion and deletion in <em>O(logn)</em> time, by virtue
  * of being AVL trees, as well as amortized constant time of finding the inorder successor of any given
  * node, by virtue of being threaded trees. They thus combine two powerful ideas in a common
