@@ -13,29 +13,29 @@ package avlg; /**
 import exceptions.EmptyTreeException;
 import exceptions.InvalidBalanceException;
 
-/** <p>An <tt><AVL-G Tree/tt> is an AVL Tree with a relaxed balance condition. Its constructor receives a strictly
- * positive parameter which controls the <b>maximum</b> maxImbalance allowed on any subtree of the tree which
+/** <p>An <tt>AVL-G Tree</tt> is an AVL Tree with a relaxed balance condition. Its constructor receives a strictly
+ * positive parameter which controls the <b>maximum</b> imbalance allowed on any subtree of the tree which
  * it creates. So, for example:</p>
  *  <ul>
  *      <li>An AVL-1 tree is a classic AVL tree, which only allows for perfectly balanced binary
- *      subtrees (maxImbalance of 0), or subtrees with an maxImbalance of 1. </li>
+ *      subtrees (imbalance of 0 everywhere), or subtrees with a maximum imbalance of 1 (somewhere). </li>
  *      <li>An AVL-2 tree relaxes the criteria of AVL-1 trees, by also allowing for subtrees
- *      that have an maxImbalance of 2.</li>
- *      <li>AVL-3 trees allow an maxImbalance of 3</li>
+ *      that have an imbalance of 2.</li>
+ *      <li>AVL-3 trees allow an imbalance of 3</li>
  *      <li>...</li>
  *  </ul>
  *
- *  <p>The idea behind AVL-G trees is that it might be beneficial, in certain scenarios, to
- *  allow for more unbalance subtrees to avoid the temporal cost of frequent rotations.</p>
+ *  <p>The idea behind AVL-G trees is that rotations cost time, so maybe we would be willing to
+ *  accept bad search performance now and then if it would mean less rotations.</p>
  *
- *
- * @author <a href="https://github.com/JasonFil" alt = "Jason Filippou's GitHub">Jason Filippou</a>
+ * @author <a href="https://github.com/JasonFil">Jason Filippou</a>
  */
 public class AVLGTree<T extends Comparable<T>> {
 
     /* *********************************************************************
      ************************* PRIVATE FIELDS  *****************************
      **********************************************************************/
+
     private Node root;
     private int maxImbalance;
     private int count;
@@ -152,7 +152,7 @@ public class AVLGTree<T extends Comparable<T>> {
                 }
             }
         }
-        // Update the current node's height.
+        // Update the current node's height. This is relevant whether we have rotated or not.
         int rightHeight = height(n.right);
         int leftHeight = height(n.left);
         int maxHeight = (rightHeight > leftHeight) ? rightHeight : leftHeight;
@@ -166,12 +166,14 @@ public class AVLGTree<T extends Comparable<T>> {
     private Node delete(Node n, T key) {
         if(n == null) return null;
         if (n.key.compareTo(key) == 0) { // Found the key
+
             // Case #1: Null right subtree; simply return left subtree (might be null)
             if (n.right == null) {
                 return n.left;
 
                 /* Case #2: Non-null right subtree. Gotta find inorder successor, copy
                  * and recursively delete him. */
+
             } else {
 
                 Node inSucc = getInorderSuccessor(n);
@@ -203,7 +205,8 @@ public class AVLGTree<T extends Comparable<T>> {
         } else if (key.compareTo(n.key) < 0) { // Key might be on the left
             n.left = delete(n.left, key);
 
-            // Do we need to re-balance? Check the right subtree!
+            // Do we need to re-balance? If so, check the right subtree's balance
+            // // to figure out appropriate rotation!
 
             if (Math.abs(balance(n)) > maxImbalance) {
 
@@ -215,13 +218,13 @@ public class AVLGTree<T extends Comparable<T>> {
                     n = rotateLeft(n, false);
                 }
             }
-        } else {
+        } else { // Key on the right
             // The rest of this code is the same as the inorder successor deletion case.
             n.right = delete(n.right, key);
             if (Math.abs(balance(n)) > maxImbalance) {
 
                 int leftBalance = balance(n.left);
-                if (leftBalance == -1) { // Left-leaning left subtree. Right rotation about n.
+                if (leftBalance == 1) { // Left-leaning left subtree. Right rotation about n.
                     n = rotateRight(n, false);
                 } else { // Right-leaning left subtree. LR rotation about n.
                     n.left = rotateLeft(n.left, false);
@@ -233,7 +236,6 @@ public class AVLGTree<T extends Comparable<T>> {
 
         // Before we return the node, we need to adjust its height appropriately,
         // taking into consideration the heights of its children subtrees.
-        // Once again, we pay attention to threads.
 
         int rightHeight =  height(n.right);
         int leftHeight = height(n.left);
@@ -325,8 +327,9 @@ public class AVLGTree<T extends Comparable<T>> {
     }
 
     /**
-     * Search for <tt>key</tt> in the tree. Return a reference to it if it's in there,
-     * or <tt>null</tt> otherwise.
+     * <p>Search for <tt>key</tt> in the tree. Return a reference to it if it's in there,
+     * or <tt>null</tt> otherwise.</p>
+     * @param key The key to search for.
      * @return <tt>key</tt> if <tt>key</tt> is in the tree, or <tt>null</tt> otherwise.
      * @throws EmptyTreeException if the tree is empty.
      */

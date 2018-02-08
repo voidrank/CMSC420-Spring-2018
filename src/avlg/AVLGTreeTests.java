@@ -6,25 +6,29 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.security.InvalidParameterException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
-import java.util.ArrayList;
 import java.util.stream.IntStream;
+import java.util.Random;
+
 import static org.junit.Assert.*;
 
 /** A class containing jUnit tests to test the students' code with.
  *
- * @author <a href="https://github.com/jasonfil" alt="Jason Filippou's GitHub page">Jason Filippou</a>
+ * @author <a href="https://github.com/jasonfil">Jason Filippou</a>
  */
 public class AVLGTreeTests {
 
-    private ArrayList<AVLGTree> trees;
+    private ArrayList<AVLGTree> trees = new ArrayList<>(MAX_IMBALANCE);
+    private static final Random RNG = new Random(47);
+
     private static final int MAX_IMBALANCE=10;
     private static final Integer ZERO = 0;
     private static final int NUMS = 150;
-    AVLGTree<Integer> intAVL1Tree;
-    AVLGTree<String> stringAVL1Tree;
+    private AVLGTree<Integer> intAVL1Tree;
+    private AVLGTree<String> stringAVL1Tree;
+
     /**
      * Set-up the trees that we will use for our tests.
      */
@@ -45,6 +49,7 @@ public class AVLGTreeTests {
             fail("Caught an InvalidBalanceException with message: " + i.getMessage());
         }
     }
+
     @Test
     public void easyTest(){
         try {
@@ -56,14 +61,16 @@ public class AVLGTreeTests {
             intAVL1Tree.delete(8);
             assertTrue("The tree should be empty!", intAVL1Tree.isEmpty());
             assertEquals("The tree should have a height of -1!", -1 , intAVL1Tree.height());
+            EmptyTreeException exc1 = null;
             try {
                 intAVL1Tree.delete(-1); // This shouldn't do anything, but it's interesting to investigate if it throws an exception
-            } catch(EmptyTreeException exc){
-                fail("Caught an EmptyTreeException when deleting a key that's not in the tree," +
-                        " and the tree itself non-empty. Message: " + exc.getMessage() + ".");
+            } catch(EmptyTreeException exc2){
+                exc1 = exc2;
             }catch(Throwable t) {
                 fail("Caught a " + t.getClass().getSimpleName() + " in easyTest(). The message was: " + t.getMessage() + ".");
             }
+            assertNotNull("An EmptyTreeException should have been thrown" +
+                    " when attempting to delete a node from an empty tree.", exc1);
         }catch(EmptyTreeException exc){
             fail("Caught an EmptyTreeException with message: " + exc.getMessage() + ".");
         }
@@ -370,7 +377,7 @@ public class AVLGTreeTests {
              * *about the root* properly. We will first begin with a RL rotation:
              */
 
-            intAVL1Tree = new AVLGTree<Integer>();
+            intAVL1Tree = new AVLGTree<>(1);
             Integer[] keys1 = {ZERO, 5, 3};
             for (Integer k : keys1)
                 intAVL1Tree.insert(k);
@@ -390,7 +397,7 @@ public class AVLGTreeTests {
                     1, intAVL1Tree.height());
 
             /* And then also check LR rotations: */
-            stringAVL1Tree = new AVLGTree<String>();
+            stringAVL1Tree = new AVLGTree<>(1);
             String[] keys2 = {"gea", "beq", "car"};
             for (String k : keys2)
                 stringAVL1Tree.insert(k);
@@ -552,7 +559,7 @@ public class AVLGTreeTests {
          *   		 5	   10
          */
 
-        intAVL1Tree = new AVLGTree<Integer>();
+        intAVL1Tree = new AVLGTree<>(1);
         keys = new Integer[]{10, 5, 15, 7};
         for(Integer k: keys)
             intAVL1Tree.insert(k);
@@ -584,7 +591,7 @@ public class AVLGTreeTests {
          * 			Karen     Linda
          */
 
-        stringAVL1Tree = new AVLGTree<String>();
+        stringAVL1Tree = new AVLGTree<>(1);
         String[] keys2 = new String[]{"Karen", "Jake", "Linda", "Lauren"};
         for(String k: keys2)
             stringAVL1Tree.insert(k);
@@ -622,7 +629,7 @@ public class AVLGTreeTests {
          *    Let's check whether it does:
          */
 
-        intAVL1Tree = new AVLGTree<Integer>();
+        intAVL1Tree = new AVLGTree<>(1);
         keys = new Integer[]{45, 20, 60, 10, 30, 50, 65, 25}; // Inserting them in this order guarantees the tree above.
         for(Integer k : keys)
             intAVL1Tree.insert(k);
@@ -657,7 +664,7 @@ public class AVLGTreeTests {
          *   		  ar  dog  mad	rod
          */
 
-        stringAVL1Tree = new AVLGTree<String>();
+        stringAVL1Tree = new AVLGTree<>(1);
         keys2 = new String[]{"kal", "bet", "rod", "ar", "dog", "mad", "zed", "nac"};
         for(String k: keys2)
             stringAVL1Tree.insert(k);
@@ -685,7 +692,7 @@ public class AVLGTreeTests {
          *  			  25
          */
 
-        intAVL1Tree = new AVLGTree<Integer>();
+        intAVL1Tree = new AVLGTree<>(1);
         keys = new Integer[]{45, 20, 60, 10, 30, 50, 65, 25};
         for(Integer k : keys)
             intAVL1Tree.insert(k);
@@ -740,7 +747,7 @@ public class AVLGTreeTests {
          *  					 62
          */
 
-        intAVL1Tree = new AVLGTree<Integer>();
+        intAVL1Tree = new AVLGTree<>(1);
         keys = new Integer[]{45, 25, 60, 10, 30, 50, 65, 62};
         for(Integer k: keys)
             intAVL1Tree.insert(k);
@@ -783,10 +790,10 @@ public class AVLGTreeTests {
      */
     @Test
     public void testManyInsertions(){
-        LinkedList<Integer> collector = new LinkedList<Integer>();
+        LinkedList<Integer> collector = new LinkedList<>();
         for(int i = 0; i < NUMS; i++)
             collector.add(i);
-        Collections.shuffle(collector);
+        Collections.shuffle(collector, RNG);
 
         /* It's not particularly efficient to initiate a try / catch block
          * within a loop, but it will be helpful for the students so that they know
@@ -809,10 +816,10 @@ public class AVLGTreeTests {
     @Test
     public void testManyDeletions(){
 
-        LinkedList<Integer> collector = new LinkedList<Integer>();
+        LinkedList<Integer> collector = new LinkedList<>();
         for(int i = 0; i < NUMS; i++)
             collector.add(i);
-        Collections.shuffle(collector);
+        Collections.shuffle(collector, RNG);
 
         /* It's not particularly efficient to initiate a try / catch block
          * within a loop, but it will be helpful for the students so that they know
@@ -834,9 +841,20 @@ public class AVLGTreeTests {
                 assertEquals("In iteration " + i +", when attempting to delete key " + collector.get(i) +
                                 ", the return value of delete() did not match the key. Instead, it was: " + retVal + ".",
                         collector.get(i), retVal);
-                assertTrue("In iteration " + i +", after deleting key " + retVal +
+               if(i < collector.size() - 1)
+                   assertTrue("In iteration " + i +", after deleting key " + retVal +
                                 ", search() determined the key to still exist inside the tree.",
                         intAVL1Tree.search(retVal) == null);
+               else {
+                   EmptyTreeException exc = null;
+                   try {
+                       intAVL1Tree.search(retVal);
+                   } catch (EmptyTreeException excThrown) {
+                        exc = excThrown;
+                   }
+                   assertNotNull("Should have thrown an EmptyTreeException when searching " +
+                           "an empty tree.");
+               }
             }catch(Throwable t){
                 fail("Caught a " + t.getClass() + " with message: " + t.getMessage() +
                         " in iteration " + i + ", with the key " + collector.get(i) + ".");
