@@ -1,15 +1,11 @@
 
-<<<<<<< HEAD
-avlg
-exceptions
-=======
 demos.matrices.java
-demos.splaying
-demos.traversals
 edu.umd.cs.datastructures.demos.bags
 edu.umd.cs.datastructures.demos.bags.clients
 edu.umd.cs.datastructures.demos.bags.testcases
-edu.umd.cs.datastructures.demos.hashing
+exceptions
+projects.avlg
+projects.avlg.exceptions
 projects.pqueue
 projects.pqueue.fifoqueues
 projects.pqueue.fifoqueues.test
@@ -19,4 +15,3 @@ projects.pqueue.lists.test
 projects.pqueue.priorityqueues
 projects.pqueue.trees
 projects.pqueue.trees.test
->>>>>>> skeleton

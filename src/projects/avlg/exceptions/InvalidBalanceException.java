@@ -2,7 +2,7 @@ package projects.avlg.exceptions;
 
 /**
  *<p> <tt>InvalidBalanceException</tt> is an {@link Exception} that is thrown by the constructor
- * of {@link avlg.AVLGTree}
+ * of {@link projects.avlg.AVLGTree}
  *
  * <p>You should <b>not</b> edit this class! It is given to you as a resource for your project.</p>
 
