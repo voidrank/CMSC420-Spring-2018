@@ -1,9 +1,12 @@
 package demos.bags.testcases;
+
+
+
 import demos.bags.*;
 
 import org.junit.After;
 import org.junit.Before;
-
+import org.junit.Test;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.Random;
@@ -24,9 +27,8 @@ public class BagTests {
     private Random r;
     private static long DEFAULT_SEED=47;
 
-    @org.junit.Test
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         staticBag = new StaticallyPerturbedBag<Integer>();
         randomAccessBag = new RandomAccessBag<Integer>();
         shuffledBag = new DynamicallyShuffledBag<Integer>();
@@ -40,16 +42,17 @@ public class BagTests {
         r.setSeed(DEFAULT_SEED); // Comment out for actual pseudorandomness
     }
 
-    @org.junit.Test
+    
+    @Test
     @After
-    public void tearDown() throws Exception {
+    public void tearDown(){
         staticBag = randomAccessBag = shuffledBag = null;
         thousand = tenthousand = null;
         r = null;
         System.gc();
     }
 
-    @org.junit.Test
+    @Test
     public void add() throws Exception {
         try {
             testAdditions(thousand, staticBag);
@@ -84,7 +87,7 @@ public class BagTests {
         }
     }
 
-    @org.junit.Test
+    @Test
     public void isEmpty() throws Exception {
         assertTrue("Statically Perturbed Bag should be empty.", staticBag.isEmpty());
         assertTrue("Dynamically Shuffled Bag should be empty.", shuffledBag.isEmpty());
@@ -109,7 +112,7 @@ public class BagTests {
         assertTrue("Random Access Bag should should have a size of 1.", randomAccessBag.size() == 1);
     }
 
-    @org.junit.Test
+    @Test
     public void shake() throws Exception {
         // Shake() unit tests are tricky... some things should clearly not happen regardless of the shaking.
         // Let's start with those.
@@ -185,7 +188,7 @@ public class BagTests {
         return false;
     }
 
-    @org.junit.Test
+    @Test
     public void iterator() throws Exception {
 
         // Add a bunch of elements to all the bags
