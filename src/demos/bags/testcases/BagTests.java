@@ -42,8 +42,7 @@ public class BagTests {
         r.setSeed(DEFAULT_SEED); // Comment out for actual pseudorandomness
     }
 
-    
-    @Test
+
     @After
     public void tearDown(){
         staticBag = randomAccessBag = shuffledBag = null;
