@@ -103,7 +103,7 @@ public class AVLGTree<T extends Comparable<T>> {
     /**
      * <p>Return the key at the tree's root node if it exists, or throws an
      * <tt>EmptyTreeException</tt> otherwise.</p>
-     * @throws EmptyTreeException
+     * @throws EmptyTreeException if the tree is empty.
      * @return The key at the tree's root node.
      */
     public T getRoot() throws EmptyTreeException{
@@ -143,9 +143,10 @@ public class AVLGTree<T extends Comparable<T>> {
 
     /**
      * <p>Return the number of elements in the tree.</p>
+     * @throws EmptyTreeException if the tree is empty.
      * @return  The number of elements in the tree.
      */
-    public int getCount(){
+    public int getCount() throws EmptyTreeException{
         throw UNIMPL_METHOD; /* ERASE THIS LINE AFTER IMPLEMENTING THE METHOD. */
     }
 }
