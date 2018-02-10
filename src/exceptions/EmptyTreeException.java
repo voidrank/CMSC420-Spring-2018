@@ -15,7 +15,7 @@ package exceptions;
  * @author <a href="https://github.com/jasonfil">Jason Filippou</a>
 */
 
-public class EmptyTreeException extends Exception{
+public class EmptyTreeException extends RuntimeException{
 	public EmptyTreeException(String msg){
 		super(msg);
 	}

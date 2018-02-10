@@ -10,7 +10,7 @@ package exceptions;
  *
  * @see EmptyTreeException
 */
-public class InvalidBalanceException extends Exception {
+public class InvalidBalanceException extends RuntimeException {
     public InvalidBalanceException(String msg){
         super(msg);
     }
