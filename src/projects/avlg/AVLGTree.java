@@ -101,10 +101,12 @@ public class AVLGTree<T extends Comparable<T>> {
     }
 
     /**
-     * Return the key at the tree's root node.
+     * <p>Return the key at the tree's root node if it exists, or throws an
+     * <tt>EmptyTreeException</tt> otherwise.</p>
+     * @throws EmptyTreeException
      * @return The key at the tree's root node.
      */
-    public T getRoot() {
+    public T getRoot() throws EmptyTreeException{
         throw UNIMPL_METHOD; /* ERASE THIS LINE AFTER IMPLEMENTING THE METHOD. */
     }
 
