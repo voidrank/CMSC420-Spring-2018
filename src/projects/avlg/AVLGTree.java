@@ -31,12 +31,6 @@ public class AVLGTree<T extends Comparable<T>> {
             new RuntimeException("Implement this method!");
 
 
-    /* ********************************************************************
-     ****************** YOUR PRIVATE FIELDS AND METHODS HERE: **************
-     **********************************************************************/
-
-
-
     /* *********************************************************************
      ************************* PUBLIC (INTERFACE) METHODS *******************
      **********************************************************************/
@@ -94,8 +88,8 @@ public class AVLGTree<T extends Comparable<T>> {
      * stub tree has a height of 0, and we define an empty tree to have a height of -1.</p>
      * @return The height of the tree.
      */
-    public int height() {
-        throw UNIMPL_METHOD; /* ERASE THIS LINE AFTER IMPLEMENTING THE METHOD. */
+    public int getHeight() {
+            throw UNIMPL_METHOD; /* ERASE THIS LINE AFTER IMPLEMENTING THE METHOD. */
     }
 
     /**
