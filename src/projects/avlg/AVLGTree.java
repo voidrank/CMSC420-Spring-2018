@@ -143,10 +143,9 @@ public class AVLGTree<T extends Comparable<T>> {
 
     /**
      * <p>Return the number of elements in the tree.</p>
-     * @throws EmptyTreeException if the tree is empty.
      * @return  The number of elements in the tree.
      */
-    public int getCount() throws EmptyTreeException{
+    public int getCount(){
         throw UNIMPL_METHOD; /* ERASE THIS LINE AFTER IMPLEMENTING THE METHOD. */
     }
 }
