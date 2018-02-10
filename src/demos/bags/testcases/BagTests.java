@@ -1,8 +1,5 @@
 package demos.bags.testcases;
-
-
 import demos.bags.*;
-
 
 import org.junit.After;
 import org.junit.Before;
