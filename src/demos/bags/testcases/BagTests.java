@@ -1,9 +1,6 @@
-package edu.umd.cs.datastructures.demos.bags.testcases;
+package demos.bags.testcases;
 
-import edu.umd.cs.datastructures.demos.bags.Bag;
-import edu.umd.cs.datastructures.demos.bags.DynamicallyShuffledBag;
-import edu.umd.cs.datastructures.demos.bags.RandomAccessBag;
-import edu.umd.cs.datastructures.demos.bags.StaticallyPerturbedBag;
+import demos.bags.*;
 import org.junit.After;
 import org.junit.Before;
 

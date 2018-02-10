@@ -20,7 +20,7 @@ import static org.junit.Assert.*;
  */
 public class AVLGTreeTests {
 
-    private ArrayList<AVLGTree> trees = new ArrayList<>(MAX_IMBALANCE);
+    private ArrayList<AVLGTree<Integer>> trees = new ArrayList<>(MAX_IMBALANCE);
     private static final Random RNG = new Random(47);
 
     private static final int MAX_IMBALANCE=10;
@@ -50,6 +50,12 @@ public class AVLGTreeTests {
         }
     }
 
+    /*@Test
+    public void emptyAVLGTreeBasicTests(){
+        for(AVLGTree<Integer> t: trees){
+            assertEquals()
+        }
+    }*/
     @Test
     public void easyTest(){
         try {

@@ -351,6 +351,14 @@ public class AVLGTree<T extends Comparable<T>> {
         }
     }
 
+    /**
+     * Retrieves the maximum imbalance parameter.
+     * @return The maximum imbalance parameter provided as a constructor parameter.
+     */
+    public int getMaxImbalance(){
+        return maxImbalance;
+    }
+
 
     /**
      * <p>Return the height of the tree. The height of the tree is defined as the length of the
