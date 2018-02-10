@@ -1,6 +1,6 @@
-package edu.umd.cs.datastructures.demos.bags.clients;
+package demos.bags.clients;
 
-import edu.umd.cs.datastructures.demos.bags.*;
+import demos.bags.*;
 
 import java.util.Random;
 import java.util.stream.IntStream;

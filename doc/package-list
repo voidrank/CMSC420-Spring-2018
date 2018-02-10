@@ -1,9 +1,8 @@
 
+demos.bags
+demos.bags.clients
+demos.bags.testcases
 demos.matrices.java
-edu.umd.cs.datastructures.demos.bags
-edu.umd.cs.datastructures.demos.bags.clients
-edu.umd.cs.datastructures.demos.bags.testcases
-exceptions
 projects.avlg
 projects.avlg.exceptions
 projects.pqueue

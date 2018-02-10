@@ -1,9 +1,9 @@
-package edu.umd.cs.datastructures.demos.bags.testcases;
+package demos.bags.testcases;
 
-import edu.umd.cs.datastructures.demos.bags.Bag;
-import edu.umd.cs.datastructures.demos.bags.DynamicallyShuffledBag;
-import edu.umd.cs.datastructures.demos.bags.RandomAccessBag;
-import edu.umd.cs.datastructures.demos.bags.StaticallyPerturbedBag;
+import demos.bags.Bag;
+import demos.bags.DynamicallyShuffledBag;
+import demos.bags.RandomAccessBag;
+import demos.bags.StaticallyPerturbedBag;
 import org.junit.After;
 import org.junit.Before;
 
@@ -13,9 +13,7 @@ import java.util.Random;
 import java.util.function.IntConsumer;
 import java.util.stream.IntStream;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 /**
  * Created by jason on 3/22/17.

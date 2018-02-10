@@ -1,4 +1,4 @@
-package edu.umd.cs.datastructures.demos.bags.clients;
+package demos.bags.clients;
 
 /**A simple abstraction for a colored ball.
  * @author jason

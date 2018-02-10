@@ -1,4 +1,4 @@
-package edu.umd.cs.datastructures.demos.bags;
+package demos.bags;
 
 /** A <b>Bag&lt;Item&gt;</b> is an <b>Iterable&lt;Item&gt;</b> which represents a rather useless data structure known as a bag.
  * A bag allows for:

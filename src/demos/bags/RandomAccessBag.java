@@ -1,4 +1,4 @@
-package edu.umd.cs.datastructures.demos.bags;
+package demos.bags;
 
 import java.util.*;
 
