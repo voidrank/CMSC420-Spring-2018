@@ -50,12 +50,37 @@ public class AVLGTreeTests {
         }
     }
 
-    /*@Test
+    @Test
     public void emptyAVLGTreeBasicTests(){
-        for(AVLGTree<Integer> t: trees){
-            assertEquals()
-        }
-    }*/
+        trees.forEach(t->
+        {
+            assertTrue("", t.isEmpty());
+            assertEquals("", -1, t.getHeight());
+            assertEquals("", 0, t.getCount());
+            EmptyTreeException expected = null;
+            try {
+               t.getRoot();
+            } catch(EmptyTreeException thrown){
+                expected = thrown;
+            }
+            assertNotNull("", expected);
+        });
+    }
+
+    @Test
+    public void testInvalidImbalances(){
+        IntStream.range(0, NUMS).forEach(imb->
+        {
+            InvalidBalanceException expected = null;
+            try {
+                new AVLGTree<Integer>(-imb); // Zero or negative imbalance
+            } catch(InvalidBalanceException thrown){
+                expected = thrown;
+            }
+            assertNotNull("", expected);
+        });
+    }
+
     @Test
     public void easyTest(){
         try {
