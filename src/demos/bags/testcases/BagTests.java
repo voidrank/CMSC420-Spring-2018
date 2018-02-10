@@ -1,9 +1,9 @@
 package demos.bags.testcases;
 
-import demos.bags.Bag;
-import demos.bags.DynamicallyShuffledBag;
-import demos.bags.RandomAccessBag;
-import demos.bags.StaticallyPerturbedBag;
+
+import demos.bags.*;
+
+
 import org.junit.After;
 import org.junit.Before;
 
