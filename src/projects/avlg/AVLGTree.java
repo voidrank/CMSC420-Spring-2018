@@ -384,7 +384,9 @@ public class AVLGTree<T extends Comparable<T>> {
      * @throws  EmptyTreeException if the tree is empty.
      */
     public T getRoot() throws EmptyTreeException{
-        return root == null ? null : root.key;
+        if(root == null || isEmpty())
+            throw new EmptyTreeException("AVL-"+maxImbalance + " tree is empty!");
+        return root.key;
     }
 
 
