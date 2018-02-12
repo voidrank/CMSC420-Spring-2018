@@ -30,6 +30,12 @@ public class AVLGTree<T extends Comparable<T>> {
     private static final RuntimeException UNIMPL_METHOD =
             new RuntimeException("Implement this method!");
 
+    /* *************************************************************************
+     ************** PLACE YOUR PRIVATE METHODS AND FIELDS HERE: ****************
+     ***************************************************************************/
+
+    
+
 
     /* *********************************************************************
      ************************* PUBLIC (INTERFACE) METHODS *******************
