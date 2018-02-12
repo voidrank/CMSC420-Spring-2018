@@ -16,45 +16,86 @@ import java.util.stream.IntStream;
 
 import static org.junit.Assert.*;
 
-/** A class containing jUnit tests to test the students' code with.
+/** <p>A testing suite for the second project of CMSC420, Data Structures,
+ * in CS UMD, Spring 2018. The theme of the project is AVL-G Trees.
+ * The structure is tested against {@link Integer}s, with easily tune-able values
+ * for <i>G</i> as well as tune-able stress-testing of a pre-defined number of pairwise
+ * distinct Integers.</p>
+ *
+ * <p>The <tt>testBalancedInsertionsAVLx()</tt> and The <tt>testBalancedInsertionsAVLx()</tt>
+ * tests <b>all</b> test against expected behavior of the following eight operations: </p>
+ *
+ * <ol>
+ *     <li>Single left rotation about the root.</li>
+ *     <li>Single right rotation about the root.</li>
+ *     <li>RL rotation about the root.</li>
+ *     <li>LR rotation about the root.</li>
+ *     <li>LR rotation about the root's left child.</li>
+ *     <li>RL rotation about the root's left child.</li>
+ *     <li>LR rotation about the root's right child.</li>
+ *     <li>RL rotation about the root's right child.</li>
+ * </ol>
  *
  * @author <a href="https://github.com/jasonfil">Jason Filippou</a>
  */
 public class AVLGTreeTests {
 
-    // TODO: Use the jUnit4 solution of Exception.ExpectedException to simplify the code.
+    // TODO: Use the jUnit4 solution of Exception.ExpectedException to simplify the
+    // TODO: pieces of the code that *expect* certain specific Exceptions to be thrown.
+
+                    /* ******************************/
+                    /* ****** PRIVATE FIELDS ********/
+                    /* ******************************/
 
     private ArrayList<AVLGTree<Integer>> trees = new ArrayList<>(MAX_IMBALANCE);
     private static final Random RNG = new Random(47);
-
     private static final int MAX_IMBALANCE=10;
     private static final Integer ZERO = 0;
     private static final int NUMS = 150;
 
+
+                        /* *******************************/
+                        /* ****** PRIVATE METHODS ********/
+                        /* *******************************/
+
+
+    /* Ensure that the given tree is empty in terms of both isEmpty()
+     * and count(). Return false otherwise.
+     */
     private boolean ensureTreeEmpty(AVLGTree<?> tree){
         assert tree!= null : "ensureTreeEmpty() expects non-null trees";
         return tree.isEmpty() || tree.getCount() == 0;
     }
 
+    /* Ensure that the given tree has the provided arguments as height,
+     * count and root respectively. Return false in any other case.
+     */
     private boolean ensureHeightCountAndRoot(AVLGTree<Integer> tree,
                                              int expectedHeight, int expectedCount,
                                              Object expectedRoot){
         assert tree!= null : "ensureHeightAndCount() expects non-null trees";
         try {
-            assertEquals(" ", expectedRoot , tree.getRoot());
+            assertEquals("Root mismatch!", expectedRoot , tree.getRoot());
         } catch(EmptyTreeException exc ){
-            return (expectedCount == 0);
+            return (expectedCount == 0); // True only if we were dealing with an empty tree.
+        } catch(AssertionError ignored){
+            return false;
         }
         return ( expectedHeight == tree.getHeight() ) &&
                 (expectedCount == tree.getCount());
 
     }
 
+    /* Ensure that the given tree obeys *both* the BST *and* AVL-G
+     * global invariants. Null trees obey those trivially.
+     */
     private boolean ensureAVLGBST(AVLGTree<?> tree){
-        assert tree!= null : "ensureAVLGBST() expects non-null trees";
-        return tree.isBST() && tree.isAVLGBalanced();
+        return (tree == null) || (tree.isBST() && tree.isAVLGBalanced());
     }
 
+    /* Insert all the Integers provided in the stream in the given tree.
+     * Afterwards, check height, count and root against expected values.
+     */
     private void insertAndTest(IntStream stream,
                                   AVLGTree<Integer> tree, int expectedHeight,
                                   int expectedCount, Object expectedRoot) throws AssertionError{
@@ -76,6 +117,11 @@ public class AVLGTreeTests {
                     " in an initially empty AVL-" + tree.getMaxImbalance() + " tree, the height, count " +
                     "and/or new root were different from what was expected.");
     }
+
+
+                        /* *****************************/
+                        /* ****** UNIT TESTS ***********/
+                        /* *****************************/
 
     /**
      * Set-up the trees that we will use for our tests.
@@ -101,6 +147,10 @@ public class AVLGTreeTests {
         trees.clear(); // The C++ in me has spoken.
     }
 
+    /**
+     * Test whether a {@link InvalidBalanceException} is thrown when initializing
+     * AVL-G trees with various invalid choices for the imbalance parameter <i>G</i>.
+     */
     @Test
     public void testInvalidImbalances(){
         IntStream.range(0, NUMS).forEach(imb->
@@ -120,6 +170,10 @@ public class AVLGTreeTests {
         });
     }
 
+    /**
+     * Make sure that an empty tree is reported as such by the code, in terms of both
+     * {@link AVLGTree#isEmpty()} and {@link AVLGTree#getCount()}.
+     */
     @Test
     public void testEmptyTree(){
         trees.forEach(t->
@@ -147,6 +201,10 @@ public class AVLGTreeTests {
         });
     }
 
+    /**
+     * A simple test which inserts two keys and then deletes them. Tests for height, count,
+     * emptiness, and even polls the root after all 4 different operations.
+     */
     @Test
     public void testTwoInsertionsAndDeletions(){
         trees.forEach(t->
@@ -345,6 +403,154 @@ public class AVLGTreeTests {
         });
     }
 
+    /**
+     * Generate 8 different insertion orders, each of which
+     * should lead to the 8 operations described in the class' docs.
+     * Perform tests against a maximum absolute imbalance parameter of 1.
+     */
+    @Test
+    public void testBalancedInsertionsAVL1(){
+
+        AVLGTree<Integer> tree = trees.get(0);
+
+        // (1) A single left rotation about the root.
+        insertAndTest(IntStream.rangeClosed(0, 2), tree,
+                1, 3, 1);
+
+        // (2) A single right rotation about the root.
+        insertAndTest(IntStream.of(0, -1, -2), tree,
+                1, 3, -1);
+
+        // (3) A R-L rotation about the root.
+        insertAndTest(IntStream.of(1, 3, 2), tree,
+                1, 3, 2);
+
+        // (4) A L-R rotation about the root.
+        insertAndTest(IntStream.of(3, 1, 2), tree,
+                1, 3, 2);
+
+        // (5) A L-R rotation about the root's left child.
+        insertAndTest(IntStream.of(5, -5, 10, -10, -8), tree,
+                2, 5, 5);
+
+        // (6) A R-L rotation about the root's left child.
+        insertAndTest(IntStream.of(5, -5, 10, 0, -2), tree,
+                2, 5, 5);
+
+        // (7) A L-R rotation about the root's right child.
+        insertAndTest(IntStream.of(5, 10, 0, 7, 8), tree,
+                2, 5, 5);
+
+        // (8) A R-L rotation about the root's right child
+        insertAndTest(IntStream.of(5, 10, 0, 13, 12), tree,
+                2, 5, 5);
+    }
+
+    /**
+     * Generate 8 different insertion orders, each of which
+     * should lead to the 8 operations described in the class' docs.
+     * Perform tests against a maximum absolute imbalance parameter of 2.
+     */
+    @Test
+    public void testBalancedInsertionsAVL2(){
+
+        AVLGTree<Integer> tree = trees.get(1);
+
+        // (1) A single left rotation about the root.
+        insertAndTest(IntStream.rangeClosed(0, 3), tree,
+                2, 4, 1);
+
+        // (2) A single right rotation about the root.
+        insertAndTest(IntStream.of(0, -1, -2, -3), tree,
+                2, 4, -1);
+
+        // (3) A R-L rotation about the root.
+        insertAndTest(IntStream.of(1, 4, 2, 3), tree,
+                2, 4, 2);
+
+        // (4) A L-R rotation about the root.
+        insertAndTest(IntStream.of(4, 1, 2, 3), tree,
+                2, 4, 2);
+
+        // (5) A L-R rotation about the root's left child.
+        insertAndTest(IntStream.of(5, -5, 10, -10, -8, -7), tree,
+                3, 6, 5);
+
+        // (6) A R-L rotation about the root's left child.
+        insertAndTest(IntStream.of(5, -5, 10, 0, -2, -3 ), tree,
+                3, 6, 5);
+
+        // (7) A L-R rotation about the root's right child.
+        insertAndTest(IntStream.of(5, 10, 0, 7, 8, 9), tree,
+                3, 6, 5);
+
+        // (8) A R-L rotation about the root's right child
+        insertAndTest(IntStream.of(5, 10, 0, 13, 12, 11), tree,
+                3, 6, 5);
+
+    }
+
+    /**
+     * Generate 8 different insertion orders, each of which
+     * should lead to the 8 operations described in the class' docs.
+     * Perform tests against a maximum absolute imbalance parameter of 3.
+     */
+    @Test
+    public void testBalancedInsertionsAVL3(){
+        AVLGTree<Integer> tree = trees.get(2);
+
+        // (1) A single left rotation about the root.
+        insertAndTest(IntStream.rangeClosed(0, 4), tree,
+                3, 5, 1);
+
+        // (2) A single right rotation about the root.
+        insertAndTest(IntStream.of(0, -1, -2, -3, -4), tree,
+                3, 5, -1);
+
+        // (3) A R-L rotation about the root.
+        insertAndTest(IntStream.of(1, 5, 2, 3, 4), tree,
+                3, 5, 2);
+
+        // (4) A L-R rotation about the root.
+        insertAndTest(IntStream.of(5, 1, 2, 3, 4), tree,
+                3, 5, 2);
+
+        // (5) A L-R rotation about the root's left child.
+        insertAndTest(IntStream.of(5, -5, 10, -10, -8, -7, -6), tree,
+                4, 7, 5);
+
+        // (6) A R-L rotation about the root's left child.
+        insertAndTest(IntStream.of(5, -5, 10, 0, -2, -3, -4 ), tree,
+                4, 7, 5);
+
+        // (7) A L-R rotation about the root's right child.
+        insertAndTest(IntStream.of(5, 11, 0, 7, 8, 9, 10), tree,
+                4, 7, 5);
+
+        // (8) A R-L rotation about the root's right child
+        insertAndTest(IntStream.of(5, 9, 0, 13, 12, 11, 10), tree,
+                4, 7, 5);
+    }
+
+
+    @Test
+    public void testBalancedDeletionsAVL1(){
+
+
+
+
+    }
+
+    @Test
+    public void testBalancedDeletionsAVL2(){
+
+    }
+
+    @Test
+    public void testBalancedDeletionsAVL3() {
+
+    }
+
     @Test
     public void testManySuccessfulInsertions(){
         List<Integer> keys = IntStream.range(0, NUMS).boxed().collect(Collectors.toList());
@@ -482,72 +688,5 @@ public class AVLGTreeTests {
         });
     }
 
-    @Test
-    public void testBalancedInsertionsAVL1(){
 
-        AVLGTree<Integer> tree = trees.get(0);
-
-        // (1) A single left rotation about the root.
-        insertAndTest(IntStream.rangeClosed(0, 2), tree,
-                1, 3, 1);
-
-        // (2) A single right rotation about the root.
-        insertAndTest(IntStream.of(0, -1, -2), tree,
-                1, 3, -1);
-
-        // (3) A R-L rotation about the root.
-        insertAndTest(IntStream.of(1, 3, 2), tree,
-                1, 3, 2);
-
-        // (4) A L-R rotation about the root.
-        insertAndTest(IntStream.of(3, 1, 2), tree,
-                1, 3, 2);
-
-        // (5) A L-R rotation about the root's left child.
-        insertAndTest(IntStream.of(5, -5, 10, -10, -8), tree,
-                2, 5, 5);
-
-        // (6) A R-L rotation about the root's left child.
-        insertAndTest(IntStream.of(5, -5, 10, 0, -2), tree,
-                2, 5, 5);
-
-        // (7) A L-R rotation about the root's right child.
-        insertAndTest(IntStream.of(5, 10, 0, 7, 8), tree,
-                2, 5, 5);
-
-        // (8) A R-L rotation about the root's right child
-        insertAndTest(IntStream.of(5, 10, 0, 13, 12), tree,
-                2, 5, 5);
-    }
-
-    @Test
-    public void testBalancedInsertionsAVL2(){
-
-
-    }
-
-    @Test
-    public void testBalancedInsertionsAVL3(){
-
-
-    }
-
-
-    @Test
-    public void testBalancedDeletionsAVL1(){
-
-
-
-
-    }
-
-    @Test
-    public void testBalancedDeletionsAVL2(){
-
-    }
-
-    @Test
-    public void testBalancedDeletionsAVL3() {
-
-    }
 }
