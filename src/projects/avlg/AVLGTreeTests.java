@@ -49,9 +49,9 @@ public class AVLGTreeTests {
 
     private ArrayList<AVLGTree<Integer>> trees = new ArrayList<>(MAX_IMBALANCE);
     private static final Random RNG = new Random(47);
-    private static final int MAX_IMBALANCE=10;
+    private static final int MAX_IMBALANCE=3;
     private static final Integer ZERO = 0;
-    private static final int NUMS = 150;
+    private static final int NUMS = 100;
 
 
                         /* *******************************/
@@ -144,7 +144,7 @@ public class AVLGTreeTests {
     @After
     public void tearDown(){
         trees.forEach(AVLGTree::clear);
-        trees.clear(); // The C++ in me has spoken.
+        trees.clear();
     }
 
     /**
@@ -551,8 +551,14 @@ public class AVLGTreeTests {
 
     }
 
+
+                            /* ******************* /
+                             * ** STRESS TESTS  ** /
+                             * ******************* /
+                             */
+
     @Test
-    public void testManySuccessfulInsertions(){
+    public void testManyInsertions(){
         List<Integer> keys = IntStream.range(0, NUMS).boxed().collect(Collectors.toList());
         Collections.shuffle(keys, RNG);
         trees.forEach(t->keys.forEach(k-> {
@@ -563,9 +569,9 @@ public class AVLGTreeTests {
                         " into a tree with maxImbalance parameter " + t.getMaxImbalance() + ".");
             }
             assertTrue("After inserting the key " + k + ", which was the key #" +
-                    keys.indexOf(k) + " in the insertion sequence, we determined that the" +
-                    " tree did not globally satisfy the AVLG and/or BST properties",
-                    ensureAVLGBST(t));
+                    keys.indexOf(k) + " in the insertion sequence in an AVL-" + t.getMaxImbalance() + " tree," +
+                            " we determined that the tree did not globally satisfy " +
+                            "the AVLG and/or BST properties",  ensureAVLGBST(t));
         }));
     }
 
@@ -670,11 +676,12 @@ public class AVLGTreeTests {
                 try {
                     t.delete(k);
                 } catch(EmptyTreeException ignored){
-                    fail("When deleting key " + k + " from a non-empty AVL-" + t.getMaxImbalance() +
-                            " tree, we caught an EmptyTreeException.");
+                    fail("When deleting key " + k + ", which was #" + keys.indexOf(k) + " in the sequence " +
+                            " from a non-empty AVL-" + t.getMaxImbalance() +" tree, we caught an " +
+                            "EmptyTreeException.");
                 } catch(Throwable thr) {
-                    fail("When deleting key " + k + " from a non-empty AVL- " + t.getMaxImbalance() +
-                            " tree, we caught a " + thr.getClass().getSimpleName() + " with message " +
+                    fail("When deleting key " + k + ", which was #" + keys.indexOf(k) + " in the sequence " +
+                            " from a non-empty AVL- " + t.getMaxImbalance() + " tree, we caught a " + thr.getClass().getSimpleName() + " with message " +
                             thr.getMessage() + ".");
                 }
                 assertTrue("After deleting key " + k + ", which was key #" +

@@ -49,9 +49,6 @@ public class AVLGTree<T extends Comparable<T>> {
         private T key;
         private Node left, right;
 
-        /* *********************************************************************
-         ************************* PRIVATE METHODS *****************************
-         **********************************************************************/
 
         /* Constructor */
         Node(T key) { // This is really only useful for the root.
@@ -60,6 +57,9 @@ public class AVLGTree<T extends Comparable<T>> {
         }
     } // End of inner node class definition
 
+    /* *********************************************************************
+     ************************* PRIVATE METHODS *****************************
+     **********************************************************************/
 
     /* Height of a node. */
     private int getHeight(Node n) {
@@ -165,20 +165,23 @@ public class AVLGTree<T extends Comparable<T>> {
      * as well as inner node deletions. Most complex method of data structure.
      */
     private Node delete(Node n, T key) {
-        if(n == null) return null;
-        if (n.key.compareTo(key) == 0) { // Found the key
 
-            // Case #1: Null right subtree; simply return left subtree (might be null)
+        // Case 0: Node is null. Could not find the node to delete.
+        if(n == null)
+            return null;
+
+        // Case 1: Found the key
+        if (n.key.compareTo(key) == 0) {
+
+            // Case  1.a: Null right subtree; simply return left subtree (might be null)
             if (n.right == null) {
                 return n.left;
-
-                /* Case #2: Non-null right subtree. Gotta find inorder successor, copy
-                 * and recursively delete him. */
-
+            // Case 1.b: Non-null right subtree. Gotta find inorder successor, copy
+            // and recursively delete him.
             } else {
 
                 Node inSucc = getInorderSuccessor(n);
-                assert inSucc != null : "The inorder successors should never be null here!";
+                assert inSucc != null : "The inorder successor should never be null here!";
                 n.key = inSucc.key;
                 n.right = delete(n.right, n.key); // recursively
 
@@ -192,7 +195,6 @@ public class AVLGTree<T extends Comparable<T>> {
                      * right rotation about n or an LR rotation about n, we need to query
                      * its left subtree about whether it is left heavy, balanced or right heavy.
                      */
-
                     int leftBalance = balance(n.left);
 
                     if (leftBalance >= 0) { // Left-leaning or balanced left subtree. Right rotation about n.
@@ -204,11 +206,13 @@ public class AVLGTree<T extends Comparable<T>> {
                 }
 
             }
-        } else if (key.compareTo(n.key) < 0) { // Key might be on the left
+        }
+        // Case #2: key might be on the left
+        else if (key.compareTo(n.key) < 0) {
             n.left = delete(n.left, key);
 
             // Do we need to re-balance? If so, check the right subtree's balance
-            // // to figure out appropriate rotation!
+            // to figure out appropriate rotation!
 
             if (Math.abs(balance(n)) > maxImbalance) {
 
@@ -220,7 +224,8 @@ public class AVLGTree<T extends Comparable<T>> {
                     n = rotateLeft(n, false);
                 }
             }
-        } else { // Key on the right
+        // Case #3: key might be on the right
+        } else {
             // The rest of this code is the same as the inorder successor deletion case.
             n.right = delete(n.right, key);
             if (Math.abs(balance(n)) > maxImbalance) {
@@ -246,7 +251,7 @@ public class AVLGTree<T extends Comparable<T>> {
 
     /* Check if the subtree obeys the BST property. */
     private boolean isBST(Node n) {
-        if (n == null || (n.left == null && n.right == null)) { // leaves are trivially BSTs )
+        if (n == null || (n.left == null && n.right == null)) { // Empty trees and leaves are trivially BSTs )
             return true;
         } else if (n.left != null && n.right == null) { // Non-null left child, null right child
             if (n.left.key.compareTo(n.key) >= 0)
@@ -334,7 +339,7 @@ public class AVLGTree<T extends Comparable<T>> {
      */
     public T search(T key) throws EmptyTreeException {
         if (isEmpty())
-            throw new EmptyTreeException("AVLGTree.search(): Tree is empty!");
+            throw new EmptyTreeException("AVLGTree::search(T key): Tree is empty!");
         else { // Do it iteratively.
             Node current = root;
             while(current != null) {
@@ -415,7 +420,7 @@ public class AVLGTree<T extends Comparable<T>> {
      */
     public void clear(){
         root = null;
-        System.gc();
+        // System.gc();
         count = 0;
     }
 
