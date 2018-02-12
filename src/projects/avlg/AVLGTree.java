@@ -178,6 +178,7 @@ public class AVLGTree<T extends Comparable<T>> {
             } else {
 
                 Node inSucc = getInorderSuccessor(n);
+                assert inSucc != null : "The inorder successors should never be null here!";
                 n.key = inSucc.key;
                 n.right = delete(n.right, n.key); // recursively
 
@@ -233,11 +234,8 @@ public class AVLGTree<T extends Comparable<T>> {
                 }
             }
         }
-
-
         // Before we return the node, we need to adjust its height appropriately,
         // taking into consideration the heights of its children subtrees.
-
         int rightHeight =  getHeight(n.right);
         int leftHeight = getHeight(n.left);
         int maxHeight = (rightHeight >= leftHeight) ? rightHeight : leftHeight;
@@ -266,8 +264,8 @@ public class AVLGTree<T extends Comparable<T>> {
     }
 
     /* Check if the subtree is balanced, based on the maxImbalance allowed. */
-    private boolean isAVLGBalanced(Node n) { // leaves are trivially balanced )
-        if (n == null || (n.left == null && n.right == null))
+    private boolean isAVLGBalanced(Node n) {
+        if (n == null || (n.left == null && n.right == null)) // empty subtrees & leaves are trivially balanced )
             return true;
         return (Math.abs(balance(n)) <= maxImbalance)
                 && isAVLGBalanced(n.left) && isAVLGBalanced(n.right);
