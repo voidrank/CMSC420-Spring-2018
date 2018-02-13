@@ -558,6 +558,11 @@ public class AVLGTreeTests {
     }
 
 
+    /**
+     * Generate 8 different insertion &amp; deletion orders, each of which
+     * should lead to the 8 operations described in the class' docs.
+     * Perform tests against a maximum absolute imbalance parameter of 1.
+     */
     @Test
     public void testBalancedDeletionsAVL1(){
 
@@ -596,6 +601,11 @@ public class AVLGTreeTests {
         deleteAndTest(25, tree, 2, 6, 20);
     }
 
+    /**
+     * Generate 8 different insertion &amp; deletion orders, each of which
+     * should lead to the 8 operations described in the class' docs.
+     * Perform tests against a maximum absolute imbalance parameter of 2.
+     */
     @Test
     public void testBalancedDeletionsAVL2(){
         AVLGTree<Integer> tree = trees.get(1);
@@ -633,6 +643,11 @@ public class AVLGTreeTests {
         deleteAndTest(30, tree,3, 7, 20);
     }
 
+    /**
+     * Generate 8 different insertion &amp; deletion orders, each of which
+     * should lead to the 8 operations described in the class' docs.
+     * Perform tests against a maximum absolute imbalance parameter of 3.
+     */
     @Test
     public void testBalancedDeletionsAVL3() {
         AVLGTree<Integer> tree = trees.get(2);
@@ -676,6 +691,10 @@ public class AVLGTreeTests {
                              * ******************* /
                              */
 
+    /**
+     * <p>Test a bunch of insertions on many different AVL-G trees, with the
+     * parameter <i>G</i> varied as well.</p>
+     */
     @Test
     public void testManyInsertions(){
         List<Integer> keys = IntStream.range(0, NUMS).boxed().collect(Collectors.toList());
@@ -694,6 +713,10 @@ public class AVLGTreeTests {
         }));
     }
 
+    /**
+     * <p>Test a bunch of insertions and subsequent deletions of all elements
+     * on many different AVL-G trees, with the parameter <i>G</i> varied as well.</p>
+     */
     @Test
     public void testManySuccessfulDeletions(){
         List<Integer> keys = IntStream.range(0, NUMS).boxed().collect(Collectors.toList());
@@ -717,6 +740,10 @@ public class AVLGTreeTests {
         }));
     }
 
+    /**
+     * <p>Test a bunch of searches on varied <i>G</i> AVL-G trees, all of which
+     * <b>should</b> succeed.</p>
+     */
     @Test
     public void testManySuccessfulSearches(){
         List<Integer> keys = IntStream.range(0, NUMS).boxed().collect(Collectors.toList());
@@ -741,6 +768,10 @@ public class AVLGTreeTests {
         });
     }
 
+    /**
+     * <p>Test a bunch of searches on varied <i>G</i> AVL-G trees, <b>none</b> of which
+     * <b>should</b> succeed!</p>
+     */
     @Test
     public void testManyFailedSearches(){
 
@@ -786,6 +817,10 @@ public class AVLGTreeTests {
         }));
     }
 
+    /**
+     * <p>Test the behavior of clearing (calling <tt>clear()</tt>), <tt>count()</tt>, and
+     * calling <tt>delete()</tt> until the tree is empty (instead of calling <tt>clear()</tt>.</p>
+     */
     @Test
     public void testCountDeleteAndClear(){
         List<Integer> keys = IntStream.range(0, NUMS).boxed().collect(Collectors.toList());
