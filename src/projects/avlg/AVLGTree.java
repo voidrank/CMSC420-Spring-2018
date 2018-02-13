@@ -85,7 +85,7 @@ public class AVLGTree<T extends Comparable<T>> {
      * NEGATIVE BALANCE: Right-heavy subtree.
      */
     private int balance(Node n) {
-        return getHeight(n.left) - getHeight(n.right);
+        return ( n == null) ? 0 : getHeight(n.left) - getHeight(n.right);
     }
 
     /* Rotation methods. Very important that those methods
@@ -101,7 +101,7 @@ public class AVLGTree<T extends Comparable<T>> {
         Node x = n.left;
         n.left = x.right;
         x.right = n;
-        x.height = n.height;
+       // x.height = n.height;
         if (isInsertion)
             n.height--;
         else
@@ -113,7 +113,7 @@ public class AVLGTree<T extends Comparable<T>> {
         Node x = n.right;
         n.right = x.left; // x was not left-pointing to n via a thread...
         x.left = n;
-        x.height = n.height; // TODO: check this. Should it be staying the same in deletions?
+       //  x.height = n.height; // TODO: check this. Should it be staying the same in deletions?
         if (isInsertion)
             n.height--;
         else
@@ -231,7 +231,7 @@ public class AVLGTree<T extends Comparable<T>> {
             if (Math.abs(balance(n)) > maxImbalance) {
 
                 int leftBalance = balance(n.left);
-                if (leftBalance == 1) { // Left-leaning left subtree. Right rotation about n.
+                if (leftBalance >= 1) { // Left-leaning left subtree. Right rotation about n.
                     n = rotateRight(n, false);
                 } else { // Right-leaning left subtree. LR rotation about n.
                     n.left = rotateLeft(n.left, false);
