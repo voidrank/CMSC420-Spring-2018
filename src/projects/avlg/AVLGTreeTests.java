@@ -43,9 +43,9 @@ public class AVLGTreeTests {
     // TODO: Use the jUnit4 solution of Exception.ExpectedException to simplify the
     // TODO: pieces of the code that *expect* certain specific Exceptions to be thrown.
 
-                    /* ******************************/
-                    /* ****** PRIVATE FIELDS ********/
-                    /* ******************************/
+    /* ******************************/
+    /* ****** PRIVATE FIELDS ********/
+    /* ******************************/
 
     private ArrayList<AVLGTree<Integer>> trees = new ArrayList<>(MAX_IMBALANCE);
     private static final Random RNG = new Random(47);
@@ -54,9 +54,9 @@ public class AVLGTreeTests {
     private static final int NUMS = 50;
 
 
-                        /* *******************************/
-                        /* ****** PRIVATE METHODS ********/
-                        /* *******************************/
+    /* *******************************/
+    /* ****** PRIVATE METHODS ********/
+    /* *******************************/
 
 
     /* Ensure that the given tree is empty in terms of both isEmpty()
@@ -93,8 +93,8 @@ public class AVLGTreeTests {
     /* Insert all the Integers provided in the stream in the given tree.
      * Afterwards, check height, count and root against expected values. */
     private void insertAndTest(IntStream stream,
-                                  AVLGTree<Integer> tree, int expectedHeight,
-                                  int expectedCount, Object expectedRoot) throws AssertionError{
+                               AVLGTree<Integer> tree, int expectedHeight,
+                               int expectedCount, Object expectedRoot) throws AssertionError{
 
         assert stream != null && tree != null: "insertAndTest() expects a valid IntStream and tree.";
         assert expectedCount >= 0 && expectedHeight >= -1 : "insertAndTest() expects " +
@@ -126,8 +126,8 @@ public class AVLGTreeTests {
         try {
             tree.delete(toDel);
         } catch(EmptyTreeException exc){
-           throw new RuntimeException("AVLGTree:delete() threw an EmptyTreeException " +
-                   "with message: " + exc.getMessage() + ".");
+            throw new RuntimeException("AVLGTree:delete() threw an EmptyTreeException " +
+                    "with message: " + exc.getMessage() + ".");
         }
 
         if(!ensureHeightCountAndRoot(tree, expectedHeight, expectedCount, expectedRoot))
@@ -143,9 +143,9 @@ public class AVLGTreeTests {
     }
 
 
-                        /* *****************************/
-                        /* ****** UNIT TESTS ***********/
-                        /* *****************************/
+    /* *****************************/
+    /* ****** UNIT TESTS ***********/
+    /* *****************************/
 
     /**
      * Set-up the trees that we will use for our tests.
@@ -437,38 +437,41 @@ public class AVLGTreeTests {
     public void testBalancedInsertionsAVL1(){
 
         AVLGTree<Integer> tree = trees.get(0);
+        try {
+            // (1) A single left rotation about the root.
+            insertAndTest(IntStream.rangeClosed(0, 2), tree,
+                    1, 3, 1);
 
-        // (1) A single left rotation about the root.
-        insertAndTest(IntStream.rangeClosed(0, 2), tree,
-                1, 3, 1);
+            // (2) A single right rotation about the root.
+            insertAndTest(IntStream.of(0, -1, -2), tree,
+                    1, 3, -1);
 
-        // (2) A single right rotation about the root.
-        insertAndTest(IntStream.of(0, -1, -2), tree,
-                1, 3, -1);
+            // (3) A R-L rotation about the root.
+            insertAndTest(IntStream.of(1, 3, 2), tree,
+                    1, 3, 2);
 
-        // (3) A R-L rotation about the root.
-        insertAndTest(IntStream.of(1, 3, 2), tree,
-                1, 3, 2);
+            // (4) A L-R rotation about the root.
+            insertAndTest(IntStream.of(3, 1, 2), tree,
+                    1, 3, 2);
 
-        // (4) A L-R rotation about the root.
-        insertAndTest(IntStream.of(3, 1, 2), tree,
-                1, 3, 2);
+            // (5) A L-R rotation about the root's left child.
+            insertAndTest(IntStream.of(5, -5, 10, -10, -8), tree,
+                    2, 5, 5);
 
-        // (5) A L-R rotation about the root's left child.
-        insertAndTest(IntStream.of(5, -5, 10, -10, -8), tree,
-                2, 5, 5);
+            // (6) A R-L rotation about the root's left child.
+            insertAndTest(IntStream.of(5, -5, 10, 0, -2), tree,
+                    2, 5, 5);
 
-        // (6) A R-L rotation about the root's left child.
-        insertAndTest(IntStream.of(5, -5, 10, 0, -2), tree,
-                2, 5, 5);
+            // (7) A L-R rotation about the root's right child.
+            insertAndTest(IntStream.of(5, 10, 0, 7, 8), tree,
+                    2, 5, 5);
 
-        // (7) A L-R rotation about the root's right child.
-        insertAndTest(IntStream.of(5, 10, 0, 7, 8), tree,
-                2, 5, 5);
-
-        // (8) A R-L rotation about the root's right child
-        insertAndTest(IntStream.of(5, 10, 0, 13, 12), tree,
-                2, 5, 5);
+            // (8) A R-L rotation about the root's right child
+            insertAndTest(IntStream.of(5, 10, 0, 13, 12), tree,
+                    2, 5, 5);
+        }catch(AssertionError error){
+            fail("Received an AssertionError with message: " + error.getMessage() + ".");
+        }
     }
 
     /**
@@ -480,39 +483,41 @@ public class AVLGTreeTests {
     public void testBalancedInsertionsAVL2(){
 
         AVLGTree<Integer> tree = trees.get(1);
+        try {
+            // (1) A single left rotation about the root.
+            insertAndTest(IntStream.rangeClosed(0, 3), tree,
+                    2, 4, 1);
 
-        // (1) A single left rotation about the root.
-        insertAndTest(IntStream.rangeClosed(0, 3), tree,
-                2, 4, 1);
+            // (2) A single right rotation about the root.
+            insertAndTest(IntStream.of(0, -1, -2, -3), tree,
+                    2, 4, -1);
 
-        // (2) A single right rotation about the root.
-        insertAndTest(IntStream.of(0, -1, -2, -3), tree,
-                2, 4, -1);
+            // (3) A R-L rotation about the root.
+            insertAndTest(IntStream.of(1, 4, 2, 3), tree,
+                    2, 4, 2);
 
-        // (3) A R-L rotation about the root.
-        insertAndTest(IntStream.of(1, 4, 2, 3), tree,
-                2, 4, 2);
+            // (4) A L-R rotation about the root.
+            insertAndTest(IntStream.of(4, 1, 2, 3), tree,
+                    2, 4, 2);
 
-        // (4) A L-R rotation about the root.
-        insertAndTest(IntStream.of(4, 1, 2, 3), tree,
-                2, 4, 2);
+            // (5) A L-R rotation about the root's left child.
+            insertAndTest(IntStream.of(5, -5, 10, -10, -8, -7), tree,
+                    3, 6, 5);
 
-        // (5) A L-R rotation about the root's left child.
-        insertAndTest(IntStream.of(5, -5, 10, -10, -8, -7), tree,
-                3, 6, 5);
+            // (6) A R-L rotation about the root's left child.
+            insertAndTest(IntStream.of(5, -5, 10, 0, -2, -3 ), tree,
+                    3, 6, 5);
 
-        // (6) A R-L rotation about the root's left child.
-        insertAndTest(IntStream.of(5, -5, 10, 0, -2, -3 ), tree,
-                3, 6, 5);
+            // (7) A L-R rotation about the root's right child.
+            insertAndTest(IntStream.of(5, 10, 0, 7, 8, 9), tree,
+                    3, 6, 5);
 
-        // (7) A L-R rotation about the root's right child.
-        insertAndTest(IntStream.of(5, 10, 0, 7, 8, 9), tree,
-                3, 6, 5);
-
-        // (8) A R-L rotation about the root's right child
-        insertAndTest(IntStream.of(5, 10, 0, 13, 12, 11), tree,
-                3, 6, 5);
-
+            // (8) A R-L rotation about the root's right child
+            insertAndTest(IntStream.of(5, 10, 0, 13, 12, 11), tree,
+                    3, 6, 5);
+        }catch(AssertionError error){
+            fail("Received an AssertionError with message: " + error.getMessage() + ".");
+        }
     }
 
     /**
@@ -521,40 +526,43 @@ public class AVLGTreeTests {
      * Perform tests against a maximum absolute imbalance parameter of 3.
      */
     @Test
-    public void testBalancedInsertionsAVL3(){
+    public void testBalancedInsertionsAVL3() {
         AVLGTree<Integer> tree = trees.get(2);
+        try {
+            // (1) A single left rotation about the root.
+            insertAndTest(IntStream.rangeClosed(0, 4), tree,
+                    3, 5, 1);
 
-        // (1) A single left rotation about the root.
-        insertAndTest(IntStream.rangeClosed(0, 4), tree,
-                3, 5, 1);
+            // (2) A single right rotation about the root.
+            insertAndTest(IntStream.of(0, -1, -2, -3, -4), tree,
+                    3, 5, -1);
 
-        // (2) A single right rotation about the root.
-        insertAndTest(IntStream.of(0, -1, -2, -3, -4), tree,
-                3, 5, -1);
+            // (3) A R-L rotation about the root.
+            insertAndTest(IntStream.of(1, 5, 2, 3, 4), tree,
+                    3, 5, 2);
 
-        // (3) A R-L rotation about the root.
-        insertAndTest(IntStream.of(1, 5, 2, 3, 4), tree,
-                3, 5, 2);
+            // (4) A L-R rotation about the root.
+            insertAndTest(IntStream.of(5, 1, 2, 3, 4), tree,
+                    3, 5, 2);
 
-        // (4) A L-R rotation about the root.
-        insertAndTest(IntStream.of(5, 1, 2, 3, 4), tree,
-                3, 5, 2);
+            // (5) A L-R rotation about the root's left child.
+            insertAndTest(IntStream.of(5, -5, 10, -10, -8, -7, -6), tree,
+                    4, 7, 5);
 
-        // (5) A L-R rotation about the root's left child.
-        insertAndTest(IntStream.of(5, -5, 10, -10, -8, -7, -6), tree,
-                4, 7, 5);
+            // (6) A R-L rotation about the root's left child.
+            insertAndTest(IntStream.of(5, -5, 10, 0, -2, -3, -4), tree,
+                    4, 7, 5);
 
-        // (6) A R-L rotation about the root's left child.
-        insertAndTest(IntStream.of(5, -5, 10, 0, -2, -3, -4 ), tree,
-                4, 7, 5);
+            // (7) A L-R rotation about the root's right child.
+            insertAndTest(IntStream.of(5, 11, 0, 7, 8, 9, 10), tree,
+                    4, 7, 5);
 
-        // (7) A L-R rotation about the root's right child.
-        insertAndTest(IntStream.of(5, 11, 0, 7, 8, 9, 10), tree,
-                4, 7, 5);
-
-        // (8) A R-L rotation about the root's right child
-        insertAndTest(IntStream.of(5, 9, 0, 13, 12, 11, 10), tree,
-                4, 7, 5);
+            // (8) A R-L rotation about the root's right child
+            insertAndTest(IntStream.of(5, 9, 0, 13, 12, 11, 10), tree,
+                    4, 7, 5);
+        } catch (AssertionError error) {
+            fail("Received an AssertionError with message: " + error.getMessage() + ".");
+        }
     }
 
 
@@ -567,38 +575,42 @@ public class AVLGTreeTests {
     public void testBalancedDeletionsAVL1(){
 
         AVLGTree<Integer> tree = trees.get(0);
+        try {
+            // (1) A single left rotation about the root.
+            IntStream.of(1, 3, -1, 5).forEach(tree::insert);
+            deleteAndTest(-1, tree, 1, 3, 3);
 
-        // (1) A single left rotation about the root.
-        IntStream.of(1, 3, -1, 5).forEach(tree::insert);
-        deleteAndTest(-1, tree, 1, 3, 3);
+            // (2) A single right rotation about the root.
+            IntStream.of(5, 4, 6, 3).forEach(tree::insert);
+            deleteAndTest(6, tree, 1, 3, 4);
 
-        // (2) A single right rotation about the root.
-        IntStream.of(5, 4, 6, 3).forEach(tree::insert);
-        deleteAndTest(6, tree, 1, 3, 4);
+            // (3) A R-L rotation about the root.
+            IntStream.of(1, -1, 3, 2).forEach(tree::insert);
+            deleteAndTest(-1, tree, 1, 3, 2);
 
-        // (3) A R-L rotation about the root.
-        IntStream.of(1, -1, 3, 2).forEach(tree::insert);
-        deleteAndTest(-1, tree, 1, 3, 2);
+            // (4) A L-R rotation about the root.
+            IntStream.of(5, 3, 6, 4).forEach(tree::insert);
+            deleteAndTest(6, tree, 1, 3, 4);
 
-        // (4) A L-R rotation about the root.
-        IntStream.of(5, 3, 6, 4).forEach(tree::insert);
-        deleteAndTest(6, tree, 1, 3, 4);
+            // (5) A L-R rotation about the root's left child.
+            IntStream.of(20, 5, 30, 0, 10, 25, 2).forEach(tree::insert);
+            deleteAndTest(10, tree, 2, 6, 20);
 
-        // (5) A L-R rotation about the root's left child.
-        IntStream.of(20, 5, 30, 0, 10, 25, 2).forEach(tree::insert);
-        deleteAndTest(10, tree, 2, 6, 20);
+            // (6) A R-L rotation about the root's left child.
+            IntStream.of(5, 0, 10, -5, 2, 18, 1).forEach(tree::insert);
+            deleteAndTest(-5, tree, 2, 6, 5);
 
-        // (6) A R-L rotation about the root's left child.
-        IntStream.of(5, 0, 10, -5, 2, 18, 1).forEach(tree::insert);
-        deleteAndTest(-5, tree, 2, 6, 5);
+            // (7) A L-R rotation about the root's right child.
+            IntStream.of(20, 10, 40, 5, 30, 50, 35).forEach(tree::insert);
+            deleteAndTest(50, tree, 2, 6, 20);
 
-        // (7) A L-R rotation about the root's right child.
-        IntStream.of(20, 10, 40, 5, 30, 50, 35).forEach(tree::insert);
-        deleteAndTest(50, tree, 2, 6, 20);
+            // (8) A R-L rotation about the root's right child
+            IntStream.of(20, 10, 30, 5, 25, 40, 35).forEach(tree::insert);
+            deleteAndTest(25, tree, 2, 6, 20);
 
-        // (8) A R-L rotation about the root's right child
-        IntStream.of(20, 10, 30, 5, 25, 40, 35).forEach(tree::insert);
-        deleteAndTest(25, tree, 2, 6, 20);
+        }catch(AssertionError error){
+            fail("Received an AssertionError with message: " + error.getMessage() + ".");
+        }
     }
 
     /**
@@ -609,38 +621,41 @@ public class AVLGTreeTests {
     @Test
     public void testBalancedDeletionsAVL2(){
         AVLGTree<Integer> tree = trees.get(1);
+        try {
+            // (1) A single left rotation about the root.
+            IntStream.of(5, 10, 15, 20, 25).forEach(tree::insert);
+            deleteAndTest(5,tree,2, 4, 15 );
 
-        // (1) A single left rotation about the root.
-        IntStream.of(5, 10, 15, 20, 25).forEach(tree::insert);
-        deleteAndTest(5,tree,2, 4, 15 );
+            // (2) A single right rotation about the root.
+            IntStream.of(10, 5, 15, 0, -5).forEach(tree::insert);
+            deleteAndTest(15,tree,2, 4, 5 );
 
-        // (2) A single right rotation about the root.
-        IntStream.of(10, 5, 15, 0, -5).forEach(tree::insert);
-        deleteAndTest(15,tree,2, 4, 5 );
+            // (3) A R-L rotation about the root.
+            IntStream.of(10, 5, 15, 11, 12).forEach(tree::insert);
+            deleteAndTest(5, tree,2, 4, 11);
 
-        // (3) A R-L rotation about the root.
-        IntStream.of(10, 5, 15, 11, 12).forEach(tree::insert);
-        deleteAndTest(5, tree,2, 4, 11);
+            // (4) A L-R rotation about the root.
+            IntStream.of(10, 5, 15, 8, 6).forEach(tree::insert);
+            deleteAndTest(15, tree,2, 4, 8);
 
-        // (4) A L-R rotation about the root.
-        IntStream.of(10, 5, 15, 8, 6).forEach(tree::insert);
-        deleteAndTest(15, tree,2, 4, 8);
+            // (5) A L-R rotation about the root's left child.
+            IntStream.of(40, 20, 50, 10, 30, 60, 12, 14).forEach(tree::insert);
+            deleteAndTest(30, tree,3, 7, 40);
 
-        // (5) A L-R rotation about the root's left child.
-        IntStream.of(40, 20, 50, 10, 30, 60, 12, 14).forEach(tree::insert);
-        deleteAndTest(30, tree,3, 7, 40);
+            // (6) A R-L rotation about the root's left child.
+            IntStream.of(40, 20, 50, 10, 30, 60, 25, 23).forEach(tree::insert);
+            deleteAndTest(10, tree,3, 7, 40);
 
-        // (6) A R-L rotation about the root's left child.
-        IntStream.of(40, 20, 50, 10, 30, 60, 25, 23).forEach(tree::insert);
-        deleteAndTest(10, tree,3, 7, 40);
+            // (7) A L-R rotation about the root's right child.
+            IntStream.of(20, 10, 40, 0, 30, 60, 35, 38).forEach(tree::insert);
+            deleteAndTest(60, tree,3, 7, 20);
 
-        // (7) A L-R rotation about the root's right child.
-        IntStream.of(20, 10, 40, 0, 30, 60, 35, 38).forEach(tree::insert);
-        deleteAndTest(60, tree,3, 7, 20);
-
-        // (8) A R-L rotation about the root's right child
-        IntStream.of(20, 10, 40, 0, 30, 60, 50, 45).forEach(tree::insert);
-        deleteAndTest(30, tree,3, 7, 20);
+            // (8) A R-L rotation about the root's right child
+            IntStream.of(20, 10, 40, 0, 30, 60, 50, 45).forEach(tree::insert);
+            deleteAndTest(30, tree,3, 7, 20);
+        }catch(AssertionError error){
+            fail("Received an AssertionError with message: " + error.getMessage() + ".");
+        }
     }
 
     /**
@@ -651,45 +666,48 @@ public class AVLGTreeTests {
     @Test
     public void testBalancedDeletionsAVL3() {
         AVLGTree<Integer> tree = trees.get(2);
+        try {
+            // (1) A single left rotation about the root.
+            IntStream.of(1, 0, 2, 3, 4, 5).forEach(tree::insert);
+            deleteAndTest(0, tree,3, 5, 2);
 
-        // (1) A single left rotation about the root.
-        IntStream.of(1, 0, 2, 3, 4, 5).forEach(tree::insert);
-        deleteAndTest(0, tree,3, 5, 2);
+            // (2) A single right rotation about the root.
+            IntStream.of(1, 2, 0, -1, -2, -3).forEach(tree::insert);
+            deleteAndTest(2, tree,3, 5, 0);
 
-        // (2) A single right rotation about the root.
-        IntStream.of(1, 2, 0, -1, -2, -3).forEach(tree::insert);
-        deleteAndTest(2, tree,3, 5, 0);
+            // (3) A R-L rotation about the root.
+            IntStream.of(20, 10, 40, 30, 35, 37).forEach(tree::insert);
+            deleteAndTest(10, tree,3, 5, 30);
 
-        // (3) A R-L rotation about the root.
-        IntStream.of(20, 10, 40, 30, 35, 37).forEach(tree::insert);
-        deleteAndTest(10, tree,3, 5, 30);
+            // (4) A L-R rotation about the root.
+            IntStream.of(20, 0, 40, 5, 10, 15).forEach(tree::insert);
+            deleteAndTest(40, tree,3, 5, 5);
 
-        // (4) A L-R rotation about the root.
-        IntStream.of(20, 0, 40, 5, 10, 15).forEach(tree::insert);
-        deleteAndTest(40, tree,3, 5, 5);
+            // (5) A L-R rotation about the root's left child.
+            IntStream.of(40, 20, 50, 10, 25, 60, 12, 13, 14).forEach(tree::insert);
+            deleteAndTest(25, tree,4, 8, 40);
 
-        // (5) A L-R rotation about the root's left child.
-        IntStream.of(40, 20, 50, 10, 25, 60, 12, 13, 14).forEach(tree::insert);
-        deleteAndTest(25, tree,4, 8, 40);
+            // (6) A R-L rotation about the root's left child.
+            IntStream.of(40, 20, 50, 10, 25, 60, 24, 23, 22).forEach(tree::insert);
+            deleteAndTest(10, tree,4, 8, 40);
 
-        // (6) A R-L rotation about the root's left child.
-        IntStream.of(40, 20, 50, 10, 25, 60, 24, 23, 22).forEach(tree::insert);
-        deleteAndTest(10, tree,4, 8, 40);
+            // (7) A L-R rotation about the root's right child.
+            IntStream.of(20, 10, 40, 0, 30, 60, 32, 34, 36 ).forEach(tree::insert);
+            deleteAndTest(60, tree, 4, 8, 20);
 
-        // (7) A L-R rotation about the root's right child.
-        IntStream.of(20, 10, 40, 0, 30, 60, 32, 34, 36 ).forEach(tree::insert);
-        deleteAndTest(60, tree, 4, 8, 20);
-
-        // (8) A R-L rotation about the root's right child
-        IntStream.of(40, 20, 60, 10, 50, 80, 75, 70, 65 ).forEach(tree::insert);
-        deleteAndTest(50, tree, 4, 8, 40);
+            // (8) A R-L rotation about the root's right child
+            IntStream.of(40, 20, 60, 10, 50, 80, 75, 70, 65 ).forEach(tree::insert);
+            deleteAndTest(50, tree, 4, 8, 40);
+        }catch(AssertionError error){
+            fail("Received an AssertionError with message: " + error.getMessage() + ".");
+        }
     }
 
 
-                            /* ******************* /
-                             * ** STRESS TESTS  ** /
-                             * ******************* /
-                             */
+    /* ******************* /
+     * ** STRESS TESTS  ** /
+     * ******************* /
+     */
 
     /**
      * <p>Test a bunch of insertions on many different AVL-G trees, with the
@@ -708,8 +726,8 @@ public class AVLGTreeTests {
             }
             assertTrue("After inserting the key " + k + ", which was the key #" +
                     keys.indexOf(k) + " in the insertion sequence, in an AVL-" + t.getMaxImbalance() + " tree," +
-                            " we determined that the tree did not globally satisfy " +
-                            "the AVLG and/or BST properties",  ensureAVLGBST(t));
+                    " we determined that the tree did not globally satisfy " +
+                    "the AVLG and/or BST properties",  ensureAVLGBST(t));
         }));
     }
 
@@ -784,8 +802,8 @@ public class AVLGTreeTests {
                 // Have to subtract 1 from the generated index below because I filter out zero
                 // and I would be "one off" in the stderr reporting.
                 assertEquals("While looking for the negative of key " + k + "," +
-                        "which was the key #" + keys.indexOf(k)  + "in the search & delete sequence, we were " +
-                        "expecting to not be able to find it in an AVL-" + t.getMaxImbalance() + " tree.",
+                                "which was the key #" + keys.indexOf(k)  + "in the search & delete sequence, we were " +
+                                "expecting to not be able to find it in an AVL-" + t.getMaxImbalance() + " tree.",
                         null, t.search(-k));
                 try {
                     t.delete(k); // TODO: culprit...
@@ -851,8 +869,8 @@ public class AVLGTreeTests {
                             thr.getMessage() + ".");
                 }
                 assertTrue("After deleting key " + k + ", which was key #" +
-                        keys.indexOf(k) + " in the list, the AVL-" + t.getMaxImbalance() + "" +
-                        " tree was found to not obey either the BST and/or the AVL-G properties.",
+                                keys.indexOf(k) + " in the list, the AVL-" + t.getMaxImbalance() + "" +
+                                " tree was found to not obey either the BST and/or the AVL-G properties.",
                         ensureAVLGBST(t));
 
             });
