@@ -47,7 +47,7 @@ public class BinaryPatriciaTrie {
     }
 
     /**
-     * Searches the trie for a given key.
+     * Searches the trie for a given <tt>key</tt>.
      *
      * @param key The input String key.
      * @return true if and only if key is in the trie, false otherwise.
@@ -57,7 +57,8 @@ public class BinaryPatriciaTrie {
     }
 
     /**
-     * <p>A helper method used by  {@link #search(String)}. Searches the current node and its subtrees for a given key. </p>
+     * <p>A helper method used by  {@link #search(String)}. Searches the subtree
+     * rooted at <tt>curr</tt> for <tt>key</tt>. </p>
      *
      * @param curr The current node.
      * @param key  The key to be searched in the subtree rooted at the current node.
@@ -96,7 +97,7 @@ public class BinaryPatriciaTrie {
             if (key.charAt(i) != '0' && key.charAt(i) != '1') return false;
 
         // TODO Jason: Make a custom exception for invalid strings and write a test to catch it.
-        // insert(String) should check for it.
+        // TODO insert(String) should check for it.
 
         flag = true;
         root = insert(root, key.trim());
@@ -106,8 +107,8 @@ public class BinaryPatriciaTrie {
 
 
     /**
-     * A helper method used by insert(String key).
-     * Inserts key into the subtree of the trie rooted at the current node.
+     * A helper method used by {@link #insert(String key)}.
+     * Inserts <tt>key</tt> into the subtree of the trie rooted at <tt>curr</tt>.
      *
      * @param curr The current node.
      * @param key  The key to be added to the subtree rooted at the current node.
@@ -155,9 +156,11 @@ public class BinaryPatriciaTrie {
     }
 
     /**
-     * <p>A helper method used by {@link #insert(Node, String)}. Splits the current node to two and add a second child to the
-     *  resulting upper node appropriately. The index at which the split happens is the length of the longest prefix shared by
-     *  the key and the string stored in the current node. </p>
+     * <p>A helper method used by {@link #insert(Node, String)}. Splits the node
+     *  referred to by <tt>curr</tt> into two new nodes and creates a father node that
+     *  contains the <i>longest shared prefix of the {@link String} in <tt>curr</tt> and <tt>key</tt>.
+     *  Decides which one of the two nodes needs to be the right (resp. left) child of the new father node,
+     *  and attaches them to said node. </p>
      *
      * @param curr The current node.
      * @param key  The key to be added to the subtree rooted at the current node.
@@ -186,7 +189,7 @@ public class BinaryPatriciaTrie {
      *
      * @param s1 Input string &#35;1.
      * @param s2 Input string &#35;2.
-     * @return The length of the longest prefix shared the two input strings.
+     * @return The length of the longest prefix shared by the two input strings.
      */
     private int getSharedPrefixLength(String s1, String s2) {
         int i = s1.length() < s2.length() ? s1.length() : s2.length();
