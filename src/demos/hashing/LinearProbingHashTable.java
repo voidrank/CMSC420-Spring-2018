@@ -79,9 +79,6 @@ public class LinearProbingHashTable {
 
     public void delete(String key){
 
-
-        /* Implement this! */
-
         int probe = myHash(key);
         while(buffer[probe] != null){
             if(buffer[probe].equals(key)){ // Found it! Nullify and then re-insert all others

@@ -48,13 +48,6 @@ public class CustomHashes {
             return hash;
         }
 
-
-        /* Setters */
-        
-        void setFirstName(String first){firstName = first;}
-        void setMiddleName(String middle){middleName = middle;}
-        void setLastName(String last){lastName = last;}
-
         /*  Getters */
 
         public String getFirstName() { return firstName;}
