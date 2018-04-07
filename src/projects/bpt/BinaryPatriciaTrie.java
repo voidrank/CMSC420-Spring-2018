@@ -110,7 +110,7 @@ public class BinaryPatriciaTrie {
      *
      * @return The longest {@link String} stored in this. If the trie is empty, the empty string "" should be
      * returned. Careful: the empty string "" is <b>not</b> the same string as " "; the latter is a string
-     * consisting of a single <b>space character</b>!
+     * consisting of a single <b>space character</b>! It is also <b>not</b> the same as a <tt>null</tt> reference.
      */
     public String getLongest() {
         throw UNIMPL_METHOD;
