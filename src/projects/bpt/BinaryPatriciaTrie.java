@@ -108,9 +108,12 @@ public class BinaryPatriciaTrie {
     /**
      * Finds the longest {@link String} stored in the Binary Patricia Trie.
      *
-     * @return The longest {@link String} stored in this. If the trie is empty, the empty string "" should be
+     * @return <p>The longest {@link String} stored in this. If the trie is empty, the empty string "" should be
      * returned. Careful: the empty string "" is <b>not</b> the same string as " "; the latter is a string
-     * consisting of a single <b>space character</b>! It is also <b>not</b> the same as a <tt>null</tt> reference.
+     * consisting of a single <b>space character</b>! It is also <b>not</b> the same as a <tt>null</tt> reference.</p>
+     * <p>Ties should be broken in terms of <b>value</b> of the bit string. For example, if our trie contained
+     * only the binary strings 01 and 11, <b>11</b> would be the longest string. If our trie contained
+     * only 001 and 010, <b>010</b> would be the longest string.</p>
      */
     public String getLongest() {
         throw UNIMPL_METHOD;
