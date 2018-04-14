@@ -97,6 +97,10 @@ public class BinaryPatriciaTrie {
      * This means that you  do <b>not</b> need to test for thrown {@link java.util.ConcurrentModificationException}s and we do
      * <b>not</b> test your code for the possible occurrence of concurrent modifications.</p>
      *
+     * <p>We also assume that the {@link Iterator} is <em>immutable</em>, i,e we do <b>not</b> test for the behavior
+     * of {@link Iterator#remove()}. You can handle it any way you want for your own application, yet <b>we</b> will
+     * <b>not</b> test for it.</p>
+     *
      * @return An {@link Iterator} over the {@link String} keys stored in the trie, exposing the elements in <i>symmetric
      * order</i>.
      */
