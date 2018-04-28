@@ -17,7 +17,6 @@ Code base for UMD's CMSC420, Data Structures, Section 0301, Spring 2018.
 
 - `.gitignore`: The Git ignore file.
 
-- `project1_writeup.pdf`: A PDF writeup for the first project.
 
 ### Contact
 
