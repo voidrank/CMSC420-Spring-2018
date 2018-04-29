@@ -2,11 +2,15 @@ package projects.spatial.node;
 
 import projects.spatial.kdpoint.KDPoint;
 
+/**
+ * <p><tt>PRQuadNode</tt> is an <tt>abstract class</tt> used to provide the common structure that all
+ * implementing subclasses will share. </p>
+ */
 public abstract class PRQuadNode {
 
-    private PRQuadNode[] children; // White nodes will be represented with null.
-    private KDPoint[] points;
-    private int maxPoints; // Bucketing parameter
+    protected PRQuadNode[] children; // White nodes will be represented with null.
+    protected KDPoint[] points;
+    protected int maxPoints; // Bucketing parameter
 
     /**
      * <p>Only common piece of the interface. Subclasses can use this constructor's functionality

@@ -16,7 +16,7 @@ import static projects.spatial.kdpoint.KDPoint.distance;
  * @author Jason Filippou (jasonfil@cs.umd.edu)
  *
  */
-public class KDTree {
+public class KDTree implements SpatialTree {
 
 	/* Private KDNode class: Will implement
      * a KD-Tree node abstraction. */
@@ -339,11 +339,11 @@ public class KDTree {
 
 	/**
 	 * Performs a k-nearest neighbors query on the <tt>KDTree</tt>. Returns the <em>k</em>
-	 * {@link KDPoint}s which are nearest to <tt>p</tt>, as dictated by {@link utils.KDPoint#distance(KDPoint) distance(KDPoint p)}.
+	 * {@link KDPoint}s which are nearest to <tt>p</tt>, as dictated by {@link KDPoint#distance(KDPoint) distance(KDPoint p)}.
 	 * The {@link KDPoint}s are sorted in ascending order of distance.
 	 * @param k A positive integer denoting the amount of neighbors to return.
 	 * @param p The query point.
-	 * @return A {@link queues.BoundedPriorityQueue} containing the k-nearest neighbors of <tt>p</tt>.
+	 * @return A {@link BoundedPriorityQueue} containing the k-nearest neighbors of <tt>p</tt>.
 	 * This queue will be empty if the tree contains only <tt>p</tt>.
 	 * @throws RuntimeException If <tt>k&lt;=0</tt>.
 	 */
