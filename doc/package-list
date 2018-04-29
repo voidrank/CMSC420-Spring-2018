@@ -18,5 +18,5 @@ projects.pqueue.trees
 projects.pqueue.trees.test
 projects.spatial.kdpoint
 projects.spatial.knnutils
-projects.spatial.node
+projects.spatial.nodes
 projects.spatial.trees

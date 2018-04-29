@@ -28,7 +28,7 @@ public class LinkedList<T> implements List<T> {
 	// them will make querying for the size more efficient.
 	protected int size; 
 
-	/** Constructor only initializes the head node reference to null.*/
+	/** Constructor only initializes the head nodes reference to null.*/
 	public LinkedList(){
 		head = null; 
 		size = 0;
@@ -176,7 +176,7 @@ public class LinkedList<T> implements List<T> {
 
 	@Override
 	public boolean delete(T element) {
-		// In this method, we will need to keep control of the previous node
+		// In this method, we will need to keep control of the previous nodes
 		// at every step of the iteration.
 		LinkedListNode previous = head, current = head;
 		while(current != null){
@@ -200,7 +200,7 @@ public class LinkedList<T> implements List<T> {
 
 	@Override
 	public void delete(int index) throws IllegalListAccessException {
-		// Again, we will need a "previous" node reference.
+		// Again, we will need a "previous" nodes reference.
 		if(index < 0 || index >= size)
 			throw new IllegalListAccessException("delete(int): Index " + index + " is not a valid list index.");
 		// Special case of removing the getFirst element of the list:
@@ -305,7 +305,7 @@ public class LinkedList<T> implements List<T> {
 			this.next = next;
 		}
 
-		public LinkedListNode(T data){ // This constructor is useful for placing a node at the end of the list (pushBack).
+		public LinkedListNode(T data){ // This constructor is useful for placing a nodes at the end of the list (pushBack).
 			this(data, null);
 		}
 

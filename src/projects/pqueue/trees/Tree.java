@@ -48,7 +48,7 @@ public interface Tree<T> extends Iterable<T> {
 	/**
 	 * Generates a preorder traversal for the tree.
 	 * @return An iterator which traverses the tree in preorder
-	 * fashion. (node -&gt; left subtree-&gt; right subtree).
+	 * fashion. (nodes -&gt; left subtree-&gt; right subtree).
 	 * @throws EmptyTreeException if the tree is empty.
 	 */
 	public Iterator<T> preorder() throws EmptyTreeException;
@@ -56,7 +56,7 @@ public interface Tree<T> extends Iterable<T> {
 	/**
 	 * Generates an inorder traversal for the tree.
 	 * @return An iterator which traverses the tree in inorder
-	 * fashion. (left subtree-&gt;node-&gt;right subtree).
+	 * fashion. (left subtree-&gt;nodes-&gt;right subtree).
 	 * @throws EmptyTreeException if the tree is empty.
 	 */
 	public Iterator<T> inOrder() throws EmptyTreeException;
@@ -64,7 +64,7 @@ public interface Tree<T> extends Iterable<T> {
 	/**
 	 * Generates a postorder traversal for the tree.
 	 * @return An iterator which traverses the tree in postorder
-	 * fashion. (left subtree -&gt; right subtree -&gt; node).
+	 * fashion. (left subtree -&gt; right subtree -&gt; nodes).
 	 * @throws EmptyTreeException if the tree is empty.
 	 */
 	public Iterator<T> postOrder() throws EmptyTreeException;

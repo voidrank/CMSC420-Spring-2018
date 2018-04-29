@@ -69,7 +69,7 @@ public class LinkedBinarySearchTreeTest {
 			assertEquals(intTree.getMax(), new Integer(9));
 			assertEquals(intTree.size(), nums.length - 1); // 1 less
 		} catch(EmptyTreeException exc){
-			fail("delete() threw an unexpected EmptyTreeException when removing a leaf node.");
+			fail("delete() threw an unexpected EmptyTreeException when removing a leaf nodes.");
 		}
 
 		try {
@@ -78,7 +78,7 @@ public class LinkedBinarySearchTreeTest {
 			assertEquals(intTree.getMax(), new Integer(9));
 			assertEquals(intTree.size(), nums.length - 2); // 1 less
 		} catch(EmptyTreeException exc){
-			fail("delete() threw an unexpected EmptyTreeException when removing a pre-leaf node.");
+			fail("delete() threw an unexpected EmptyTreeException when removing a pre-leaf nodes.");
 		}
 
 		try {
@@ -87,7 +87,7 @@ public class LinkedBinarySearchTreeTest {
 			assertEquals(intTree.getMax(), new Integer(9));
 			assertEquals(intTree.size(), nums.length - 3); // 1 less
 		} catch(EmptyTreeException exc){
-			fail("delete() threw an unexpected EmptyTreeException when removing a pre-leaf node.");
+			fail("delete() threw an unexpected EmptyTreeException when removing a pre-leaf nodes.");
 		}
 
 		try {
@@ -96,7 +96,7 @@ public class LinkedBinarySearchTreeTest {
 			assertEquals(intTree.getMax(), new Integer(5));
 			assertEquals(intTree.size(), nums.length - 4); // 1 less
 		} catch(EmptyTreeException exc){
-			fail("delete() threw an unexpected EmptyTreeException when removing a leaf node.");
+			fail("delete() threw an unexpected EmptyTreeException when removing a leaf nodes.");
 		}
 
 		// Two sequential root deletions should provide us with an empty tree.
@@ -143,8 +143,8 @@ public class LinkedBinarySearchTreeTest {
 			fail("delete() threw an unexpected EmptyTreeException when removing the root.");
 		}
 
-		// Removing the same node should throw an exception, because there's no duplicates
-		// of the former root node in the tree.
+		// Removing the same nodes should throw an exception, because there's no duplicates
+		// of the former root nodes in the tree.
 
 		try {
 			intTree.delete(-10);
@@ -152,8 +152,8 @@ public class LinkedBinarySearchTreeTest {
 			fail("Should not have throuwn an EmptyTreeException at this point.");
 		}
 
-		// However, removing the node -2 twice should not throw an exception, because
-		// there were two instances of this node in the tree, the second one being the current root.
+		// However, removing the nodes -2 twice should not throw an exception, because
+		// there were two instances of this nodes in the tree, the second one being the current root.
 
 		try {
 			intTree.delete(-2);
@@ -161,7 +161,7 @@ public class LinkedBinarySearchTreeTest {
 			fail("Threw an EmptyTreeException for removal of nodes from a non-empty tree.");
 		}
 
-		// Finally, removing the root node up until we get an EmptyTreeException should leave us with
+		// Finally, removing the root nodes up until we get an EmptyTreeException should leave us with
 		// an empty tree.
 
 		boolean exceptionThrown = false;

@@ -3,7 +3,7 @@ package projects.pqueue.heaps;
 import java.util.Iterator;
 
 /**
- * <p><tt>MinHeap</tt>s are <b>complete</b> binary search projects.pqueue.trees whose node contents are always smaller than
+ * <p><tt>MinHeap</tt>s are <b>complete</b> binary search projects.pqueue.trees whose nodes contents are always smaller than
  * the contents of their children nodes.
  *
  * <p>You should <b>not</b> edit this interface! It is given to you as a resource for your project.</p>

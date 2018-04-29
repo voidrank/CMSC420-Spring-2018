@@ -6,7 +6,7 @@ import java.util.NoSuchElementException;
 
 /** 
  * <p>A <tt>DoublyLinkedList</tt> is a {@link LinkedList} whose nodes have two references,
- * one pointing to the previous and one to the next node.</p>
+ * one pointing to the previous and one to the next nodes.</p>
  *
  * <p>You should <b>not</b> edit this class! It is given to you as a resource for your project.</p>
  *
@@ -125,7 +125,7 @@ public class DoublyLinkedList<T> extends LinkedList<T>{
 		newNode.previous.next = newNode;
 		newNode.next.previous = newNode; 
 		size++;
-		// Reference to head node remains unaffected.
+		// Reference to head nodes remains unaffected.
 	}
 
 	@Override 
@@ -196,12 +196,12 @@ public class DoublyLinkedList<T> extends LinkedList<T>{
 		if(head == null)
 			return false;
 		DoublyLinkedNode current = head;
-		while(current.next != head){ // Iterate up until one node before the head
+		while(current.next != head){ // Iterate up until one nodes before the head
 			if(current.getData().equals(element))
 				return true;
 			current = current.next;
 		}
-		if(current.getData().equals(element)) // last node before head (maybe head itself, if there's only one node)
+		if(current.getData().equals(element)) // last nodes before head (maybe head itself, if there's only one nodes)
 			return true;
 		return false;
 	}
@@ -209,7 +209,7 @@ public class DoublyLinkedList<T> extends LinkedList<T>{
 	@Override
 	public boolean delete(T element){
 		DoublyLinkedNode current = head;
-		while(current.next != head){ // Again, iterate until one node before the head.
+		while(current.next != head){ // Again, iterate until one nodes before the head.
 			if(current.getData().equals(element)){
 				if(current == head){// Special case of head of the list
 					if(head.next == head) // Special case of single element in the list.
@@ -294,7 +294,7 @@ public class DoublyLinkedList<T> extends LinkedList<T>{
 	}
 
 
-	/* Inner class which describes the type of node held by a
+	/* Inner class which describes the type of nodes held by a
 	 * DoublyLinked list.
 	 */
 	private class DoublyLinkedNode{

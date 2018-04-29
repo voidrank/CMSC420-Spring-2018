@@ -26,7 +26,7 @@ public class BoundedPriorityQueueTests {
 	private static final int SCALE = 100;
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp(){
 		try {
 			people = new BoundedPriorityQueue<String>(DEFAULT_CAPACITY);
 		}catch(Throwable t){
@@ -38,15 +38,10 @@ public class BoundedPriorityQueueTests {
 	}
 
 	@After
-	public void tearDown() throws Exception {
-		try {
-			people.clear();
-		} catch(Throwable t){
-			fail("During tearDown(), we caught a " + t.getClass() + 
-					" with message: " + t.getMessage() + " when clearing our BPQ.");
-		}
-		// Allows garbage collection to occur
+	public void tearDown()  {
+		people = null;
 		r = null;
+		System.gc();
 	}
 
 	@Test
@@ -184,7 +179,7 @@ public class BoundedPriorityQueueTests {
 		assertEquals("Jim", people.first());
 		assertFalse("A singleton BPQ should not be empty after peeking its top element.", 
 				people.isEmpty());
-		people.clear();
+		people = new BoundedPriorityQueue<String>(DEFAULT_CAPACITY);
 		// (2) Make sure that two elements with equal priorities
 		// get processed in a FIFO manner.
 		people.enqueue("Jim", 11.3);
@@ -238,7 +233,7 @@ public class BoundedPriorityQueueTests {
 		assertEquals("Jim", people.last());
 		assertFalse("A singleton BPQ should not be empty after peeking its last element.", 
 				people.isEmpty());
-		people.clear();
+		people = new BoundedPriorityQueue<String>(DEFAULT_CAPACITY);
 		// (2) Make sure that two elements with equal priorities
 		// get processed in a FIFO manner.
 		people.enqueue("Jim", 11.3);

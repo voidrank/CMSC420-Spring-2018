@@ -1,11 +1,9 @@
 package projects.spatial.knnutils;
 
-/**<tt>NNData</tt> is a simple "struct-like" class that stores 
- * intermediate results of nearest neighbor queries.
- * 
- * @author Jason Filippou (jasonfil@cs.umd.edu)
- * 
- * @since April 2015
+/**<p><tt>NNData</tt> is a simple "struct-like" class that stores
+ * intermediate results of nearest neighbor queries. </p>
+ * @author <a href = "mailto:jasonfil@cs.umd.edu">Jason Filippou</a>
+ * @see KNNComparator
  */
 public class NNData<T> {
 	

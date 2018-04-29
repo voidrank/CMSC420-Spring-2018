@@ -3,7 +3,7 @@ package projects.avlg;
  * <p> <tt>tavl.ThreadedAVLTree</tt> implements threaded Adelson-Velsky-Landis (AVL) trees.
  * Those trees allow efficient search, insertion and deletion in <em>O(logn)</em> time, by virtue
  * of being AVL trees, as well as amortized constant time of finding the inorder successor of any given
- * node, by virtue of being threaded trees. They thus combine two powerful ideas in a common
+ * nodes, by virtue of being threaded trees. They thus combine two powerful ideas in a common
  * framework.</p>
  *
  * @author Jason Filippou (jasonfil@cs.umd.edu, https://github.com/jasonfil)
@@ -113,8 +113,8 @@ public class AVLGTree<T extends Comparable<T>> {
     }
 
     /**
-     * Return the key at the tree's root node.
-     * @return The key at the tree's root node.
+     * Return the key at the tree's root nodes.
+     * @return The key at the tree's root nodes.
      * @throws  EmptyTreeException if the tree is empty.
      */
     public T getRoot() throws EmptyTreeException{

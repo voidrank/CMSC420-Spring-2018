@@ -201,7 +201,7 @@ public class LinkedBinarySearchTree<T extends Comparable<T>>  implements BinaryS
 		count++;
 	}
 
-	/* Removal of a node consists of two things: First, finding it and returning it
+	/* Removal of a nodes consists of two things: First, finding it and returning it
 	 * to the caller, and, second, the actual removal of it. The second part will be 
 	 * attained by Node.delete.
 	 */
@@ -274,11 +274,11 @@ public class LinkedBinarySearchTree<T extends Comparable<T>>  implements BinaryS
 		}
 
 		/* Binary search projects.pqueue.trees allow us to insert nodes at specific places. The
-		 * new node inserted will always be a leaf node.*/
+		 * new nodes inserted will always be a leaf nodes.*/
 		public void add(T element){
 
 			// Case 1: If the element to insert is smaller than the currently encountered
-			// node, insert it at the left subtree of the node.
+			// nodes, insert it at the left subtree of the nodes.
 			if(element.compareTo(data) < 0){
 				if(left == null)
 					left = new LinkedBSTNode(element);
@@ -286,7 +286,7 @@ public class LinkedBinarySearchTree<T extends Comparable<T>>  implements BinaryS
 					left.add(element);
 
 				// Case 2: If the element to insert is larger than or equal to the currently
-				// encountered node, insert it at the right subtree of the node.
+				// encountered nodes, insert it at the right subtree of the nodes.
 			} else if(element.compareTo(data) >= 0){
 				if(right == null)
 					right = new LinkedBSTNode(element);
@@ -295,12 +295,12 @@ public class LinkedBinarySearchTree<T extends Comparable<T>>  implements BinaryS
 			}
 		}
 
-		/* The following method removes a specific node from the tree
-		 * and returns the node that replaces it. It is recursive in nature.
+		/* The following method removes a specific nodes from the tree
+		 * and returns the nodes that replaces it. It is recursive in nature.
 		 */
 		public LinkedBSTNode remove(T element){
 			LinkedBSTNode retVal = this;
-			if(element.compareTo(data) == 0){// Current node should be removed
+			if(element.compareTo(data) == 0){// Current nodes should be removed
 
 				// Case #1: LinkedBSTNode is a leaf: return null.
 				if(left == null && right == null)
@@ -314,11 +314,11 @@ public class LinkedBinarySearchTree<T extends Comparable<T>>  implements BinaryS
 				else if(left != null && right == null)
 					retVal = left;
 
-				// Case #4: LinkedBSTNode is an inner node with rooted subtrees. Find its inorder successor
-				//		and replace the node with it. Set the left child to whatever was left before
+				// Case #4: LinkedBSTNode is an inner nodes with rooted subtrees. Find its inorder successor
+				//		and replace the nodes with it. Set the left child to whatever was left before
 				//		and the right child to whatever was right before.
 				else {
-					retVal = getInorderSuccessor(); // Guaranteed to exist, because "this" is an inner node.
+					retVal = getInorderSuccessor(); // Guaranteed to exist, because "this" is an inner nodes.
 					retVal.left = left;
 					retVal.right = right;
 				}
@@ -332,12 +332,12 @@ public class LinkedBinarySearchTree<T extends Comparable<T>>  implements BinaryS
 			return retVal;
 		}
 
-		// The inorder successor of an inner node is the leftmost node of its right subtree.
+		// The inorder successor of an inner nodes is the leftmost nodes of its right subtree.
 		private LinkedBSTNode getInorderSuccessor(){
 			LinkedBSTNode current = right;
 			while(current.left != null)
 				current = current.left;
-			right.remove(current.getElement()); // The successor is a leaf node, so it boils down to a previous case.
+			right.remove(current.getElement()); // The successor is a leaf nodes, so it boils down to a previous case.
 			return current;
 		}
 

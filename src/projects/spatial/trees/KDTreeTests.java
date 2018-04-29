@@ -26,8 +26,8 @@ public class KDTreeTests {
 
 	/* Prepares David Mount's 2D-tree, taken from his 420 notes, page 76.
 	 * IMPORTANT NOTE: DAVID MOUNT'S MADE A MISTAKE ON THAT TREE OF HIS.
-	 * Namely, the leaf node (60, 10) should be its parent's left child.
-	 * To make the example work, I changed that particular node to (75, 10).
+	 * Namely, the leaf nodes (60, 10) should be its parent's left child.
+	 * To make the example work, I changed that particular nodes to (75, 10).
 	 * 
 	 */
 	private void prepMountTree(){
@@ -398,7 +398,7 @@ public class KDTreeTests {
 		// which'll fail unless the client code takes care of both appropriately.
 
 		mount2DTree.delete(new KDPoint(20, 45));
-		assertTrue("After deletion of a node without a right child, a node that formerly existed " + 
+		assertTrue("After deletion of a nodes without a right child, a nodes that formerly existed " +
 				" in its left subtree could no longer be found in the tree.",mount2DTree.search(new KDPoint(20, 20)));
 
 		/* (2) Tests on custom 2D tree: This tree gives rise to a deletion special case
@@ -414,7 +414,7 @@ public class KDTreeTests {
 			fail("Caught a " + t.getClass() + " with message " + t.getMessage() + 
 					" when deleting a root with no right subtree in a 2D tree.");
 		}
-		assertEquals("Check your deletion special cases for the root node.", 
+		assertEquals("Check your deletion special cases for the root nodes.",
 				new KDPoint(-10,-3), jason2DTree.getRoot());
 		assertEquals("Just deleted the root, but this particular deletion should not have affected " + 
 				" the tree height.", origJason2DTreeHeight, jason2DTree.height());

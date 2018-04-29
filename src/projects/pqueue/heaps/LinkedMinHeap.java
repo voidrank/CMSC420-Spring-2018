@@ -7,7 +7,7 @@ package projects.pqueue.heaps; // ******* <---  DO NOT ERASE THIS LINE!!!! *****
 
 import java.util.Iterator;
 /**
- * <p>A <tt>LinkedMinHeap</tt> is a tree (specifically, a <b>complete</b> binary tree) where every node is
+ * <p>A <tt>LinkedMinHeap</tt> is a tree (specifically, a <b>complete</b> binary tree) where every nodes is
  * smaller than or equal to its descendants (as defined by the <tt>compareTo() </tt>overridings of the type T).
  * Percolation is employed when the root is deleted, and insertions guarantee are performed in a way that guarantees
  * that the heap property is maintained. </p>

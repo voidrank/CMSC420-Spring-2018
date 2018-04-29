@@ -36,7 +36,7 @@ public interface SpatialTree {
      * @param range The maximum {@link KDPoint#distance(KDPoint, KDPoint)} from <tt>p</tt>
      * that we allow a {@link KDPoint} to have if it should be part of the solution.
      * @return A {@link Collection} over all {@link KDPoint}s which satisfy our query. The
-     * {@linkplain Collection} will be empty if there are no points which satisfy the query.
+     * {@link Collection} will be empty if there are no points which satisfy the query.
      */
     public Collection<KDPoint> range(KDPoint p, double range);
 
@@ -53,7 +53,7 @@ public interface SpatialTree {
     /**
      * Performs a k-nearest neighbors query on the <tt>SpatialTree</tt>. Returns the <em>k</em>
      * {@link KDPoint}s which are nearest to <tt>p</tt>, as dictated by
-     * {@link KDPoint#distance(KDPoint) distance(KDPoint p)}.
+     * {@link KDPoint#distance(KDPoint)}.
      * The {@link KDPoint}s are sorted in ascending order of distance.
      * @param k A positive integer denoting the amount of neighbors to return.
      * @param p The query point.
@@ -64,16 +64,32 @@ public interface SpatialTree {
     public BoundedPriorityQueue<KDPoint> kNearestNeighbors(int k, KDPoint p);
 
     /**
-     * Returns the height of the <tt>SpatialTree</tt>. By convention, the height of an empty tree is -1.
-     * @return The height of <tt>this</tt>.
+     * Return the height of the<tt>SpatialTree</tt>. The height is defined similarly to
+     * AVL trees, as follows:
+     * <ol>
+     *   <li>The height of a null tree (no nodes) is -1 (minus 1).</li>
+     *   <li>The height of a tree that consists of a single nodes (a "stub" tree) is 0 (zero). </li>
+     *   <li>The height of a tree that consists of four children is the maximum height of its children plus one.</li>
+     *</ol>
+     *
+     * Note that the data field <tt>height</tt> is <tt>protected</tt>, so it's only accessible by derived classes.
+     * This is a public method, so it can be called by callers outside the scope of this class (such as
+     * {@link projects.spatial.trees.PRQuadTree})
+     *
+     * @return the height of the subtree rooted at the current nodes.
+     * @see #height
      */
     public int height();
 
     /**
      * Reports whether the <tt>SpatialTree</tt> is empty, that is, it contains zero
      * <tt>KDPoint</tt>s.
-     * @return <tt>true</tt> if {@link #height()} == -1, false otherwise.
+     * @return <tt>true</tt> iff {@link #count()} == 0, false otherwise.
      */
     public boolean isEmpty();
 
+    /** Returns the number of elements in the <tt>SpatialTree</tt>.
+     *  @return The number of elements in the <tt>SpatialTree</tt>.
+     */
+    public int count();
 }

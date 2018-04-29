@@ -10,9 +10,8 @@ import static org.junit.Assert.fail;
 import static projects.spatial.kdpoint.KDPoint.distance;
 
 /**
- * <tt>KDPointTests</tt> is a unit testing class for {@link KDPoint}.
- * @author Jason Filippou (jasonfil@cs.umd.edu)
- * @since March 2015
+ * <p><tt>KDPointTests</tt> is a unit testing class for {@link KDPoint}. </p>
+ * @author <a href = "mailto:jasonfil@cs.umd.edu">Jason Filippou</a>
  */
 public class KDPointTests {
 

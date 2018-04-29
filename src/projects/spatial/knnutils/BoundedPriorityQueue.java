@@ -15,7 +15,6 @@ import java.util.Iterator;
  */
 public class BoundedPriorityQueue<T> implements PriorityQueue<T>, Iterable<T>{
 
-
 	/**
 	 * Since this class is a generic, we will opt for an ArrayList
 	 * instead of a raw Object array for our static storage. This avoids
@@ -41,7 +40,7 @@ public class BoundedPriorityQueue<T> implements PriorityQueue<T>, Iterable<T>{
 
 	/**
 	 * Enqueueing elements for<tt> BoundedPriorityQueue</tt>s works a little bit differently from general case
-	 * {@link queues.PriorityQueue} objects. If the queue is not at capacity, the <tt>element</tt> is inserted at its
+	 * PriorityQueues. If the queue is not at capacity, the <tt>element</tt> is inserted at its
 	 * appropriate location in the sequence. On the other hand, if the object is at capacity, the element is
 	 * inserted in its appropriate spot in the sequence (if such a spot exists, based on its <tt>priority</tt>) and
 	 * the maximum priority element is ejected from the structure.
@@ -116,13 +115,6 @@ public class BoundedPriorityQueue<T> implements PriorityQueue<T>, Iterable<T>{
 	@Override
 	public boolean isEmpty() {
 		return elements.isEmpty();
-	}
-
-	@Override
-	public void clear() {
-		elements.clear();
-		orderInserted = 0;
-		// queue size can remain as is
 	}
 
 	@Override

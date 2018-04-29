@@ -44,11 +44,6 @@ public interface PriorityQueue<T> {
 	 * @return <tt>true</tt> iff the queue contains zero elements.
 	 */
 	public boolean isEmpty();
-	
-	/**
-	 * Clear the queue of any elements. The size of the queue after the call to this method
-	 * is zero.
-	 */
-	public void clear();
+
 }
 
