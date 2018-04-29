@@ -15,7 +15,7 @@ import static org.junit.Assert.*;
  * <p>Some tests for {@link BoundedPriorityQueue}s.</p>
  * @author <a href = "mailto:jasonfil@cs.umd.edu">Jason Filippou</a>
  */
-public class BPQTests {
+public class BoundedPriorityQueueTests {
 
 	private BoundedPriorityQueue<String> people;
 	private Random r;

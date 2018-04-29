@@ -9,12 +9,13 @@ package projects.spatial.kdpoint;
  * if the current functionality is left untouched, since our jUnit tests depend on the
  * current functionality!</p>
  *
- * @author Jason Filippou (jasonfil@cs.umd.edu)
+ * @author <a href="mailto:jasonfil@cs.umd.edu">Jason Filippou</a>
  */
 public class KDPoint {
 	
 	/** To make matters simple for client code, we will allow the <tt>KDPoint</tt>'s
-	 * coordinates to be publicly accessible.
+	 * coordinates to be publicly accessible. This makes <tt>KDPoint</tt>s <b>mutable</b>,
+	 * so deep copies will be required.
 	 */
 	public double[] coords;
 	
@@ -26,6 +27,7 @@ public class KDPoint {
 	public KDPoint(){
 		this(2);
 	}
+
 	/**
 	 * Initialize a <em>k</em>-dimensional <tt>KDPoint</tt> at the origin of the axes.
 	 * @param k The dimensionality of the <tt>KDPoint</tt>.

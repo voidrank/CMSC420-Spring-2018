@@ -9,17 +9,25 @@ import java.util.LinkedList;
 import static projects.spatial.kdpoint.KDPoint.distance;
 
 /**
- * <tt>KDTree</tt> implements <em>K</em>-D Trees. <em>K</em> is a positive integer.
+ * <p><tt>KDTree</tt> implements <em>K</em>-D Trees. <em>K</em> is a positive integer.
  *  By default, <em>k=2</em>. <tt>KDTree</tt> supports standard insertion, deletion and
- *  search routines, and also allows for range searching and nearest neighbor queries.
+ *  search routines, and also allows for range searching and nearest neighbor queries.</p>
  *
- * @author Jason Filippou (jasonfil@cs.umd.edu)
+ * <p>KD-Trees alternate dimensions with every increasing level. At any given level,
+ * a KD-Tree acts as a Binary Search Tree over the relevant dimension. Refer to the course
+ * slides and the textbook for exact algorithms of insertion, deletion and range / kNN
+ * queries. </p>
  *
+ * @author <a href ="mailto:jasonfil@cs.umd.edu">Jason Filippou</a>
  */
 public class KDTree implements SpatialTree {
 
-	/* Private KDNode class: Will implement
-     * a KD-Tree node abstraction. */
+
+	/* ************************************************************************** */
+	/* ************************* PRIVATE NODE CLASS  ****************************** */
+	/* **************************  IMPLEMENTATION **************************** */
+	/* ************************************************************************** */
+
 	private class Node {
 
 		private KDPoint p;
@@ -237,11 +245,20 @@ public class KDTree implements SpatialTree {
 				notPicked.kNearestNeighbors(k, anchor, queue, nextDim);
 		}
 
-	} // End Node class
+	} /* ***************** END OF NODE CLASS IMPLEMENTATION ***************** */
+
+	/* ************************************************************************** */
+	/* ************************* PRIVATE FIELDS ********************************* */
+	/* ************************************************************************** */
 
 	private Node root;
 	private int dims;
 	private static final double INFTY = -1; // Encoding infinity with a negative number is safer than Double.MAX_VALUE for our purposes.
+
+	/* ************************************************************************** */
+	/* ************************* PUBLIC METHOD ********************************* */
+	/* ************************* IMPLEMENTATION ******************************** */
+	/* ************************************************************************** */
 
 	/**
 	 * Default constructor constructs <tt>this</tt> with <em>k=2</em>.
@@ -262,10 +279,7 @@ public class KDTree implements SpatialTree {
 		root = null;
 	}
 
-	/**
-	 * Inserts <tt>p</tt> into the <tt>KDTree</tt>.
-	 * @param p The {@link KDPoint} to insert into the tree.
-	 */
+	@Override
 	public void insert(KDPoint p){
 		if(root == null)
 			root = new Node(p);
@@ -274,22 +288,14 @@ public class KDTree implements SpatialTree {
 
 	}
 
-	/**
-	 * Deletes <tt>p</tt> from the <tt>KDTree</tt>. If <tt>p</tt> is not in the
-	 * tree, this method performs no changes to the tree.
-	 * @param p The {@link KDPoint} to delete from the tree.
-	 */
+	@Override
 	public void delete(KDPoint p){
 		if(root == null)
 			return;
 		else root = root.delete(p, 0);
 	}
 
-	/**
-	 * Searches the tree for <tt>p</tt> and reports if it found it.
-	 * @param p The {@link KDPoint} to look for in the tree.
-	 * @return <tt>true</tt> iff <tt>p</tt> is in the tree.
-	 */
+	@Override
 	public boolean search(KDPoint p){
 		if(root == null)
 			return false;
@@ -306,15 +312,7 @@ public class KDTree implements SpatialTree {
 		return root == null ? null : root.p;
 	}
 
-	/**
-	 * Performs a range query on the KD-Tree. Returns all the {@link KDPoint}s whose
-	 * {@link KDPoint#distance(KDPoint) distance(KDPoint p)} distance} from  <tt>p</tt> is at most <tt>range</tt>.
-	 * @param p The query {@link KDPoint}.
-	 * @param range The maximum {@link KDPoint#distance(KDPoint, KDPoint)} from <tt>p</tt>
-	 * that we allow a {@link KDPoint} to have if it should be part of the solution.
-	 * @return A {@link Collection} over all {@link KDPoint}s which satisfy our query. The
-	 * {@linkplain Collection} will be empty if there are no points which satisfy the query.
-	 */
+	@Override
 	public Collection<KDPoint> range(KDPoint p, double range){
 		LinkedList<KDPoint> pts = new LinkedList<KDPoint>();
 		if(root == null)
@@ -324,12 +322,7 @@ public class KDTree implements SpatialTree {
 		return pts;
 	}
 
-	/** Performs a nearest neighbor query on the <tt>KDTree</tt>. Returns the {@link KDPoint}
-	 * which is closest to <tt>p</tt>, as dictated by {@link KDPoint#distance(KDPoint) distance(KDPoint p)}.
-	 * @param p The query {@link KDPoint}.
-	 * @return The solution to the nearest neighbor query. This method will return <tt>null</tt> if
-	 * there are no points other than <tt>p</tt> in the tree.
-	 */
+	@Override
 	public KDPoint nearestNeighbor(KDPoint p){
 		NNData<KDPoint> n = new NNData<KDPoint>(null, INFTY);
 		if(root != null)
@@ -337,20 +330,8 @@ public class KDTree implements SpatialTree {
 		return n.bestGuess;
 	}
 
-	/**
-	 * Performs a k-nearest neighbors query on the <tt>KDTree</tt>. Returns the <em>k</em>
-	 * {@link KDPoint}s which are nearest to <tt>p</tt>, as dictated by {@link KDPoint#distance(KDPoint) distance(KDPoint p)}.
-	 * The {@link KDPoint}s are sorted in ascending order of distance.
-	 * @param k A positive integer denoting the amount of neighbors to return.
-	 * @param p The query point.
-	 * @return A {@link BoundedPriorityQueue} containing the k-nearest neighbors of <tt>p</tt>.
-	 * This queue will be empty if the tree contains only <tt>p</tt>.
-	 * @throws RuntimeException If <tt>k&lt;=0</tt>.
-	 */
+	@Override
 	public BoundedPriorityQueue<KDPoint> kNearestNeighbors(int k, KDPoint p){
-			/* I really don't have the time to collect all the points and
-			 * put them in a PQ, so I will do it the naive way. Sorry.
-			 */
 		if(k <= 0)
 			throw new RuntimeException("The value of k provided, " + k + ", is invalid: Please provide a positive integer.");
 		BoundedPriorityQueue<KDPoint> queue = new BoundedPriorityQueue<KDPoint>(k);
@@ -358,19 +339,12 @@ public class KDTree implements SpatialTree {
 			root.kNearestNeighbors(k, p, queue, 0);
 		return queue; // Might be empty; that's not a problem.
 	}
-
-	/**
-	 * Returns the height of the tree. By convention, the height of an empty tree is -1.
-	 * @return The height of <tt>this</tt>.
-	 */
+	@Override
 	public int height(){
 		return root == null ? -1 : root.height;
 	}
 
-	/**
-	 * Reports whether the <tt>KDTree</tt> is empty, that is, it contains zero <tt>KDPoint</tt>s.
-	 * @return <tt>true</tt> iff height() == -1.
-	 */
+	@Override
 	public boolean isEmpty(){
 		return height() == -1;
 	}
