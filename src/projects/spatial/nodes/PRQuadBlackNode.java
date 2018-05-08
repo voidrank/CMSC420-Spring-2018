@@ -3,7 +3,7 @@ package projects.spatial.nodes;
 import projects.spatial.kdpoint.KDPoint;
 
 
-/** <p>A <tt><PRQuadBlackNode/tt> is a black {@link PRQuadNode}. It maintains the following
+/** <p>A <tt>PRQuadBlackNode</tt> is a black {@link PRQuadNode}. It maintains the following
  * invariants: </p>
  * <ul>
  *  <li>It does <b>not</b> have children.</li>

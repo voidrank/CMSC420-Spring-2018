@@ -2,7 +2,7 @@ package projects.spatial.nodes;
 
 import projects.spatial.kdpoint.KDPoint;
 
-/** <p>A <tt><PRQuadGrayNode/tt> is a gray ("mixed") {@link PRQuadNode}. It
+/** <p>A <tt>PRQuadGrayNode</tt> is a gray ("mixed") {@link PRQuadNode}. It
  * maintains the following invariants: </p>
  * <ul>
  *  <li>Its children pointer buffer is non-<tt>null</tt>has a length of 4.</li>

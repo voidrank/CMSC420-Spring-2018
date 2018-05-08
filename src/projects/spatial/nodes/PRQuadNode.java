@@ -1,9 +1,6 @@
 package projects.spatial.nodes;
 
 import projects.spatial.kdpoint.KDPoint;
-import projects.spatial.knnutils.NNData;
-import projects.spatial.knnutils.BoundedPriorityQueue;
-import java.util.Collection;
 /**
  * <p><tt>PRQuadNode</tt> is an <tt>abstract class</tt> used to provide the common structure that all
  * implementing subclasses will share.  It is an abstraction over nodes of a Point-Region (PR)- QuadTree.
@@ -69,38 +66,6 @@ public abstract class PRQuadNode {
      * @return the total number of {@link KDPoint}s contained in the subtree rooted at the current nodes.
      */
     public abstract int count();
-
-    /**
-     * Fills the provided {@link Collection} with all the {@link KDPoint}s that satisfy the range query provided.
-     * Range searches are considered <b>inclusive</b>; that is, points that lie <b>exactly</b> on the hypersphere
-     * with centroid <tt>anchor</tt> and (squared) radius <tt>range</tt> <b>should</b> be reported by the query.
-     *
-     * Invariants:
-     * <ol>
-     *     <li><tt>results != null</tt></li>
-     *     <li>range, currDim, dims >= 0</li>
-     * </ol>
-     * @param anchor A {@link KDPoint} representing the "anchor" (centroid) of the range search.
-     * @param results A {@link java.util.Collection}
-     * @param range
-     * @param currDim
-     * @param dims
-     */
-    public abstract void range(KDPoint anchor, Collection<KDPoint> results,
-                               double range, int currDim, int dims);
-
-    /**
-     *
-     */
-    public abstract NNData<KDPoint> nearestNeighbor(KDPoint anchor, int currDim,
-                                                    NNData<KDPoint> n, int dims);
-
-    /**
-     *
-     */
-    public abstract void kNearestNeighbors(int k, KDPoint anchor, BoundedPriorityQueue<KDPoint> queue, int currDim,
-                                           int dims);
-
 }
 
 

@@ -1,10 +1,8 @@
 package projects.spatial.trees;
 
 import projects.spatial.kdpoint.KDPoint;
-import projects.spatial.knnutils.BoundedPriorityQueue;
-import projects.spatial.nodes.*;
-
-import java.util.Collection;
+import projects.spatial.nodes.PRQuadBlackNode;
+import projects.spatial.nodes.PRQuadNode;
 
 /**
  * <p><tt>PRQuadTree</tt> implements Point-Region (P-R) QuadTrees. Those are trie-based
@@ -22,7 +20,7 @@ import java.util.Collection;
  *
  * @author <a href="mailto:jasonfil@cs.umd.edu">Jason Filippou</a>
  */
-public class PRQuadTree implements SpatialTree {
+public class PRQuadTree implements SpatialDictionary {
 
 
     /**
@@ -93,31 +91,13 @@ public class PRQuadTree implements SpatialTree {
     }
 
     @Override
-    public Collection<KDPoint> range(KDPoint p, double range) {
-        return null;
-    }
-
-    @Override
-    public KDPoint nearestNeighbor(KDPoint p) {
-        return null;
-    }
-
-
-    @Override
-    public BoundedPriorityQueue<KDPoint> kNearestNeighbors(int k, KDPoint p) {
-        return null;
-    }
-
-
-    @Override
     public int height() {
         return (root == null) ? -1 : root.height();
     }
 
-
     @Override
-    public boolean isEmpty() {
-        return (root == null);
+    public boolean isEmpty(){
+        return (count() == 0);
     }
 
     @Override

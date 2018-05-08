@@ -17,7 +17,7 @@ import java.util.LinkedList;
  *
  * @author <a href ="mailto:jasonfil@cs.umd.edu">Jason Filippou</a>
  */
-public class KDTree implements SpatialTree {
+public class KDTree implements SpatialDictionary, SpatialQuerySolver {
 
 
 	/* ************************************************************************** */
