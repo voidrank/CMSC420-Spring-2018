@@ -16,6 +16,8 @@ import java.util.Iterator;
  * @author  ---- YOUR NAME HERE! -----
  *
  * @see BoundedPriorityQueueTests
+ * @see PriorityQueue
+ * @see PriorityQueueNode
  */
 public class BoundedPriorityQueue<T> implements PriorityQueue<T>, Iterable<T>{
 
