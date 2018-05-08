@@ -12,11 +12,14 @@ import java.util.Comparator;
  * <p><b>Note: this comparator imposes orderings that are inconsistent with {@link KDPoint#equals(Object)}.</b></p>
  *   
  * @author <a href ="mailto:jasonfil@cs.umd.edu">Jason Filippou</a>
- * @param <T> A {@link KDPoint}.
+ * @param <T> A {@link KDPoint} type.
  * @see NNData
  */
 public class KNNComparator<T extends KDPoint> implements Comparator<T>, Serializable {
 
+	/**
+	 * The &quot;anchor&quot;point for which we want to calculate the nearest neighbors.
+	 */
 	private T anchor;
 
 	/**

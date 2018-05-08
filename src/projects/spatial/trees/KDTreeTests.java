@@ -167,7 +167,7 @@ public class KDTreeTests {
 	 * Check whether a range query on a {@link KDTree} is satisfied.
 	 * @param tree A populated {@link KDTree}.
 	 * @param origin The {@link KDPoint} used as the center of the range query.
-	 * @param range The maximum {@link KDPoint#distance(KDPoint, KDPoint) that any {@link KDPoint} can have
+	 * @param range The maximum {@link KDPoint#distance(KDPoint, KDPoint)} that any {@link KDPoint} can have
 	 * from <tt>origin</tt> in order to satisfy our query. 
 	 * @param candidates A varargs array containing the ground truth answers to our range query.
 	 * @return <tt>true</tt> iff all the {@link KDPoint}s in <tt>candidates</tt> are at a {link {@link KDPoint#distance(KDPoint, KDPoint)}

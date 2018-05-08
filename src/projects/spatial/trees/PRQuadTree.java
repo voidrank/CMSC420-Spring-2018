@@ -18,7 +18,10 @@ import projects.spatial.nodes.PRQuadNode;
  * subtrees per nodes. The course staff has come around some papers with applications of oct-trees, which are extensions of PR-QuadTrees) in 3 *
  * dimensions. Beyond 3, it seems that the idea of such exponential fanout trie-based quadtrees fades.</p>
  *
+ * <p><b>YOU SHOULD ***NOT*** EDIT THIS CLASS!</b> If you do, you risk <b>not passing our tests!</b></p>
+ *
  * @author <a href="mailto:jasonfil@cs.umd.edu">Jason Filippou</a>
+ *
  */
 public class PRQuadTree implements SpatialDictionary {
 
@@ -51,10 +54,13 @@ public class PRQuadTree implements SpatialDictionary {
      * @param n The exponent of 2 that defines the area assumed to be spanned by the root nodes.
      * @param bucketingParam The "bucketing" parameter, which controls how many {@link KDPoint}s a
      * {@link PRQuadBlackNode} of this tree can hold before having to split.
+     * @throws RuntimeException if <tt>bucketingParam</tt> &lt; 1
      * @see #n
      * @see #maxPoints
      */
     public PRQuadTree(int n, int bucketingParam){
+        if(bucketingParam < 1)
+            throw new RuntimeException("Bucketing parameter needs to be at least 1!");
         this.n = n;
         this.maxPoints = bucketingParam;
         count = 0;
@@ -63,10 +69,8 @@ public class PRQuadTree implements SpatialDictionary {
 
     @Override
     public void insert(KDPoint p) {
-        if(root == null) { // white nodes, first point stored
+        if(root == null)  // white nodes, first point stored
             root = new PRQuadBlackNode(maxPoints, p);
-
-        }
         else // black or gray nodes
             root.insert(p); // will adjust height accordingly.
         count++;

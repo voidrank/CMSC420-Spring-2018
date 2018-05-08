@@ -6,31 +6,48 @@ import java.util.Iterator;
 
 
 /**
- * <p><tt>BoundedPriorityQueue</tt> is a priority queue whose number of elements
+ * <p>{@link BoundedPriorityQueue} is a priority queue whose number of elements
  * is bounded. Insertions are such that if the queue's provided capacity is surpassed,
  * its length is not expanded, but rather the maximum priority element is ejected
  * (which could be the element just attempted to be enqueued).</p>
- * 
- * @author <a href="mailto:jasonfil@cs.umd.edu">Jason Filippou</a>
+ *
+ * <p><b>YOU ***** MUST ***** IMPLEMENT THIS CLASS!</b></p>
+ *
+ * @author  ---- YOUR NAME HERE! -----
  *
  * @see BoundedPriorityQueueTests
  */
 public class BoundedPriorityQueue<T> implements PriorityQueue<T>, Iterable<T>{
 
 	/**
-	 * Since this class is a generic, we will opt for an ArrayList
-	 * instead of a raw Object array for our static storage. This avoids
-	 * downcasting problems with Objects and Ts.
+	 * Since this class is a generic, we will opt for an {@link ArrayList}
+	 * instead of a raw {@link Object} array for our static storage. This avoids
+	 * downcasting problems with {@link Object}s and Ts.
 	 */
 	private ArrayList<PriorityQueueNode<T>> elements;
 
-	private int queueSize, orderInserted;
+	/**
+	 * The {@link BoundedPriorityQueue} will be provided a maximum size at construction time.
+	 * Refer to the course slides about how the BPQ should be treated.
+	 */
+	private int queueSize;
+
+	/**
+	 * The order in which an element is inserted will be useful for tie-breaking
+	 * in the case of common priorities.
+	 */
+	private int orderInserted;
+
+	/**
+	 * <tt>modificationFlag</tt> is useful for making the {@link Iterator} returned by {@link #iterator()}
+	 * <b>fail-fast</b>.
+	 */
 	private boolean modificationFlag; // Will be useful for our iterator.
 
 	/**
 	 * Constructor that specifies the size of our queue.
-	 * @param size The static size of the <tt>BoundedPriorityQueue</tt>. Has to be a positive integer.
-	 * @throws RuntimeException if <tt>size</tt> is not positive.
+	 * @param size The static size of the {@link BoundedPriorityQueue}. Has to be a positive integer.
+	 * @throws RuntimeException if <tt>size</tt> is not a strictly positive integer.
 	 */
 	public BoundedPriorityQueue(int size){
 		if(size <= 0)

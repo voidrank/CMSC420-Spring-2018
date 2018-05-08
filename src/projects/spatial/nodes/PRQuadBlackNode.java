@@ -1,23 +1,29 @@
 package projects.spatial.nodes;
 
 import projects.spatial.kdpoint.KDPoint;
+import java.util.List;
 
 
-/** <p>A <tt>PRQuadBlackNode</tt> is a black {@link PRQuadNode}. It maintains the following
+/** <p>A {@link PRQuadBlackNode} is a &quot;black&quot; {@link PRQuadNode}. It maintains the following
  * invariants: </p>
  * <ul>
  *  <li>It does <b>not</b> have children.</li>
- *  <li>It contains at least one {@link KDPoint} </li>
+ *  <li><b>Once created</b>, it will contain at least one {@link KDPoint}. </li>
  * </ul>
- * @author <a href="mailto:jasonfil@cs.umd.edu">Jason Filippou</a>
+ *
+ * <p><b>YOU ***** MUST ***** IMPLEMENT THIS CLASS!</b></p>
+ *
+ * @author --- YOUR NAME HERE! ---
  */
 public class PRQuadBlackNode extends PRQuadNode {
 
+    private static final RuntimeException UNIMPL_METHOD = new RuntimeException("Implement this method!");
 
     /**
-     * The default bucketsize for all of our black nodes will be 1.
+     * The default bucketsize for all of our black nodes will be 1, and this is something
+     * that the interface also communicates to consumers.
      */
-    private static final int DEFAULT_BUCKETSIZE = 1;
+    public static final int DEFAULT_BUCKETSIZE = 1;
 
     /**
      *  The number of {@link KDPoint}s held by the current nodes.
@@ -26,30 +32,32 @@ public class PRQuadBlackNode extends PRQuadNode {
 
     /**
      *  The bucketing parameter that controls the total number of {@link KDPoint}s
-     * that this nodes is allowed to hold.
+     * that this node is allowed to hold.
      */
-    private int maxPoints;
+    private int bucketSize;
+
 
     /**
-     *  Creates a <tt>PRQuadBlackNode</tt> with the provided parameters.  
-     * @param bucketSize The maximum number of points that the current <tt>PRQuadBlackNode</tt> is allowed to hold. Must be at least 1.
-     * @throws RuntimeException if <tt>bucketSize</tt> &le; 0
+     * Creates a {@link PRQuadBlackNode} with the default bucket size and a provided {@link KDPoint}.
+     * @param p The {@link KDPoint} with which we want to initialize <tt>this</tt>.
+     * @see #DEFAULT_BUCKETSIZE
+     * @see #PRQuadBlackNode(int, KDPoint)
      */
-    public PRQuadBlackNode(int bucketSize){
-        if(bucketSize < 1)
-            throw new RuntimeException("bucketSize needs to be at least 1!");
-        points = new KDPoint[bucketSize];
-        maxPoints = bucketSize;
+    public PRQuadBlackNode(KDPoint p){
+        this(DEFAULT_BUCKETSIZE, p);
     }
 
     /**
-     * Creates a <tt>PRQuadBlackNode</tt> with the provided parameters.
-     * @param bucketSize The maximum number of points that the current <tt>PRQuadBlackNode</tt> is allowed to hold.
+     * Creates a {@link PRQuadBlackNode} with the provided parameters.
+     * @param bucketSize The maximum number of points that the current {@link PRQuadBlackNode} is allowed to hold.
      *                   Must be at least 1.
-     * @param p A {@link KDPoint} to initialize the current <tt>PRQuadBlackNode</tt> with.
+     * @param p A {@link KDPoint} to initialize the current {@link PRQuadBlackNode} with.
+     *
+     * @see #PRQuadBlackNode(KDPoint)
      */
     public PRQuadBlackNode(int bucketSize, KDPoint p){
-        this(bucketSize);
+        this.bucketSize = bucketSize;
+        points = new KDPoint[bucketSize];
         points[0] = new KDPoint(p); // Invariant: points.length >= 1
     }
 
@@ -83,5 +91,17 @@ public class PRQuadBlackNode extends PRQuadNode {
     public int count(){
         /* ***** IMPLEMENT THIS! *** */
         return 0;
+    }
+
+    /** Returns all the {@link KDPoint}s contained by the {@link PRQuadBlackNode}. <b>INVARIANT</b>: the returned
+     * {@link List}'s length can only be between 1 and bucket-size inclusive.
+     *
+     * @return A {@link List} that contains all the {@link KDPoint}s that are contained by the node. It is
+     * guaranteed, by the invariants, that the {@link List} will not be empty, and it will also <b>not</b> be
+     * a <tt>null</tt> reference.
+     */
+    public List<KDPoint> getPoints(){
+        /* ***** IMPLEMENT THIS! **** */
+        return null;
     }
 }

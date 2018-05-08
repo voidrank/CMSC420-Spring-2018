@@ -5,10 +5,12 @@ import projects.spatial.knnutils.BoundedPriorityQueue;
 import java.util.Collection;
 
 /**
- * <p><tt>SpatialQuerySolver</tt> is an interface that declares methods for range and k-NN queries over {@link KDPoint}s.</p>
+ * <p>{@link SpatialQuerySolver} is an interface that declares methods for range and k-NN queries over {@link KDPoint}s.</p>
  *
  *  <p>Minor detail: since {@link SpatialQuerySolver} is an <b>interface</b>, all of its methods are implicitly
  *  <tt>public</tt>, so the explicit scope modifier is <b>not needed</b> in the source.</p>
+ *
+ * <p><b>YOU SHOULD NOT EDIT THIS INTERFACE'S SOURCE CODE! IF YOU DO, YOU RISK FAILING OUR UNIT TESTS!</b></p>
  *
  * @author <a href="mailto:jasonfil@cs.umd.edu">Jason Filippou</a>
  *

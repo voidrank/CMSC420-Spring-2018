@@ -12,7 +12,9 @@ import java.util.Random;
 import static org.junit.Assert.*;
 
 /**
- * <p>Some tests for {@link BoundedPriorityQueue}s.</p>
+ * <p>A testing framework for {@link BoundedPriorityQueue}s. It is <b>provided</b> for you
+ * to speed up your implementation of {@link BoundedPriorityQueue}!</p>
+ *
  * @author <a href = "mailto:jasonfil@cs.umd.edu">Jason Filippou</a>
  */
 public class BoundedPriorityQueueTests {
@@ -54,6 +56,7 @@ public class BoundedPriorityQueueTests {
 			try {
 				new BoundedPriorityQueue<Object>(randNegInt);
 			} catch(RuntimeException exc){
+				// Good
 			} catch(Throwable t){
 				fail("When creating BPQ # " + i + " with priority " + randNegInt
 						+ ", we should've caught a RuntimeException. Instead, we caught a " 

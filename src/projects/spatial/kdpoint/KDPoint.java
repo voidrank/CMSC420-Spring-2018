@@ -1,27 +1,25 @@
 package projects.spatial.kdpoint;
 
-/** <p><tt>KDPoint</tt> is a class that represents a k-dimensional point in Euclidean
+/** <p>{@link KDPoint} is a class that represents a k-dimensional point in Euclidean
  * space, where <em>k</em> is a positive integer. It provides methods for initialization,
- * copy construction, equality checks and distance calculations. The precision of <tt>KDPoint</tt>s
+ * copy construction, equality checks and distance calculations. The precision of {@link KDPoint}s
  * is <tt>double</tt>.</p>
  * 
- * <p>Students should feel free to add functionality to this class, but it is best
- * if the current functionality is left untouched, since our jUnit tests depend on the
- * current functionality!</p>
+ * <p><b>YOU SHOULD NOT EDIT THIS CLASS'S SOURCE CODE! IF YOU DO, YOU RISK FAILING OUR UNIT TESTS!</b></p>
  *
  * @author <a href="mailto:jasonfil@cs.umd.edu">Jason Filippou</a>
  */
 public class KDPoint {
 	
-	/** To make matters simple for client code, we will allow the <tt>KDPoint</tt>'s
-	 * coordinates to be publicly accessible. This makes <tt>KDPoint</tt>s <b>mutable</b>,
-	 * so deep copies will be required.
+	/** To make matters simple for client code, we will allow the {@link KDPoint}'s
+	 * coordinates to be publicly accessible. This makes {@link KDPoint}s <b>mutable</b>,
+	 * so deep copies will be required wherever we copy {@link KDPoint}s.
 	 */
 	public double[] coords;
 	
 	
 	/**
-	 * Default constructor initializes <tt>this</tt> as a 2D <tt>KDPoint</tt> describing
+	 * Default constructor initializes <tt>this</tt> as a 2D {@link KDPoint} describing
 	 * the Cartesian origin.
 	 */
 	public KDPoint(){
@@ -29,8 +27,9 @@ public class KDPoint {
 	}
 
 	/**
-	 * Initialize a <em>k</em>-dimensional <tt>KDPoint</tt> at the origin of the axes.
-	 * @param k The dimensionality of the <tt>KDPoint</tt>.
+	 * Initialize a <em>k</em>-dimensional {@link KDPoint} at the origin of the axes.
+	 * @param k The dimensionality of the {@link KDPoint}.
+	 * @throws RuntimeException if the provided dimensionality is &lt; 1.
 	 */
 	public KDPoint(int k) {
 		if(k <= 0)
@@ -39,19 +38,20 @@ public class KDPoint {
 	}
 	
 	/**
-	 * Initialize a <tt>KDPoint</tt> with some values. Implicitly sets the <tt>KDPoint</tt>'s
-	 * dimensionality.  
-	 * @param vals The values with which to initialize the <tt>KDPoint</tt>.
+	 * Initialize a {@link KDPoint} with some values. Implicitly sets the {@link KDPoint}'s
+	 * dimensionality.
+	 * @param vals The values with which to initialize the {@link KDPoint}.
+	 * @see System#arraycopy(Object, int, Object, int, int)
 	 */
 	public KDPoint(double... vals){
 		coords = new double[vals.length];
-		for(int i = 0; i < coords.length; i++)
-			coords[i] = vals[i];
+		System.arraycopy(vals, 0, coords, 0, vals.length);
 	}
 	
 	/**
-	 * Initialize a <tt>KDPoint</tt> based on an already existing <tt>KDPoint</tt>.
-	 * @param p The <tt>KDPoint</tt> on which we will base the creation of <tt>this</tt>.
+	 * Initialize a {@link KDPoint} based on an already existing {@link KDPoint}. Since {@link KDPoint} is a
+	 * <b>mutable</b> class, <b>all new {@link KDPoint} instances</b> should be created this copy-constructor!
+	 * @param p The {@link KDPoint} on which we will base the creation of <tt>this</tt>.
 	 */
 	public KDPoint(KDPoint p){
 		this(p.coords);
@@ -73,9 +73,9 @@ public class KDPoint {
 	}
 	
 	/**
-	 * Calculate the Squared Euclidean distance between <tt>this</tt> and <tt>p</tt>.
-	 * @param p The <tt>KDPoint</tt> to calculate the distance to.
-	 * @return The squared Euclidean distance between the two <tt>KDPoint</tt>s.
+	 * Calculate the <b><u>squared</u> Euclidean distance</b> between <tt>this</tt> and <tt>p</tt>.
+	 * @param p The {@link KDPoint} to calculate the distance to.
+	 * @return The <b><u>squared</u> Euclidean distance</b> between the two {@link KDPoint}s.
 	 * @throws RuntimeException if the dimensionality of the two KDPoints is different.
 	 */
 	public double distance(KDPoint p) throws RuntimeException{
@@ -91,8 +91,8 @@ public class KDPoint {
 	 * A static version of distance calculations. Since the Squared Euclidean distance is symmetric,
 	 * it's somewhat awkward to have to specify a start and end point, as {@link #distance(KDPoint) distance} does,
 	 * so we provide this option as well.
-	 * @param p1 One of the two <tt>KDPoint</tt>s to calculate the distance of.
-	 * @param p2 One of the two <tt>KDPoint</tt>s to calculate the distance of.
+	 * @param p1 One of the two {@link KDPoint}s to calculate the distance of.
+	 * @param p2 One of the two {@link KDPoint}s to calculate the distance of.
 	 * @return The Euclidean distance between <tt>p1</tt> and <tt>p2</tt>.
 	 */
 	public static double distance(KDPoint p1, KDPoint p2){

@@ -17,11 +17,14 @@ import java.util.LinkedList;
  * slides and the textbook for exact algorithms, with code samples, of insertion, deletion and range / kNN
  * queries. </p>
  *
- * @author <a href="mailto:jasonfil@cs.umd.edu">Jason Filippou</a>
+ * <p><b>YOU SHOULD ***NOT*** EDIT THIS CLASS!</b> If you do, you risk <b>not passing our tests!</b></p>
+ *
+ * @author  <a href ="mailto:jasonfil@cs.umd.edu">Jason Filippou</a>
  *
  * @see SpatialDictionary
  * @see SpatialQuerySolver
  * @see KDTreeNode
+ * @see PRQuadTree
  */
 public class KDTree implements SpatialDictionary, SpatialQuerySolver {
 
@@ -56,9 +59,14 @@ public class KDTree implements SpatialDictionary, SpatialQuerySolver {
 	private KDTreeNode root;
 
 	/**
-	 * The dimensions
+	 * The dimensionality of the space considered.
+	 * @see KDTreeNode
 	 */
 	private int dims;
+
+	/**
+	 * The total number of {@link KDPoint}s held by the container.
+	 */
 	private int count;
 
 
@@ -110,14 +118,6 @@ public class KDTree implements SpatialDictionary, SpatialQuerySolver {
 		return (root != null) && root.search(p, 0, dims);
 	}
 
-	/**
-	 * Returns the root nodes of the <tt>KDTree</tt>.
-	 * @return The {@link KDPoint} located at the root of the tree, or <tt>null</tt>
-	 * if the tree is empty.
-	 */
-	public KDPoint getRoot(){
-		return root == null ? null : new KDPoint(root.getPoint());
-	}
 
 	@Override
 	public Collection<KDPoint> range(KDPoint p, double range){
@@ -159,5 +159,15 @@ public class KDTree implements SpatialDictionary, SpatialQuerySolver {
 	@Override
 	public int count(){
 		return count;
+	}
+
+	/**
+	 * Returns the {@link KDPoint} located at the <b>root</b>of the <tt>KDTree</tt>.
+	 * Only non-interface method! Added primarily for debugging purposes.
+	 * @return The {@link KDPoint} located at the root of the tree, or <tt>null</tt>
+	 * if the tree is empty.
+	 */
+	public KDPoint getRoot(){
+		return root == null ? null : new KDPoint(root.getPoint());
 	}
 }
