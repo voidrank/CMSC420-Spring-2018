@@ -5,16 +5,17 @@ import projects.spatial.kdpoint.KDPoint;
 /** <p>A <tt>PRQuadGrayNode</tt> is a gray (&quot;mixed&quot;) {@link PRQuadNode}. It
  * maintains the following invariants: </p>
  * <ul>
- *  <li>Its children pointer buffer is non-<tt>null</tt>has a length of 4.</li>
- *  <li>At least one of its children is a gray nodes. This invariant also means
- *  that there cannot be any gray nodes with a single black nodes child; those should be collapsed
- *  into black nodes containing the points of the former child.</li>
+ *      <li>Its children pointer buffer is non-<tt>null</tt> and has a length of 4.</li>
+ *      <li>If there is at least one black node child, the total number of {@link KDPoint}s stored
+ *      by <b>all</b> of the children is greater than the bucketing parameter (because if it is equal to it
+ *      or smaller, we can prune the node.</li>
  * </ul>
  *
  * <p><b>YOU ***** MUST ***** IMPLEMENT THIS CLASS!</b></p>
  *
  *  @author --- YOUR NAME HERE! ---
-*/
+ */
+
 public class PRQuadGrayNode extends PRQuadNode{
 
     /**
