@@ -9,27 +9,32 @@ import java.util.Collection;
 import static projects.spatial.kdpoint.KDPoint.distance;
 
 /**
- * <p><tt>KDTreeNode</tt> is an abstraction over nodes of a KD-Tree. It will be used extensively by
+ * <p>{@link KDTreeNode} is an abstraction over nodes of a KD-Tree. It is used extensively by
  * {@link projects.spatial.trees.KDTree} to implement its functionality.</p>
- * @author <a href = "mailto:jasonfil@cs.umd.edu">Jason Filippou</a>
+ *
+ * @author <------ YOUR NAME HERE !!! ----->
+ *
+ * @see projects.spatial.trees.KDTree
  */
 public class KDTreeNode {
+
+    private static RuntimeException UNIMPL_METHOD = new RuntimeException("Implement this method!");
+
+    /* *************************************************************************
+     ************** PLACE YOUR PRIVATE METHODS AND FIELDS HERE: ****************
+     ***************************************************************************/
 
     private KDPoint p;
     private int height;
     private KDTreeNode left, right;
     private static final double INFTY = -1; // Encoding infinity with a negative number is safer than Double.MAX_VALUE for our purposes.
 
-    /* Node-specific methods. Technically, they're also accessible
-     * by the container class, but let's pretend they're not for visibility
-     * purposes.
-     */
 
-    public  boolean coordLargerOrEqual(KDPoint p1, KDPoint p2, int dim){
+    private boolean coordLargerOrEqual(KDPoint p1, KDPoint p2, int dim){
         return p1.coords[dim] >= p2.coords[dim];
     }
 
-    public  KDPoint findMinOfDim(int soughtDim, int currDim, int dims){
+    private KDPoint findMinOfDim(int soughtDim, int currDim, int dims){
         int nextDim = (currDim + 1) % dims;
         if(soughtDim == currDim)
             if(left != null)
@@ -44,14 +49,14 @@ public class KDTreeNode {
 
     }
 
-    public  int max(int a, int b){
+    private int max(int a, int b){
         return a >= b ? a : b;
     }
 
     // We follow a clockwise approach when we have equality
     // cases: L is preferred over C is preferred over R whenever any pair
     // of those nodes is equal w.r.t the coordinate "dim".
-    public  KDPoint min(KDPoint left, KDPoint curr, KDPoint right, int dim){
+    private KDPoint min(KDPoint left, KDPoint curr, KDPoint right, int dim){
         if(coordLargerOrEqual(right, curr, dim)) // R >= C
             if(coordLargerOrEqual(curr, left, dim)) // C >= L
                 return left; // R >= C >= L
@@ -69,23 +74,34 @@ public class KDTreeNode {
      * away from the currently considered point in the increasing direction,
      * for instance, +x, +y, +z etc.
      */
-    public  boolean anchorTooFarAwayFromAbove(KDPoint anchor, KDPoint p, double range, int coord){
+    private boolean anchorTooFarAwayFromAbove(KDPoint anchor, KDPoint p, double range, int coord){
         return (anchor.coords[coord] - range) > p.coords[coord];
     }
 
     /* While the second one does the converse thing. */
-    public  boolean anchorTooFarAwayFromBelow(KDPoint anchor, KDPoint p, double range, int coord){
+    private boolean anchorTooFarAwayFromBelow(KDPoint anchor, KDPoint p, double range, int coord){
         return (anchor.coords[coord] + range) < p.coords[coord];
     }
 
-    /* Interface methods for KDTreeNode... Those will be called by the
-     * container class.
+    /* ***************************************************************************** */
+    /* ******************* PUBLIC (INTERFACE) METHODS ****************************** */
+    /* ***************************************************************************** */
+
+
+    /**
+     * 1-arg constructor. Stores the provided {@link KDPoint} inside the freshly created node.
+     * @param p The {@link KDPoint} to store inside <tt>this</tt>. Just a reminder: {@link KDPoint}s are
+     *          <b>mutable!!!</b>.
      */
     public KDTreeNode(KDPoint p){
         this.p = new KDPoint(p);
         height = 0;
     }
 
+    /**
+     * Inserts the provided {@link KDPoint} in the tree rooted at <tt>this</tt>. To select which subtree to recurse to,
+     * the KD-Tree acts as a Binary Search Tree on <tt>currDim</tt>; it will examine the value of the provided {@link KDPoint}
+     */
     public  void insert(KDPoint pIn, int currDim, int dims){
         int nextDim = (currDim + 1) % dims;
         if(coordLargerOrEqual(pIn, p, currDim)) // Go right
@@ -245,4 +261,4 @@ public class KDTreeNode {
 
 
 
-} /* ***************** END OF NODE CLASS IMPLEMENTATION ***************** */
+}

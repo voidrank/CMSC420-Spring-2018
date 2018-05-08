@@ -1,49 +1,56 @@
 package projects.spatial.knnutils;
 
-/**
- * <p><tt>PriorityQueue</tt> is an interface describing PriorityQueues, that is, queues that instead
- * of operating in a FIFO manner, insert elements according to a given priority, where lower is better.</p>
- * .
- * @author Jason Filippou (jasonfil@cs.umd.edu)
- *
- * @since March 2015
- */
+import projects.spatial.kdpoint.KDPoint;
 
+/**
+ * <p>{@link PriorityQueue} is an interface specification for <i>Priority Queues</i>. Those are queues which, instead
+ * of operating in a FIFO manner, will insert elements according to a provided priority, which is <b>not necessarily an integer</b>
+ * and where <b>lower number means better priority</b>.</p>
+ *
+ * <p>Minor detail: since {@link PriorityQueue} is an <b>interface</b>, all of its methods are implicitly <tt>public</tt>, so the explicit
+ * scope modifier is <b>not needed</b> in the source.</p>
+ *
+ * @author <a href="mailto:jasonfil@cs.umd.edu">Jason Filippou</a>
+ * @see PriorityQueueNode
+ * @see BoundedPriorityQueue
+ */
 public interface PriorityQueue<T> {
 	
 	/**
-	 * Insert <tt>element</tt> in the PriorityQueue according to its <tt>priority</tt>. Lower
-	 * is better. We allow for non-integer priorities such that the PriorityQueue can be used
-	 * for orderings where the prioritization is not rounded to integer quantities, such as 
-	 * Euclidean Distances in KNN queries.
+	 * <p>Insert <tt>element</tt> in the {@link PriorityQueue} according to its <tt>priority</tt>.
+	 * <b>Lower is better.</b> We allow for <b>non-integer priorities</b> such that the {@link PriorityQueue}
+	 * can be used for orderings where the prioritization is <b>not</b> rounded to integer quantities, such as
+	 * Euclidean Distances in KNN queries. </p>
+	 *
 	 * @param element The element to insert in the queue.
 	 * @param priority The priority of the element.
+	 *
+	 * @see projects.spatial.kdpoint.KDPoint#distance(KDPoint)
 	 */
-	public void enqueue(T element, double priority);
+	void enqueue(T element, double priority);
 	
 	/**
-	 * Return the minimum priority element in the queue, simultaneously removing it from the structure.
+	 * Return the <b>minimum priority element</b> in the queue, <b>simultaneously removing it</b> from the structure.
 	 * @return The minimum priority element in the queue, or <tt>null</tt> if the queue is empty.
 	 */
-	public T dequeue();
+	T dequeue();
 	
 	/**
-	 * Return, but don't remove, the minimum priority element from the queue.
+	 * Return, <b>but don't remove</b>, the <b>minimum priority element</b> from the queue.
 	 * @return The minimum priority element of the queue, or <tt>null</tt> if the queue is empty.
 	 */
-	public T first();	
+	T first();
 	
 	/**
-	 * Query the queue about its size. Empty queues have a size of 0.
+	 * Query the queue about its size. <b>Empty queues have a size of 0.</b>
 	 * @return The size of the queue. Returns 0 if the queue is empty.
 	 */
-	public int size();
+	int size();
 	
 	/**
-	 * Query the queue about emptiness. A queue is empty iff it contains zero elements.
-	 * @return <tt>true</tt> iff the queue contains zero elements.
+	 * Query the queue about emptiness. A queue is empty <b>iff</b> it contains <b>0 (zero)</b> elements.
+	 * @return <tt>true</tt> iff the queue contains <b>0 (zero)</b> elements.
 	 */
-	public boolean isEmpty();
-
+	boolean isEmpty();
 }
 

@@ -5,7 +5,10 @@ import projects.spatial.knnutils.BoundedPriorityQueue;
 import java.util.Collection;
 
 /**
- * <p><tt>SpatialQuerySolver</tt> is an interface that declares methods for range and k-NN queries over {@link KDPoint}s.
+ * <p><tt>SpatialQuerySolver</tt> is an interface that declares methods for range and k-NN queries over {@link KDPoint}s.</p>
+ *
+ *  <p>Minor detail: since {@link SpatialQuerySolver} is an <b>interface</b>, all of its methods are implicitly
+ *  <tt>public</tt>, so the explicit scope modifier is <b>not needed</b> in the source.</p>
  *
  * @author <a href="mailto:jasonfil@cs.umd.edu">Jason Filippou</a>
  *
@@ -25,7 +28,7 @@ public interface SpatialQuerySolver {
      * {@link Collection} will be empty if there are no points which satisfy the query.
      * @see KDPoint
      */
-    public Collection<KDPoint> range(KDPoint p, double range);
+    Collection<KDPoint> range(KDPoint p, double range);
 
     /** Performs a nearest neighbor query. Returns the {@link KDPoint} which is closest to
      * <tt>p</tt>, as dictated by {@link KDPoint#distance(KDPoint) distance(KDPoint p)}.
@@ -34,7 +37,7 @@ public interface SpatialQuerySolver {
      * there are no points other than <tt>p</tt> in the tree.
      * @see KDPoint
      */
-    public KDPoint nearestNeighbor(KDPoint p);
+    KDPoint nearestNeighbor(KDPoint p);
 
     /**
      * Performs a k-nearest neighbors query on the <tt>SpatialTree</tt>. Returns the <em>k</em>
@@ -49,5 +52,5 @@ public interface SpatialQuerySolver {
      * @see KDPoint
      * @see BoundedPriorityQueue
      */
-    public BoundedPriorityQueue<KDPoint> kNearestNeighbors(int k, KDPoint p);
+    BoundedPriorityQueue<KDPoint> kNearestNeighbors(int k, KDPoint p);
 }

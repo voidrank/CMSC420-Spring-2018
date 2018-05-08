@@ -6,12 +6,14 @@ import java.util.Iterator;
 
 
 /**
- * <tt>BoundedPriorityQueue</tt> is a priority queue whose number of elements
+ * <p><tt>BoundedPriorityQueue</tt> is a priority queue whose number of elements
  * is bounded. Insertions are such that if the queue's provided capacity is surpassed,
  * its length is not expanded, but rather the maximum priority element is ejected
- * (which could be the element just attempted to be enqueued).
+ * (which could be the element just attempted to be enqueued).</p>
  * 
- * @author Jason Filippou (jasonfil@cs.umd.edu)
+ * @author <a href="mailto:jasonfil@cs.umd.edu">Jason Filippou</a>
+ *
+ * @see BoundedPriorityQueueTests
  */
 public class BoundedPriorityQueue<T> implements PriorityQueue<T>, Iterable<T>{
 
@@ -24,6 +26,7 @@ public class BoundedPriorityQueue<T> implements PriorityQueue<T>, Iterable<T>{
 
 	private int queueSize, orderInserted;
 	private boolean modificationFlag; // Will be useful for our iterator.
+
 	/**
 	 * Constructor that specifies the size of our queue.
 	 * @param size The static size of the <tt>BoundedPriorityQueue</tt>. Has to be a positive integer.
@@ -39,11 +42,11 @@ public class BoundedPriorityQueue<T> implements PriorityQueue<T>, Iterable<T>{
 	}
 
 	/**
-	 * Enqueueing elements for<tt> BoundedPriorityQueue</tt>s works a little bit differently from general case
+	 * <p>Enqueueing elements for<tt> BoundedPriorityQueue</tt>s works a little bit differently from general case
 	 * PriorityQueues. If the queue is not at capacity, the <tt>element</tt> is inserted at its
 	 * appropriate location in the sequence. On the other hand, if the object is at capacity, the element is
 	 * inserted in its appropriate spot in the sequence (if such a spot exists, based on its <tt>priority</tt>) and
-	 * the maximum priority element is ejected from the structure.
+	 * the maximum priority element is ejected from the structure.</p>
 	 * 
 	 * @param element The element to insert in the queue.
 	 * @param priority The priority of the element to insert in the queue.

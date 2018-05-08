@@ -5,14 +5,15 @@ import projects.spatial.kdpoint.KDPoint;
 import java.io.Serializable;
 import java.util.Comparator;
 
-/**<tt>KNNComparator</tt> is a {@link Serializable} {@link Comparator} used for sorting {@link KDPoint}s
- * based on the {@link KDPoint#distance(KDPoint, KDPoint)} to an anchor {@link KDPoint}. It is tremendously
- * useful for testing KNN queries.
+/**<p><tt>KNNComparator</tt> is a {@link Serializable} {@link Comparator} used for sorting {@link KDPoint}s
+ * based on the {@link KDPoint#distance(KDPoint, KDPoint)} to an anchor {@link KDPoint}. It is very
+ * useful for <b>testing</b> KNN queries.</p>
  * 
- * <b>Note: this comparator imposes orderings that are inconsistent with {@link KDPoint#equals(Object)}.</b>
+ * <p><b>Note: this comparator imposes orderings that are inconsistent with {@link KDPoint#equals(Object)}.</b></p>
  *   
- * @author Jason Filippou (jasonfil@cs.umd.edu)
- * @param <T> A {@link KDPoint} object.
+ * @author <a href ="mailto:jasonfil@cs.umd.edu">Jason Filippou</a>
+ * @param <T> A {@link KDPoint}.
+ * @see NNData
  */
 public class KNNComparator<T extends KDPoint> implements Comparator<T>, Serializable {
 

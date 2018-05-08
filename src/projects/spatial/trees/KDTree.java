@@ -6,38 +6,70 @@ import java.util.Collection;
 import java.util.LinkedList;
 
 /**
- * <p><tt>KDTree</tt> implements <em>K</em>-D Trees. <em>K</em> is a positive integer.
- *  By default, <em>k=2</em>. <tt>KDTree</tt> supports standard insertion, deletion and
- *  search routines, and also allows for range searching and nearest neighbor queries.</p>
+ * <p>{@link KDTree} implements <em>K</em>-D Trees, where  <em>K</em> is a positive integer
+ * that defines the dimensionality of the space. By default, <em>k=2</em>.</p>
+ *
+ * <p>A <em>K</em>-D tree supports standard insertion, deletion and search routines, and additionally allows for
+ * <b>range</b> and <b>nearest-neighbor</b> queries</p>
  *
  * <p>KD-Trees alternate dimensions with every increasing level. At any given level,
  * a KD-Tree acts as a Binary Search Tree over the relevant dimension. Refer to the course
- * slides and the textbook for exact algorithms of insertion, deletion and range / kNN
+ * slides and the textbook for exact algorithms, with code samples, of insertion, deletion and range / kNN
  * queries. </p>
  *
- * @author <a href ="mailto:jasonfil@cs.umd.edu">Jason Filippou</a>
+ * @author <a href="mailto:jasonfil@cs.umd.edu">Jason Filippou</a>
+ *
+ * @see SpatialDictionary
+ * @see SpatialQuerySolver
+ * @see KDTreeNode
  */
 public class KDTree implements SpatialDictionary, SpatialQuerySolver {
 
+	/* *********************************************************************/
+	/* *********** SOME STATIC CONSTANTS WE AGREE TO SHARE WITH CLIENTS ***/
+	/* *********************************************************************/
+	/**
+	 * We define the default dimensionality for a KD-Tree to be 2. An application might want to use it,
+	 * so we provide it as part of the contract.
+	 */
+	public static final int DEFAULT_DIMS = 2;
+
+	/**
+	 * Encoding infinity with a negative number is safer than {@link Double#MAX_VALUE} for our purposes,
+	 * and allows for faster comparisons as well. An application may use it as given.
+	 */
+	public static final double INFTY = -1;
 
 	/* ************************************************************************** */
 	/* ************************* PRIVATE FIELDS ********************************* */
-	/* ************************************************************************** */
-
-	private KDTreeNode root;
-	private int dims;
-	private static final double INFTY = -1; // Encoding infinity with a negative number is safer than Double.MAX_VALUE for our purposes.
-	private static final int DEFAULT_DIMS = 2;
-	private int count;
-
-
-	/* ************************************************************************** */
-	/* ************************* PUBLIC METHOD ********************************* */
-	/* ************************* IMPLEMENTATION ******************************** */
+	/* *********  JAVADOC STILL GENERATABLE, FOR EDUCATIONAL PURPOSES ************* */
+	/* *********  GENERATION OF JAVADOC FOR PROTECTED & PRIVATE MEMBERS ************* */
+	/* *********  CAN BE TOGGLED THROUGH FLAGS TO THE SHELL PROGRAM ************* */
+	/* ***************************	  javadoc   ******************************** */
+	/* *********  OR THROUGH THE VISUAL INTERFACE OF ANY GIVEN IDE.************* */
 	/* ************************************************************************** */
 
 	/**
+	 * The root of the <em>k</em>-d tree.
+	 * @see KDTreeNode
+	 */
+	private KDTreeNode root;
+
+	/**
+	 * The dimensions
+	 */
+	private int dims;
+	private int count;
+
+
+	/* *********************************************************************************************** */
+	/* *************************** PUBLIC METHOD IMPLEMENTATION ************************************* */
+	/* ********************* ACTUALLY DEFERS ALL THE WORK TO CLASS KDTreeNode, AFTER **************** */
+	/* ***************************** SOME ELEMENTARY SANITY CHECKS. ********************************** */
+	/* *********************************************************************************************** */
+	/**
 	 * Default constructor constructs <tt>this</tt> with <em>k=2</em>.
+	 * @see #DEFAULT_DIMS
 	 */
 	public KDTree(){
 		this(DEFAULT_DIMS);
