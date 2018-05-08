@@ -1,7 +1,5 @@
 package projects.spatial.knnutils;
 
-import java.util.ArrayList;
-import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 
 
@@ -15,34 +13,22 @@ import java.util.Iterator;
  *
  * @author  ---- YOUR NAME HERE! -----
  *
- * @see BoundedPriorityQueueTests
+ * @see PriorityQueue
+ * @see PriorityQueueNode
  */
 public class BoundedPriorityQueue<T> implements PriorityQueue<T>, Iterable<T>{
 
-	/**
-	 * Since this class is a generic, we will opt for an {@link ArrayList}
-	 * instead of a raw {@link Object} array for our static storage. This avoids
-	 * downcasting problems with {@link Object}s and Ts.
-	 */
-	private ArrayList<PriorityQueueNode<T>> elements;
+	private static RuntimeException UNIMPL_METHOD = new RuntimeException("Implement this method!");
 
-	/**
-	 * The {@link BoundedPriorityQueue} will be provided a maximum size at construction time.
-	 * Refer to the course slides about how the BPQ should be treated.
-	 */
-	private int queueSize;
+	/* *************************************************************************
+	 ************** PLACE YOUR PRIVATE METHODS AND FIELDS HERE: ****************
+	 ***************************************************************************/
 
-	/**
-	 * The order in which an element is inserted will be useful for tie-breaking
-	 * in the case of common priorities.
-	 */
-	private int orderInserted;
 
-	/**
-	 * <tt>modificationFlag</tt> is useful for making the {@link Iterator} returned by {@link #iterator()}
-	 * <b>fail-fast</b>.
-	 */
-	private boolean modificationFlag; // Will be useful for our iterator.
+
+	/* ***************************************************************************** */
+	/* ******************* PUBLIC (INTERFACE) METHODS ****************************** */
+	/* ***************************************************************************** */
 
 	/**
 	 * Constructor that specifies the size of our queue.
@@ -50,12 +36,7 @@ public class BoundedPriorityQueue<T> implements PriorityQueue<T>, Iterable<T>{
 	 * @throws RuntimeException if <tt>size</tt> is not a strictly positive integer.
 	 */
 	public BoundedPriorityQueue(int size){
-		if(size <= 0)
-			throw new RuntimeException("Invalid size for BPQ: " + size + " provided.");
-		elements = new ArrayList<PriorityQueueNode<T>>(size);
-		queueSize = size;
-		orderInserted = 0;
-		modificationFlag = false;
+		throw UNIMPL_METHOD; // Erase this after you implement the method!
 	}
 
 	/**
@@ -70,48 +51,17 @@ public class BoundedPriorityQueue<T> implements PriorityQueue<T>, Iterable<T>{
 	 */
 	@Override
 	public void enqueue(T element, double priority) {
-
-		// If our element store is empty, just insert the element.
-		if(elements.isEmpty()){
-			elements.add(new PriorityQueueNode<T>(element, priority, orderInserted++));
-			modificationFlag = true;
-			return;
-		}
-
-		// Else, find the position to insert the element at.
-		boolean inserted = false;
-		for(int i = 0; i < elements.size(); i++){
-			if(elements.get(i).getPriority() > priority) {
-				inserted = true;
-				if(elements.size() == queueSize)
-					elements.remove(queueSize - 1); // Pop the last element
-				elements.add(i, new PriorityQueueNode<T>(element, priority, orderInserted++));
-				modificationFlag = true;
-				break;
-			}
-		}
-		// If you didn't find an appropriate spot to insert the element and the queue
-		// is not at capacity, feel free to insert the element at the end of our queue.
-		if(!inserted && elements.size() < queueSize){
-			elements.add(new PriorityQueueNode<T>(element, priority, orderInserted++));
-			modificationFlag = true;
-		}
+		throw UNIMPL_METHOD; // Erase this after you implement the method!
 	}
 
 	@Override
 	public T dequeue() {
-		if(isEmpty())
-			return null;
-		else {
-			T retVal = elements.remove(0).getData();
-			modificationFlag = true;
-			return retVal;
-		}
+		throw UNIMPL_METHOD; // Erase this after you implement the method!
 	}
 
 	@Override
 	public T first() {
-		return isEmpty() ? null : elements.get(0).getData();
+		throw UNIMPL_METHOD; // Erase this after you implement the method!
 	}
 	
 	/**
@@ -123,60 +73,21 @@ public class BoundedPriorityQueue<T> implements PriorityQueue<T>, Iterable<T>{
 	 * @return The maximum priority element in our queue, or <tt>null</tt> if the queue is empty.
 	 */
 	public T last() {
-		return isEmpty()? null : elements.get(elements.size() - 1).getData();
+		throw UNIMPL_METHOD; // Erase this after you implement the method!
 	}
 
 	@Override
 	public int size() {
-		elements.trimToSize(); // To avoid dubious answers.
-		return elements.size();
+		throw UNIMPL_METHOD; // Erase this after you implement the method!
 	}
 
 	@Override
 	public boolean isEmpty() {
-		return elements.isEmpty();
+		throw UNIMPL_METHOD; // Erase this after you implement the method!
 	}
 
 	@Override
 	public Iterator<T> iterator() {
-		return new BoundedPriorityQueueIterator();
-	}
-	
-	// Iterator class. We will implement this as a fail-fast Iterator.
-	private class BoundedPriorityQueueIterator implements Iterator<T>{
-
-		private int currIndex;
-		
-		public BoundedPriorityQueueIterator(){
-			currIndex = 0;
-			modificationFlag = false; // So, if an enqueueing or dequeuing happens while our iterator is living, we will know.
-		}
-		
-		@Override
-		public boolean hasNext() {
-			return currIndex < elements.size();
-		}
-
-		@Override
-		public T next() throws ConcurrentModificationException{
-			if(modificationFlag)
-				throw new ConcurrentModificationException("BoundedPriorityQueueIterator.next(): Attempted to "
-						+ "call next() on the queue after it was modified.");
-			T retVal = elements.get(currIndex).getData();
-			currIndex++;
-			return retVal;
-		}
-
-		@Override
-		public void remove() throws IllegalStateException, ConcurrentModificationException{
-			if(currIndex == 0)
-				throw new IllegalStateException("BoundedPriorityQueueIterator.remove(): Need at least one call to next() before removal.");
-			if(modificationFlag)
-				throw new ConcurrentModificationException("BoundedPriorityQueueIterator.remove(): Attempted to "
-						+ "call remove() on the queue after it was modified.");
-			elements.remove(currIndex - 1);
-			currIndex--;
-		}
-		
+		throw UNIMPL_METHOD; // Erase this after you implement the method!
 	}
 }

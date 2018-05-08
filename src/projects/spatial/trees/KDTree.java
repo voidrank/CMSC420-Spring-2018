@@ -29,9 +29,10 @@ import java.util.LinkedList;
  */
 public class KDTree implements SpatialDictionary, SpatialQuerySolver {
 
-	/* *********************************************************************/
-	/* *********** SOME STATIC CONSTANTS WE AGREE TO SHARE WITH CLIENTS ***/
-	/* *********************************************************************/
+	/* ******************************************************************** */
+	/* *********** SOME STATIC CONSTANTS WE AGREE TO SHARE WITH CLIENTS ** */
+	/* ******************************************************************** */
+
 	/**
 	 * We define the default dimensionality for a KD-Tree to be 2. An application might want to use it,
 	 * so we provide it as part of the contract.

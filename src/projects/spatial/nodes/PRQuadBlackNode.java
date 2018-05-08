@@ -19,23 +19,27 @@ public class PRQuadBlackNode extends PRQuadNode {
 
     private static final RuntimeException UNIMPL_METHOD = new RuntimeException("Implement this method!");
 
+    /* ****************************************************************************** */
+    /* ***** YOU SHOULD LEAVE THE FOLLOWING PUBLICLY AVAILABLE CONSTANT AS IS. ****** */
+    /* ****************************************************************************** */
+
     /**
-     * The default bucketsize for all of our black nodes will be 1, and this is something
+     * The default bucket size for all of our black nodes will be 1, and this is something
      * that the interface also communicates to consumers.
      */
     public static final int DEFAULT_BUCKETSIZE = 1;
 
-    /**
-     *  The number of {@link KDPoint}s held by the current nodes.
-     */
-    private KDPoint[] points;
+    /* ************************************************************************* */
+    /* ************** PLACE YOUR PRIVATE METHODS AND FIELDS HERE: **************** */
+    /* ************************************************************************** */
 
-    /**
-     *  The bucketing parameter that controls the total number of {@link KDPoint}s
-     * that this node is allowed to hold.
-     */
-    private int bucketSize;
 
+
+
+
+    /* ***************************************************************************** */
+    /* ******************* PUBLIC (INTERFACE) METHODS ****************************** */
+    /* ***************************************************************************** */
 
     /**
      * Creates a {@link PRQuadBlackNode} with the default bucket size and a provided {@link KDPoint}.
@@ -44,7 +48,7 @@ public class PRQuadBlackNode extends PRQuadNode {
      * @see #PRQuadBlackNode(int, KDPoint)
      */
     public PRQuadBlackNode(KDPoint p){
-        this(DEFAULT_BUCKETSIZE, p);
+        throw UNIMPL_METHOD; // Erase this after you implement the method!
     }
 
     /**
@@ -56,41 +60,35 @@ public class PRQuadBlackNode extends PRQuadNode {
      * @see #PRQuadBlackNode(KDPoint)
      */
     public PRQuadBlackNode(int bucketSize, KDPoint p){
-        this.bucketSize = bucketSize;
-        points = new KDPoint[bucketSize];
-        points[0] = new KDPoint(p); // Invariant: points.length >= 1
+        throw UNIMPL_METHOD; // Erase this after you implement the method!
     }
 
 
     @Override
     public void insert(KDPoint p) {
-        /* ***** IMPLEMENT THIS! *** */
+        throw UNIMPL_METHOD; // Erase this after you implement the method!
     }
 
 
 
     @Override
     public PRQuadNode delete(KDPoint p) {
-        /* ***** IMPLEMENT THIS! *** */
-        return null;
+        throw UNIMPL_METHOD; // Erase this after you implement the method!
     }
 
     @Override
     public boolean search(KDPoint p){
-        /* ***** IMPLEMENT THIS! *** */
-        return false;
+        throw UNIMPL_METHOD; // Erase this after you implement the method!
     }
 
     @Override
     public int height(){
-        /* ***** IMPLEMENT THIS! *** */
-        return 0; // All black nodes have a height of 0.
+        throw UNIMPL_METHOD; // Erase this after you implement the method!
     }
 
     @Override
     public int count(){
-        /* ***** IMPLEMENT THIS! *** */
-        return 0;
+        throw UNIMPL_METHOD; // Erase this after you implement the method!
     }
 
     /** Returns all the {@link KDPoint}s contained by the {@link PRQuadBlackNode}. <b>INVARIANT</b>: the returned
@@ -101,7 +99,6 @@ public class PRQuadBlackNode extends PRQuadNode {
      * a <tt>null</tt> reference.
      */
     public List<KDPoint> getPoints(){
-        /* ***** IMPLEMENT THIS! **** */
-        return null;
+        throw UNIMPL_METHOD; // Erase this after you implement the method!
     }
 }
