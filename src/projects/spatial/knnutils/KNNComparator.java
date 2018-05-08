@@ -6,11 +6,13 @@ import java.io.Serializable;
 import java.util.Comparator;
 
 /**<p><tt>KNNComparator</tt> is a {@link Serializable} {@link Comparator} used for sorting {@link KDPoint}s
- * based on the {@link KDPoint#distance(KDPoint, KDPoint)} to an anchor {@link KDPoint}. It is very
+ * based on the {@link KDPoint#distance(KDPoint, KDPoint) distance} to an anchor {@link KDPoint}. It is very
  * useful for <b>testing</b> KNN queries.</p>
  * 
  * <p><b>Note: this comparator imposes orderings that are inconsistent with {@link KDPoint#equals(Object)}.</b></p>
- *   
+ *
+ * <p><b>YOU SHOULD ***NOT*** EDIT THIS CLASS!</b> If you do, you risk <b>not passing our tests!</b></p>
+ *
  * @author <a href ="mailto:jasonfil@cs.umd.edu">Jason Filippou</a>
  * @param <T> A {@link KDPoint} type.
  * @see NNData

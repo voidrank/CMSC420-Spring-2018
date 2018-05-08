@@ -7,6 +7,8 @@ import projects.spatial.kdpoint.KDPoint;
  * Consult the lecture slides and the textbook to review the different kinds of nodes in a PR-QuadTree, what they
  * should contain and how they should implement insertion and deletion. </p>
  *
+ * <p><b>YOU SHOULD ***NOT*** EDIT THIS CLASS!</b> If you do, you risk <b>not passing our tests!</b></p>
+ *
  * @author <a href="mailto:jasonfil@cs.umd.edu">Jason Filippou</a>
  */
 public abstract class PRQuadNode {

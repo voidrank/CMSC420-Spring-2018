@@ -10,14 +10,15 @@ import java.util.LinkedList;
  * that defines the dimensionality of the space. By default, <em>k=2</em>.</p>
  *
  * <p>A <em>K</em>-D tree supports standard insertion, deletion and search routines, and additionally allows for
- * <b>range</b> and <b>nearest-neighbor</b> queries</p>
+ * <b>range</b> and <b>nearest-neighbor</b> queries.</p>
  *
  * <p>KD-Trees alternate dimensions with every increasing level. At any given level,
  * a KD-Tree acts as a Binary Search Tree over the relevant dimension. Refer to the course
  * slides and the textbook for exact algorithms, with code samples, of insertion, deletion and range / kNN
- * queries. </p>
+ * queries.</p>
  *
- * <p><b>YOU SHOULD ***NOT*** EDIT THIS CLASS!</b> If you do, you risk <b>not passing our tests!</b></p>
+ * <p><b>YOU SHOULD ***NOT*** EDIT THIS CLASS!</b> If you do, you risk <b>not passing our tests!</b> The
+ * entire functionality will be implemented in {@link KDTreeNode}.</p>
  *
  * @author  <a href ="mailto:jasonfil@cs.umd.edu">Jason Filippou</a>
  *

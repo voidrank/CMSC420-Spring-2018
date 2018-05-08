@@ -10,7 +10,10 @@ import projects.spatial.kdpoint.KDPoint;
  * <p>Minor detail: since {@link PriorityQueue} is an <b>interface</b>, all of its methods are implicitly <tt>public</tt>, so the explicit
  * scope modifier is <b>not needed</b> in the source.</p>
  *
+ *<p><b>YOU SHOULD ***NOT*** EDIT THIS CLASS!</b> If you do, you risk <b>not passing our tests!</b></p>
+ *
  * @author <a href="mailto:jasonfil@cs.umd.edu">Jason Filippou</a>
+ *
  * @see PriorityQueueNode
  * @see BoundedPriorityQueue
  */

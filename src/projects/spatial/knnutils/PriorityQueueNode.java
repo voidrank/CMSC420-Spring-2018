@@ -5,10 +5,12 @@ package projects.spatial.knnutils;
  * the (data, priority) pairs in a {@link PriorityQueue}. Its overriding of the
  * {@link Comparable#compareTo(Object)} method allows the {@link PriorityQueue} to disambiguate between
  * the same priority elements, thus establishing a strict <em>natural ordering</em> inside the data structure.</p>
- *  
+ *
+ * <p><b>YOU SHOULD ***NOT*** EDIT THIS CLASS!</b> If you do, you risk <b>not passing our tests!</b></p>
+ *
  * @author <a href="mailto:jasonfil@cs.umd.edu">Jason Filippou</a>
  *
- * @param <T> The Type of element contained in the <tt>PriorityQueueNode</tt>.
+ * @param <T> The type of element contained in the <tt>PriorityQueueNode</tt>.
  *
  * @see PriorityQueue
  * @see BoundedPriorityQueue

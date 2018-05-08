@@ -1,16 +1,25 @@
 package projects.spatial.kdpoint;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import java.util.Random;
+
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import static projects.spatial.kdpoint.KDPoint.distance;
 
 /**
- * <p><tt>KDPointTests</tt> is a unit testing class for {@link KDPoint}. </p>
+ * <p><tt>KDPointTests</tt> is a unit testing class for {@link KDPoint}. It has next to nothing
+ * to do with your project and is just here to provide some confidence about the fact that
+ * {@link KDPoint}s should work as advertised. </p>
+ *
+ * <p>It might be of interest to you to see how the method {@link Assert#assertEquals(double, double, double)}
+ * can be used when comparing doubles in Java. It turns out that comparing doubles in Java is not particularly safe
+ * because of precision issues. In fact, it is recommended that one uses {@link java.math.BigDecimal} instead,
+ * which offers arbitrary long precision.</p>
  *
  * @author <a href = "mailto:jasonfil@cs.umd.edu">Jason Filippou</a>
  */

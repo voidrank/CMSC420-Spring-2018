@@ -11,6 +11,7 @@ import static projects.spatial.kdpoint.KDPoint.distance;
 
 /**
  * <p>A testing framework for {@link KDTree}.</p>
+ *
  * @author <a href="mailto:jasonfil@cs.umd.edu">Jason Filippou</a>
  * @see PRQuadTreeTests
  */

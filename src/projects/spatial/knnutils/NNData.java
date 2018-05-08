@@ -3,6 +3,8 @@ package projects.spatial.knnutils;
 /**<p>{@link NNData} is a simple "struct-like" class that stores
  * intermediate results of nearest neighbor queries. </p>
  *
+ * <p><b>YOU SHOULD ***NOT*** EDIT THIS CLASS!</b> If you do, you risk <b>not passing our tests!</b></p>
+ *
  * @author <a href = "mailto:jasonfil@cs.umd.edu">Jason Filippou</a>
  *
  * @param <T> The type of {@link Object} held by the container.

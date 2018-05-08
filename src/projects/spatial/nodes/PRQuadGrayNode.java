@@ -12,8 +12,8 @@ import projects.spatial.kdpoint.KDPoint;
  * </ul>
  *
  * <p><b>YOU ***** MUST ***** IMPLEMENT THIS CLASS!</b></p>
- *  *
- *  * @author --- YOUR NAME HERE! ---
+ *
+ *  @author --- YOUR NAME HERE! ---
 */
 public class PRQuadGrayNode extends PRQuadNode{
 

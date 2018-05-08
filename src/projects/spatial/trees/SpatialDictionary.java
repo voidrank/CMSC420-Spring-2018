@@ -4,10 +4,12 @@ import projects.spatial.knnutils.BoundedPriorityQueue;
 
 /**
  * <p>{@link SpatialDictionary} is an abstraction over any data structure that could be used to allow efficient
- * insertion, deletion and search of {@link KDPoint}s.</p>. Since {@link KDPoint}s are
+ * insertion, deletion and search of {@link KDPoint}s.</p>.
  *
  * <p>Minor detail: since {@link SpatialDictionary} is an <b>interface</b>, all of its methods are implicitly <tt>public</tt>, so the explicit
  * scope modifier is <b>not needed</b> in the source.</p>
+ *
+ * <p><b>YOU SHOULD ***NOT*** EDIT THIS INTERFACE!</b> If you do, you risk <b>not passing our tests!</b></p>
  *
  * @author <a href="mailto:jasonfil@cs.umd.edu">Jason Filippou</a>
  *
@@ -30,7 +32,7 @@ public interface SpatialDictionary {
     void delete(KDPoint p);
 
     /**
-     * Searches the dictionary for <tt>p</tt> and reports if it found it.
+     * Searches the {@link SpatialDictionary} for <tt>p</tt> and reports if it found it.
      * @param p The {@link KDPoint} to look for in the tree.
      * @return <tt>true</tt> if <tt>p</tt> is in the tree, <tt>false</tt> otherwise.
      */

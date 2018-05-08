@@ -18,7 +18,8 @@ import projects.spatial.nodes.PRQuadNode;
  * subtrees per nodes. The course staff has come around some papers with applications of oct-trees, which are extensions of PR-QuadTrees) in 3 *
  * dimensions. Beyond 3, it seems that the idea of such exponential fanout trie-based quadtrees fades.</p>
  *
- * <p><b>YOU SHOULD ***NOT*** EDIT THIS CLASS!</b> If you do, you risk <b>not passing our tests!</b></p>
+ * <p><b>YOU SHOULD ***NOT*** EDIT THIS CLASS!</b> If you do, you risk <b>not passing our tests!</b> All the functionality
+ * of the P-R QuadTree will be implemented by the various {@link PRQuadNode}s.</p>
  *
  * @author <a href="mailto:jasonfil@cs.umd.edu">Jason Filippou</a>
  *

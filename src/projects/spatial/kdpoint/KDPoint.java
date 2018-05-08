@@ -5,7 +5,7 @@ package projects.spatial.kdpoint;
  * copy construction, equality checks and distance calculations. The precision of {@link KDPoint}s
  * is <tt>double</tt>.</p>
  * 
- * <p><b>YOU SHOULD NOT EDIT THIS CLASS'S SOURCE CODE! IF YOU DO, YOU RISK FAILING OUR UNIT TESTS!</b></p>
+ * <p><b>YOU SHOULD ***NOT*** EDIT THIS CLASS!</b> If you do, you risk <b>not passing our tests!</b></p>
  *
  * @author <a href="mailto:jasonfil@cs.umd.edu">Jason Filippou</a>
  */
