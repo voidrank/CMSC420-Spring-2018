@@ -42,7 +42,7 @@ public class PRQuadTree implements SpatialDictionary {
      * n defines the area spanned by the root: 2^n &#42; 2^n, with the origin (0,0) assumed to be the bottom left corner.
      * This means that the centroid has coordinates (2^(n-1), 2^(n-1))
      */
-    private int n;
+    private int k;
 
     /**
      * The number of {@link KDPoint}s held by the <tt>PRQuadTree</tt>. Note that, unlike KD-Trees, in PR-QuadTrees, the
@@ -52,17 +52,25 @@ public class PRQuadTree implements SpatialDictionary {
 
     /**
      * Constructor for <tt>PRQuadTree</tt> objects.
-     * @param n The exponent of 2 that defines the area assumed to be spanned by the root nodes.
-     * @param bucketingParam The "bucketing" parameter, which controls how many {@link KDPoint}s a
-     * {@link PRQuadBlackNode} of this tree can hold before having to split.
+     * @param k The exponent of 2 that defines the area assumed to be spanned by the <b>entire QuadTree</b> (i.e by its
+     *          root node). Remember that, as in  class, this means that the centroid of the original quadrant
+     *          would be implicitly stored at (0, 0), and when we split for the first time, the cross (+) centered
+     *          in (0, 0) would define 4 centroids: The top-right corner would be at ( 2^(k-1), 2^(k-1) ), the bottom-right
+     *          at ( 2^(k-1),  -2 ^(k-1)), etc. For example, if this parameter is given as 5, the top-right corner of
+     *          the modeled space would have cartesian cooordinates (16, 16), the bottom-right (16, -16) and so on and so forth.
+     *          This also allows for the insertion of {@link KDPoint}s with <b>negative coordinates</b>: this is completely
+     *          fine. Recall the discussions that we have had in class and Piazza about {@link KDPoint}s that lie <b>exactly
+     *          on the sides</b> of the quadrants that our quadtree will recursively produce!
+     * @param bucketingParam The "bucketing" parameter, which controls how many {@link KDPoint}s a {@link PRQuadBlackNode}
+     *                       of this tree can hold before having to split.
      * @throws RuntimeException if <tt>bucketingParam</tt> &lt; 1
-     * @see #n
+     * @see #k
      * @see #maxPoints
      */
-    public PRQuadTree(int n, int bucketingParam){
+    public PRQuadTree(int k, int bucketingParam){
         if(bucketingParam < 1)
             throw new RuntimeException("Bucketing parameter needs to be at least 1!");
-        this.n = n;
+        this.k = k;
         this.maxPoints = bucketingParam;
         count = 0;
     }
@@ -73,7 +81,7 @@ public class PRQuadTree implements SpatialDictionary {
         if(root == null)  // white nodes, first point stored
             root = new PRQuadBlackNode(maxPoints, p);
         else // black or gray nodes
-            root.insert(p); // will adjust height accordingly.
+            root.insert(p, k); // will adjust height accordingly.
         count++;
     }
 
