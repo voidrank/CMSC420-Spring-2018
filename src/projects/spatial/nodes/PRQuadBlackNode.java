@@ -1,7 +1,8 @@
 package projects.spatial.nodes;
 
 import projects.spatial.kdpoint.KDPoint;
-import java.util.List;
+
+import java.util.Collection;
 
 
 /** <p>A {@link PRQuadBlackNode} is a &quot;black&quot; {@link PRQuadNode}. It maintains the following
@@ -122,13 +123,13 @@ public class PRQuadBlackNode extends PRQuadNode {
     }
 
     /** Returns all the {@link KDPoint}s contained by the {@link PRQuadBlackNode}. <b>INVARIANT</b>: the returned
-     * {@link List}'s length can only be between 1 and bucket-size inclusive.
+     * {@link Collection}'s size can only be between 1 and bucket-size inclusive.
      *
-     * @return A {@link List} that contains all the {@link KDPoint}s that are contained by the node. It is
-     * guaranteed, by the invariants, that the {@link List} will not be empty, and it will also <b>not</b> be
+     * @return A {@link Collection} that contains all the {@link KDPoint}s that are contained by the node. It is
+     * guaranteed, by the invariants, that the {@link Collection} will not be empty, and it will also <b>not</b> be
      * a <tt>null</tt> reference.
      */
-    public List<KDPoint> getPoints(){
+    public Collection<KDPoint> getPoints(){
         throw UNIMPL_METHOD; // Erase this after you implement the method!
     }
 }
