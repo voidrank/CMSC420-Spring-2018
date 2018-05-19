@@ -17,16 +17,41 @@ public abstract class PRQuadNode {
      * The centroid of the current node. Its dimensions allow us to direct incoming {@link KDPoint}s
      * to the appropriate subtree.
      * <b>INVARIANT:</b> <tt>centroid != null</tt>
+     * @see PRQuadNode#k
      */
     protected KDPoint centroid;
 
     /**
-     * Inserts the given point in the subtree rooted at the current node. Returns the update subtree.
+     * <p>The exponent to which 2 (two) is raised to characterize the length of the current quadrant's size. For example,
+     * if k=4, the length of the quadrant that is "spanned" by the current {@link PRQuadNode} is 2^4 = 16. If we
+     * were to temporarily consider the current quadrant as being a mini version of POSITIVE cartesian space (so, the upper
+     * right quadrant of all those function graphs that we learned to make in middle / high school, that has only positive
+     * 'x's and 'y's), then the centroid   of the quadrant would have coordinates (8, 8). In general, it would have coordinates
+     * ( 2^(k-1), 2^(k-1) ). </p>
+     *
+     * <p>It is also possible for this parameter to be negative. This will just mean that the produced quadrant
+     * will have a size length equal to negative powers of 2, such as -1/2, -1/8, etc. This is <b>completely fine</b>
+     * with respect to the type {@link KDPoint}, which has <tt>double</tt> accuracy and can fit {@link KDPoint} instances
+     * whose coordinates are non-integer numbers.</p>
+     *
+     *  <p>Given this parameter, you can probably imagine implementations that do <b>not</b> require using the parameter
+     *      {@link PRQuadNode#centroid centroid}. It is <b>completely fine</b> if you do <b>not</b> want to use this parameter at all:
+     *      we are just including it there because we feel your code will be cleaner if you do.</p>
+     *
+     * @see PRQuadNode#centroid
+     */
+    protected int k;
+
+    /**
+     * Inserts the given point in the subtree rooted at the current node. Returns the updated subtree.
      *
      * @param p A {@link KDPoint} to insert into the subtree rooted at the current node.
+     * @param k The side length of the quadrant spanned by the current {@link PRQuadNode}. It is important that this value
+     *          is <b>updated</b> per recursive call, such that the recursively generated quadrants have the appropriate side
+     *          length and can further drive {@link KDPoint}s to the appropriate children nodes!
      * @return The subtree rooted at the current node, potentially adjusted after insertion.
      */
-    public abstract PRQuadNode insert(KDPoint p);
+    public abstract PRQuadNode insert(KDPoint p, int k);
 
     /**
      * Deletes the given point from the subtree rooted at the current node. If the

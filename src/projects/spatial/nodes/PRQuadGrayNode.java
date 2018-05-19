@@ -45,15 +45,17 @@ public class PRQuadGrayNode extends PRQuadNode{
      * <p>Insertion into a {@link PRQuadGrayNode} consists of navigating to the appropriate child
      * and recursively inserting elements into it. If the child is a white node, memory should be allocated for a
      * {@link PRQuadBlackNode} which will contain the provided {@link KDPoint} If it's a {@link PRQuadBlackNode},
-     * refer to {@link PRQuadBlackNode#insert(KDPoint)} for details on how the insertion is performed. If it's a {@link PRQuadGrayNode},
+     * refer to {@link PRQuadBlackNode#insert(KDPoint, int)} for details on how the insertion is performed. If it's a {@link PRQuadGrayNode},
      * the current method would be called recursively. Polymorphism will allow for the appropriate <tt>insert</tt> to be called
      * based on the child object's runtime object.</p>
      * @param p A {@link KDPoint} to insert into the subtree rooted at the current {@link PRQuadGrayNode}.
+     * @param k The side length of the quadrant spanned by the <b>current</b> {@link PRQuadGrayNode}. It will need to be updated
+     *          per recursive call to help guide the input {@link KDPoint}  to the appropriate subtree.
      * @return The subtree rooted at the current node, potentially adjusted after insertion.
-     * @see PRQuadBlackNode#insert(KDPoint)
+     * @see PRQuadBlackNode#insert(KDPoint, int)
      */
     @Override
-    public PRQuadNode insert(KDPoint p) {
+    public PRQuadNode insert(KDPoint p, int k) {
         throw UNIMPL_METHOD; // Erase this after you implement the method!
     }
 

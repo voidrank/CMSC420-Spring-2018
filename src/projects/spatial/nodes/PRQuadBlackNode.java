@@ -80,14 +80,16 @@ public class PRQuadBlackNode extends PRQuadNode {
      *     is required for there to be a set of 4 quadrants that separate the points between them. This is one of the major
      *     bottlenecks in PR-QuadTrees; the presence of a pair of {@link KDPoint}s with a very small {@link
      *     KDPoint#distance(KDPoint) distance} between them can negatively impact search in certain subplanes, because
-     *     the subtrees through which those subplanes will be modelled will be &quot;unnecessarily&quot; tall.</li>
+     *     the subtrees through which those subplanes will be modeled will be &quot;unnecessarily&quot; tall.</li>
      * </ol>
      *
      * @param p A {@link KDPoint} to insert into the subtree rooted at the current node.
+     * @param k The side length of the quadrant spanned by the <b>current</b> {@link PRQuadGrayNode}. It will need to be updated
+     *           per recursive call to help guide the input {@link KDPoint} to the appropriate subtree.
      * @return The subtree rooted at the current node, potentially adjusted after insertion.
      */
     @Override
-    public PRQuadNode insert(KDPoint p) {
+    public PRQuadNode insert(KDPoint p, int k) {
         throw UNIMPL_METHOD; // Erase this after you implement the method!
     }
 
