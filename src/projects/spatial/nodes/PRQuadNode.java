@@ -21,18 +21,19 @@ public abstract class PRQuadNode {
     protected KDPoint centroid;
 
     /**
-     * Inserts the given point in the subtree rooted at the current node.
+     * Inserts the given point in the subtree rooted at the current node. Returns the update subtree.
      *
-     * @param p A {@link KDPoint}.
+     * @param p A {@link KDPoint} to insert into the subtree rooted at the current node.
+     * @return The subtree rooted at the current node, potentially adjusted after insertion.
      */
-    public abstract void insert(KDPoint p);
+    public abstract PRQuadNode insert(KDPoint p);
 
     /**
      * Deletes the given point from the subtree rooted at the current node. If the
      * point is <b>not</b> in the subtree, <b>no changes</b>  should be performed in the subtree.
      *
-     * @param p A {@link KDPoint}.
-     * @return The current subtree, adjusted after the results of deletion.
+     * @param p A {@link KDPoint} to delete from the tree rooted at the current node.
+     * @return The subtree rooted at the current node, potentially adjusted after deletion.
      */
     public abstract PRQuadNode delete(KDPoint p);
 
