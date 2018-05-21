@@ -35,7 +35,7 @@ public class PRQuadTree implements SpatialDictionary {
     /**
      * The bucketing parameter which globally controls how many {@link KDPoint}s
      */
-    private int maxPoints;
+    private int bucketingParam;
 
 
     /**
@@ -43,6 +43,7 @@ public class PRQuadTree implements SpatialDictionary {
      * This means that the centroid has coordinates (2^(n-1), 2^(n-1))
      */
     private int k;
+
 
     /**
      * The number of {@link KDPoint}s held by the <tt>PRQuadTree</tt>. Note that, unlike KD-Trees, in PR-QuadTrees, the
@@ -65,13 +66,13 @@ public class PRQuadTree implements SpatialDictionary {
      *                       of this tree can hold before having to split.
      * @throws RuntimeException if <tt>bucketingParam</tt> &lt; 1
      * @see #k
-     * @see #maxPoints
+     * @see #bucketingParam
      */
     public PRQuadTree(int k, int bucketingParam){
         if(bucketingParam < 1)
             throw new RuntimeException("Bucketing parameter needs to be at least 1!");
         this.k = k;
-        this.maxPoints = bucketingParam;
+        this.bucketingParam = bucketingParam;
         count = 0;
     }
 
@@ -79,7 +80,8 @@ public class PRQuadTree implements SpatialDictionary {
     @Override
     public void insert(KDPoint p) {
         if(root == null)  // white nodes, first point stored
-            root = new PRQuadBlackNode(maxPoints, p);
+            root = new PRQuadBlackNode(new KDPoint(0, 0), k, bucketingParam, p); // Initial centroid assumed at (0, 0).
+                                                                                    // Notice that we are calling the second constructor of PRQuadBlackNode here!
         else // black or gray nodes
             root.insert(p, k); // will adjust height accordingly.
         count++;
@@ -116,5 +118,24 @@ public class PRQuadTree implements SpatialDictionary {
     @Override
     public int count() {
         return count;
+    }
+
+    /**
+     * A simple accessor for the dimension parameter k of the current {@link PRQuadTree}.
+     * @return The parameter k that defines the length of the {@link PRQuadTree}'s ROOT node
+     *
+     * @see PRQuadTree#PRQuadTree(int, int)
+     * @see #root
+     */
+    public int getK(){
+        return k;
+    }
+
+    /**
+     * A simple accessor for the bucket size of the current {@link PRQuadTree}.
+     * @return The bucket size of the current {@link PRQuadTree}.
+     */
+    public int getBucketSize(){
+        return bucketingParam;
     }
 }

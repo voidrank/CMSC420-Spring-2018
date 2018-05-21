@@ -1,8 +1,9 @@
 package projects.spatial.nodes;
 import projects.spatial.kdpoint.KDPoint;
+import projects.spatial.trees.PRQuadTree;
 
 /**
- * <p><tt>PRQuadNode</tt> is an <tt>abstract class</tt> used to provide the common structure that all
+ * <p>{@link PRQuadNode} is an <tt>abstract class</tt> used to provide the common structure that all
  * implementing subclasses will share.  It is an abstraction over nodes of a Point-Region (PR)- QuadTree.
  * Consult the lecture slides and the textbook to review the different kinds of nodes in a PR-QuadTree, what they
  * should contain and how they should implement insertion and deletion. </p>
@@ -43,12 +44,43 @@ public abstract class PRQuadNode {
     protected int k;
 
     /**
+     * The bucketing parameter of the {@link PRQuadTree}. Necessary for all derived classes
+     * such that merges and splits can be determined on the fly.
+     */
+    protected int bucketingParam;
+
+
+
+    /**
+     * <tt>protected</tt> constructor. Every {@link PRQuadNode}, at the very minimum, requires information
+     * about the dimensions of the quadrant it spans, its current centroid (which is computable from the dimensions,
+     * yet allows for a cleaner and slightly more efficient implementation) and the bucketing parameter.
+     * @param centroid A {@link KDPoint} that represents the center of the space spanned by the current node.
+     * @param k  The exponent to which 2 is raised to characterize the side length of the quadrant &quot; spanned &quot;
+     *           by <tt>this</tt>. Refer to {@link PRQuadTree#PRQuadTree(int, int)} for a more thorough explanation
+     *           of how the parameter k works.
+     * @param bucketingParam The bucketing parameter of the tree. Necessary so that we can store the parameter in freshly
+     *                       created {@link PRQuadBlackNode}s!
+     *
+     * @see KDPoint
+     * @see PRQuadBlackNode#PRQuadBlackNode(KDPoint, int, int)
+     * @see PRQuadBlackNode#PRQuadBlackNode(KDPoint, int, int, KDPoint)
+     * @see PRQuadGrayNode#PRQuadGrayNode(KDPoint, int, int)
+     *
+     */
+    protected PRQuadNode(KDPoint centroid, int k, int bucketingParam){
+        this.centroid = centroid;
+        this.k = k;
+        this.bucketingParam = bucketingParam;
+    }
+
+    /**
      * Inserts the given point in the subtree rooted at the current node. Returns the updated subtree.
      *
      * @param p A {@link KDPoint} to insert into the subtree rooted at the current node.
      * @param k The side length of the quadrant spanned by the current {@link PRQuadNode}. It is important that this value
      *          is <b>updated</b> per recursive call, such that the recursively generated quadrants have the appropriate side
-     *          length and can further drive {@link KDPoint}s to the appropriate children nodes!
+     *          length and can drive {@link KDPoint}s to the appropriate children nodes!
      * @return The subtree rooted at the current node, potentially adjusted after insertion.
      */
     public abstract PRQuadNode insert(KDPoint p, int k);

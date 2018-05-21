@@ -1,8 +1,9 @@
 package projects.spatial.nodes;
 
 import projects.spatial.kdpoint.KDPoint;
+import projects.spatial.trees.PRQuadTree;
 
-/** <p>A <tt>PRQuadGrayNode</tt> is a gray (&quot;mixed&quot;) {@link PRQuadNode}. It
+/** <p>A {@link PRQuadGrayNode} is a gray (&quot;mixed&quot;) {@link PRQuadNode}. It
  * maintains the following invariants: </p>
  * <ul>
  *      <li>Its children pointer buffer is non-<tt>null</tt> and has a length of 4.</li>
@@ -15,7 +16,6 @@ import projects.spatial.kdpoint.KDPoint;
  *
  *  @author --- YOUR NAME HERE! ---
  */
-
 public class PRQuadGrayNode extends PRQuadNode{
 
     private static RuntimeException UNIMPL_METHOD = new RuntimeException("Implement this method!");
@@ -35,9 +35,13 @@ public class PRQuadGrayNode extends PRQuadNode{
      * Creates a {@link PRQuadGrayNode}  with the provided {@link KDPoint} as a centroid;
      * @param centroid A {@link KDPoint} that will act as the centroid of the space spanned by the current
      *                 node.
+     * @param k The See {@link PRQuadTree#PRQuadTree(int, int)} for more information on how this parameter works.
+     * @param bucketingParam The bucketing parameter fed to <tt>this</tt> by {@link PRQuadTree}.
+     * @see PRQuadTree#PRQuadTree(int, int)
      */
-    public PRQuadGrayNode(KDPoint centroid){
-        throw UNIMPL_METHOD; // Erase this after you implement the method!
+    public PRQuadGrayNode(KDPoint centroid, int k, int bucketingParam){
+        super(centroid, k, bucketingParam); // Call to the super class' protected constructor to properly initialize the object!
+        throw UNIMPL_METHOD; // You will very likely have additional functionality that you need to implement; erase this line when you do.
     }
 
 

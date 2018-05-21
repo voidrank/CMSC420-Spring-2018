@@ -1,6 +1,7 @@
 package projects.spatial.nodes;
 
 import projects.spatial.kdpoint.KDPoint;
+import projects.spatial.trees.PRQuadTree;
 
 import java.util.Collection;
 
@@ -42,26 +43,36 @@ public class PRQuadBlackNode extends PRQuadNode {
     /* ******************* PUBLIC (INTERFACE) METHODS ****************************** */
     /* ***************************************************************************** */
 
+
     /**
-     * Creates a {@link PRQuadBlackNode} with the default bucket size and a provided {@link KDPoint}.
-     * @param p The {@link KDPoint} with which we want to initialize <tt>this</tt>.
-     * @see #DEFAULT_BUCKETSIZE
-     * @see #PRQuadBlackNode(int, KDPoint)
+     * Creates a {@link PRQuadBlackNode} with the provided parameters.
+     * @param centroid The {@link KDPoint} which will act as the centroid of the quadrant spanned by the current {@link PRQuadBlackNode}.
+     * @param k An integer to which 2 is raised to define the side length of the quadrant spanned by the current {@link PRQuadBlackNode}.
+     *          See {@link PRQuadTree#PRQuadTree(int, int)} for a full explanation of how k works.
+     * @param bucketingParam The bucketing parameter provided to us {@link PRQuadTree}.
+     * @see PRQuadTree#PRQuadTree(int, int)
+     * @see #PRQuadBlackNode(KDPoint, int, int, KDPoint)
      */
-    public PRQuadBlackNode(KDPoint p){
-        throw UNIMPL_METHOD; // Erase this after you implement the method!
+    public PRQuadBlackNode(KDPoint centroid, int k, int bucketingParam){
+        super(centroid, k, bucketingParam); // Call to the super class' protected constructor to properly initialize the object!
+        throw UNIMPL_METHOD; // Depending on your implementation, you might want more things to be done by this constructor; erase this line if you add to this constructor's body.
     }
 
     /**
      * Creates a {@link PRQuadBlackNode} with the provided parameters.
-     * @param bucketSize The maximum number of points that the current {@link PRQuadBlackNode} is allowed to hold.
-     *                   Must be at least 1.
-     * @param p A {@link KDPoint} to initialize the current {@link PRQuadBlackNode} with.
-     *
-     * @see #PRQuadBlackNode(KDPoint)
+     * @param centroid The centroid of the quadrant spanned by the current {@link PRQuadBlackNode}.
+     * @param k The exponent to which 2 is raised in order to define the side of the current quadrant. Refer to {@link PRQuadTree#PRQuadTree(int, int)} for
+     *          a thorough explanation of this parameter.
+     * @param bucketingParam The bucketing parameter of the {@link PRQuadBlackNode}, passed to us by the {@link PRQuadTree} or {@link PRQuadGrayNode} during
+     *                       object construction.
+     * @param p The {@link KDPoint} with which we want to initialize <tt>this</tt>.
+     * @see #DEFAULT_BUCKETSIZE
+     * @see PRQuadTree#PRQuadTree(int, int)
+     * @see #PRQuadBlackNode(KDPoint, int, int)
      */
-    public PRQuadBlackNode(int bucketSize, KDPoint p){
-        throw UNIMPL_METHOD; // Erase this after you implement the method!
+    public PRQuadBlackNode(KDPoint centroid, int k, int bucketingParam, KDPoint p){
+        this(centroid, k, bucketingParam); // Call to the current class' other constructor, which takes care of the base class' initialization itself.
+        throw UNIMPL_METHOD; // // Depending on your implementation, you might want more things to be done by this constructor; erase this line if you add to this constructor's body.
     }
 
 
