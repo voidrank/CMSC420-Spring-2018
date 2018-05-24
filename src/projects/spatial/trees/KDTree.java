@@ -29,10 +29,9 @@ import java.util.LinkedList;
  */
 public class KDTree implements SpatialDictionary, SpatialQuerySolver {
 
-	/* ******************************************************************** */
-	/* *********** SOME STATIC CONSTANTS WE AGREE TO SHARE WITH CLIENTS ** */
-	/* ******************************************************************** */
-
+	/* *********************************************************************/
+	/* *********** SOME STATIC CONSTANTS WE AGREE TO SHARE WITH CLIENTS ***/
+	/* *********************************************************************/
 	/**
 	 * We define the default dimensionality for a KD-Tree to be 2. An application might want to use it,
 	 * so we provide it as part of the contract.
@@ -109,9 +108,11 @@ public class KDTree implements SpatialDictionary, SpatialQuerySolver {
 
 	@Override
 	public void delete(KDPoint p){
-		if(root != null) {
-			root = root.delete(p, 0, dims);
-			count--;
+		if (root != null) {
+			if(search(p)) {
+				root = root.delete(p, 0, dims);
+				count--; // Guaranteed successful insertion.
+			}
 		}
 	}
 
