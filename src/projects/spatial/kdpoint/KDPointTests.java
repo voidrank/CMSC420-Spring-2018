@@ -194,19 +194,19 @@ public class KDPointTests {
 			double randNum = r.nextDouble();
 			KDPoint p = new KDPoint(randNum);
 			assertEquals("We failed to generate a proper String-ified representation for "
-					+ "the 1D point  #" + i, "A KDPoint with coordinates: ("+randNum+").", 
+					+ "the 1D point  #" + i, "A KDPoint with coordinates: ("+randNum+")",
 					p.toString());
 			p = new KDPoint(SCALE*randNum);
 			assertEquals("We failed to generate a proper String-ified representation for "
-					+ "the 1D point  #" + i, "A KDPoint with coordinates: ("+SCALE*randNum+").", 
+					+ "the 1D point  #" + i, "A KDPoint with coordinates: ("+SCALE*randNum+")",
 					p.toString());
 			p = new KDPoint(-randNum);
 			assertEquals("We failed to generate a proper String-ified representation for "
-					+ "the 1D point  #" + i, "A KDPoint with coordinates: ("+ -randNum+").", 
+					+ "the 1D point  #" + i, "A KDPoint with coordinates: ("+ -randNum+")",
 					p.toString());
 			p = new KDPoint(-SCALE*randNum);
 			assertEquals("We failed to generate a proper String-ified representation for "
-					+ "the 1D point  #" + i, "A KDPoint with coordinates: ("+ -SCALE*randNum+").", 
+					+ "the 1D point  #" + i, "A KDPoint with coordinates: ("+ -SCALE*randNum+")",
 					p.toString());
 		} 
 		
@@ -216,22 +216,22 @@ public class KDPointTests {
 			KDPoint p = new KDPoint(randNums);
 			assertEquals("We failed to generate a proper String-ified representation for "
 					+ "the 1D point  #" + i, "A KDPoint with coordinates: ("+randNums[0]+", " 
-							+ randNums[1] + ").",p.toString());
+							+ randNums[1] + ")",p.toString());
 			double[] scaledRandNums = {SCALE*randNums[0], SCALE*randNums[1]};
 			p = new KDPoint(scaledRandNums);
 			assertEquals("We failed to generate a proper String-ified representation for "
 					+ "the 1D point  #" + i, "A KDPoint with coordinates: ("+scaledRandNums[0]+", " 
-							+ scaledRandNums[1] + ").",p.toString());
+							+ scaledRandNums[1] + ")",p.toString());
 			double[] minusRandNums = {-randNums[0], -randNums[1]};
 			p = new KDPoint(minusRandNums);
 			assertEquals("We failed to generate a proper String-ified representation for "
 					+ "the 1D point  #" + i, "A KDPoint with coordinates: ("+minusRandNums[0]+", " 
-							+ minusRandNums[1] + ").",p.toString());
+							+ minusRandNums[1] + ")",p.toString());
 			double[] minusScaledRandNums = {-scaledRandNums[0], -scaledRandNums[1]};
 			p = new KDPoint(minusScaledRandNums);
 			assertEquals("We failed to generate a proper String-ified representation for "
 					+ "the 1D point  #" + i, "A KDPoint with coordinates: ("+minusScaledRandNums[0]+", " 
-							+ minusScaledRandNums[1] + ").",p.toString());
+							+ minusScaledRandNums[1] + ")",p.toString());
 		} 
 		
 		// Could add tests for more dimensions, but it's not like we will be using toString()
