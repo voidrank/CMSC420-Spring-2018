@@ -111,7 +111,7 @@ public class KDTree implements SpatialDictionary, SpatialQuerySolver {
 		if (root != null) {
 			if(search(p)) {
 				root = root.delete(p, 0, dims);
-				count--; // Guaranteed successful insertion.
+				count--; // Guaranteed successful deletion.
 			}
 		}
 	}
