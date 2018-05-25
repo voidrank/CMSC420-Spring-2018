@@ -81,17 +81,22 @@ public class PRQuadTree implements SpatialDictionary {
     public void insert(KDPoint p) {
         if(root == null)  // white nodes, first point stored
             root = new PRQuadBlackNode(new KDPoint(0, 0), k, bucketingParam, p); // Initial centroid assumed at (0, 0).
-                                                                                    // Notice that we are calling the second constructor of PRQuadBlackNode here!
-        else // black or gray nodes
-            root.insert(p, k); // will adjust height accordingly.
-        count++;
+            // Notice that we are calling the second constructor of PRQuadBlackNode here!
+        else {// black or gray nodes
+            if(!root.search(p)) {
+                root = root.insert(p, k); // will adjust height accordingly.
+                count++;
+            }
+        }
     }
 
     @Override
     public void delete(KDPoint p) {
         if(root != null) {
-            root = root.delete(p);
-            count--;
+            if(!search(p)) {
+                root = root.delete(p);
+                count--;
+            }
         }
     }
 
