@@ -11,8 +11,8 @@ public class IntegerTest {
 
         /* What will the output of this program be? */
 
-        Integer a = 42;
-        Integer b = 42;
+        Integer a = 21;
+        Integer b = 21;
         System.out.println(a == b);
         Integer c = 666;
         Integer d = 666;
